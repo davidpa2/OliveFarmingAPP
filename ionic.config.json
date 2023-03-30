@@ -1,0 +1,7 @@
+{
+  "name": "OliveFarmingAPP",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
