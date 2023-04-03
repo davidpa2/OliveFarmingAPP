@@ -1,0 +1,683 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "olive-farming-api",
+        "version": "0.0.1",
+        "description": "API to manage olive farming",
+        "contact": {
+            "name": "David Padilla",
+            "email": "davidpaag2002@gmail.com"
+        }
+    },
+    "paths": {
+        "/hello": {
+            "get": {
+                "x-controller-name": "HelloController",
+                "x-operation-name": "hello",
+                "tags": [
+                    "HelloController"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Hello Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HelloResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "HelloController.hello"
+            }
+        },
+        "/ping": {
+            "get": {
+                "x-controller-name": "PingController",
+                "x-operation-name": "ping",
+                "tags": [
+                    "PingController"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ping Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PingResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "PingController.ping"
+            }
+        },
+        "/users/count": {
+            "get": {
+                "x-controller-name": "UserController",
+                "x-operation-name": "count",
+                "tags": [
+                    "UserController"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User model count",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/loopback.Count"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "where",
+                        "in": "query",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "title": "User.WhereFilter",
+                                    "additionalProperties": true,
+                                    "x-typescript-type": "@loopback/repository#Where<User>"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "operationId": "UserController.count"
+            }
+        },
+        "/users/{id}": {
+            "put": {
+                "x-controller-name": "UserController",
+                "x-operation-name": "replaceById",
+                "tags": [
+                    "UserController"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "User PUT success"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    },
+                    "x-parameter-index": 1
+                },
+                "operationId": "UserController.replaceById"
+            },
+            "patch": {
+                "x-controller-name": "UserController",
+                "x-operation-name": "updateById",
+                "tags": [
+                    "UserController"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "User PATCH success"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserPartial"
+                            }
+                        }
+                    },
+                    "x-parameter-index": 1
+                },
+                "operationId": "UserController.updateById"
+            },
+            "get": {
+                "x-controller-name": "UserController",
+                "x-operation-name": "findById",
+                "tags": [
+                    "UserController"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User model instance",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserWithRelations"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User.Filter"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "operationId": "UserController.findById"
+            },
+            "delete": {
+                "x-controller-name": "UserController",
+                "x-operation-name": "deleteById",
+                "tags": [
+                    "UserController"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "User DELETE success"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "operationId": "UserController.deleteById"
+            }
+        },
+        "/users": {
+            "post": {
+                "x-controller-name": "UserController",
+                "x-operation-name": "create",
+                "tags": [
+                    "UserController"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User model instance",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NewUser"
+                            }
+                        }
+                    }
+                },
+                "operationId": "UserController.create"
+            },
+            "patch": {
+                "x-controller-name": "UserController",
+                "x-operation-name": "updateAll",
+                "tags": [
+                    "UserController"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User PATCH success count",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/loopback.Count"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "where",
+                        "in": "query",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "title": "User.WhereFilter",
+                                    "additionalProperties": true,
+                                    "x-typescript-type": "@loopback/repository#Where<User>"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserPartial"
+                            }
+                        }
+                    }
+                },
+                "operationId": "UserController.updateAll"
+            },
+            "get": {
+                "x-controller-name": "UserController",
+                "x-operation-name": "find",
+                "tags": [
+                    "UserController"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of User model instances",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UserWithRelations"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User.Filter1"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "operationId": "UserController.find"
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "http://[::1]:3000"
+        }
+    ],
+    "components": {
+        "schemas": {
+            "User": {
+                "title": "User",
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "surname": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "_id",
+                    "name",
+                    "surname",
+                    "email",
+                    "password"
+                ],
+                "additionalProperties": false
+            },
+            "NewUser": {
+                "title": "NewUser",
+                "type": "object",
+                "description": "(tsType: User, schemaOptions: { title: 'NewUser' })",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "surname": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "_id",
+                    "name",
+                    "surname",
+                    "email",
+                    "password"
+                ],
+                "additionalProperties": false,
+                "x-typescript-type": "User"
+            },
+            "UserWithRelations": {
+                "title": "UserWithRelations",
+                "type": "object",
+                "description": "(tsType: UserWithRelations, schemaOptions: { includeRelations: true })",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "surname": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "_id",
+                    "name",
+                    "surname",
+                    "email",
+                    "password"
+                ],
+                "additionalProperties": false,
+                "x-typescript-type": "UserWithRelations"
+            },
+            "UserPartial": {
+                "title": "UserPartial",
+                "type": "object",
+                "description": "(tsType: Partial<User>, schemaOptions: { partial: true })",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "surname": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false,
+                "x-typescript-type": "Partial<User>"
+            },
+            "HelloResponse": {
+                "type": "object",
+                "title": "HelloResponse",
+                "properties": {
+                    "greeting": {
+                        "hello": "string"
+                    }
+                }
+            },
+            "PingResponse": {
+                "type": "object",
+                "title": "PingResponse",
+                "properties": {
+                    "greeting": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "headers": {
+                        "type": "object",
+                        "properties": {
+                            "Content-Type": {
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": true
+                    }
+                }
+            },
+            "loopback.Count": {
+                "type": "object",
+                "title": "loopback.Count",
+                "x-typescript-type": "@loopback/repository#Count",
+                "properties": {
+                    "count": {
+                        "type": "number"
+                    }
+                }
+            },
+            "User.Filter": {
+                "type": "object",
+                "title": "User.Filter",
+                "properties": {
+                    "offset": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "example": 100
+                    },
+                    "skip": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "order": {
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        ]
+                    },
+                    "fields": {
+                        "oneOf": [
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "_id": {
+                                        "type": "boolean"
+                                    },
+                                    "name": {
+                                        "type": "boolean"
+                                    },
+                                    "surname": {
+                                        "type": "boolean"
+                                    },
+                                    "email": {
+                                        "type": "boolean"
+                                    },
+                                    "password": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "additionalProperties": false
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "enum": [
+                                        "_id",
+                                        "name",
+                                        "surname",
+                                        "email",
+                                        "password"
+                                    ],
+                                    "example": "_id"
+                                },
+                                "uniqueItems": true
+                            }
+                        ],
+                        "title": "User.Fields"
+                    }
+                },
+                "additionalProperties": false,
+                "x-typescript-type": "@loopback/repository#Filter<User>"
+            },
+            "User.Filter1": {
+                "type": "object",
+                "title": "User.Filter",
+                "properties": {
+                    "offset": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "example": 100
+                    },
+                    "skip": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "order": {
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        ]
+                    },
+                    "where": {
+                        "title": "User.WhereFilter",
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "fields": {
+                        "oneOf": [
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "_id": {
+                                        "type": "boolean"
+                                    },
+                                    "name": {
+                                        "type": "boolean"
+                                    },
+                                    "surname": {
+                                        "type": "boolean"
+                                    },
+                                    "email": {
+                                        "type": "boolean"
+                                    },
+                                    "password": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "additionalProperties": false
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "enum": [
+                                        "_id",
+                                        "name",
+                                        "surname",
+                                        "email",
+                                        "password"
+                                    ],
+                                    "example": "_id"
+                                },
+                                "uniqueItems": true
+                            }
+                        ],
+                        "title": "User.Fields"
+                    }
+                },
+                "additionalProperties": false,
+                "x-typescript-type": "@loopback/repository#Filter<User>"
+            }
+        }
+    }
+}

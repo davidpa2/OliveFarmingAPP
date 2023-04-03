@@ -9,7 +9,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "oa:generate": "npx ng-openapi-gen --input src/app/services/openapi.json --output src/app/services/api"
   },
   "private": true,
   "dependencies": {
@@ -59,8 +60,9 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
+    "ng-openapi-gen": "^0.24.1",
     "ts-node": "~8.3.0",
     "typescript": "~4.8.4"
   },
-  "description": "An Ionic project"
+  "description": "My Ionic project"
 }
