@@ -21,7 +21,7 @@ export class CoreProvider {
   public get isLoggedIn() { return this.auth.token !== ''; };
 
 
-  public async errorToast(loading?: IonLoading, message: any | string = null, duration = null) {
+  public async errorToast(loading?: IonLoading, message: any | string = null, duration: number = 10000) {
     if (loading) { loading.dismiss(); }
 
     if (typeof message != 'string' && message != null) {

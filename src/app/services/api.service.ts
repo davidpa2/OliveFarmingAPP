@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth/auth.service';
+import { UserControllerService } from './api/services';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,6 @@ import { AuthService } from './auth/auth.service';
 export class ApiService {
 
   constructor(
-    public auth: AuthService
+    public user: UserControllerService
   ) { }
 }
