@@ -11,6 +11,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { ApiModule } from './services/api/api.module';
 import { environment } from 'src/environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
+import { ComponentsModule } from './components/components.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +20,8 @@ import { BrowserModule } from '@angular/platform-browser';
     BrowserModule,
     IonicModule.forRoot(),
     ApiModule.forRoot({rootUrl:environment.endpoint}),
-    AppRoutingModule
+    AppRoutingModule,
+    ComponentsModule
   ],
   providers: [
     ApiService,
