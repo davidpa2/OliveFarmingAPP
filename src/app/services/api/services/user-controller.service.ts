@@ -9,8 +9,11 @@ import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
+import { JwtResponse } from '../models/jwt-response';
 import { NewUser } from '../models/new-user';
 import { User } from '../models/user';
+import { UserLogin } from '../models/user-login';
+import { UserMe } from '../models/user-me';
 import { UserPartial } from '../models/user-partial';
 import { UserWithRelations } from '../models/user-with-relations';
 import { Count as LoopbackCount } from '../models/loopback/count';
@@ -76,6 +79,109 @@ export class UserControllerService extends BaseService {
 
     return this.count$Response(params,context).pipe(
       map((r: StrictHttpResponse<LoopbackCount>) => r.body as LoopbackCount)
+    );
+  }
+
+  /**
+   * Path part for operation userControllerLogin
+   */
+  static readonly UserControllerLoginPath = '/users/login';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `login()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  login$Response(params?: {
+    body?: UserLogin
+  },
+  context?: HttpContext
+
+): Observable<StrictHttpResponse<JwtResponse>> {
+
+    const rb = new RequestBuilder(this.rootUrl, UserControllerService.UserControllerLoginPath, 'post');
+    if (params) {
+      rb.body(params.body, 'application/json');
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json',
+      context: context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<JwtResponse>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `login$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  login(params?: {
+    body?: UserLogin
+  },
+  context?: HttpContext
+
+): Observable<JwtResponse> {
+
+    return this.login$Response(params,context).pipe(
+      map((r: StrictHttpResponse<JwtResponse>) => r.body as JwtResponse)
+    );
+  }
+
+  /**
+   * Path part for operation userControllerMe
+   */
+  static readonly UserControllerMePath = '/users/me';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `me()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  me$Response(params?: {
+  },
+  context?: HttpContext
+
+): Observable<StrictHttpResponse<UserMe>> {
+
+    const rb = new RequestBuilder(this.rootUrl, UserControllerService.UserControllerMePath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json',
+      context: context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<UserMe>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `me$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  me(params?: {
+  },
+  context?: HttpContext
+
+): Observable<UserMe> {
+
+    return this.me$Response(params,context).pipe(
+      map((r: StrictHttpResponse<UserMe>) => r.body as UserMe)
     );
   }
 

@@ -1,4 +1,7 @@
+export { JwtResponse } from './models/jwt-response';
+export { UserLogin } from './models/user-login';
 export { User } from './models/user';
+export { UserMe } from './models/user-me';
 export { NewUser } from './models/new-user';
 export { UserWithRelations } from './models/user-with-relations';
 export { UserPartial } from './models/user-partial';
