@@ -1,0 +1,37 @@
+<app-navbar></app-navbar>
+
+<ion-content class="ion-padding">
+    <ion-row>
+        <ion-col size="6">
+            <ion-img src="src/assets/olives.png" alt="Login image"></ion-img>
+        </ion-col>
+        <ion-col size="6">
+            <h2>Iniciar sesión</h2>
+            <form [formGroup]="loginForm">
+                <ion-item>
+                    <ion-input formControlName="email" label="Email" labelPlacement="floating"
+                        placeholder="Email"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-input formControlName="password" label="Password" labelPlacement="floating"
+                        placeholder="Password"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col size="12" sizeMd="4">
+                                <ion-button (click)="login()">Acceder</ion-button>
+                            </ion-col>
+                            <ion-col size="12" sizeMd="8">
+                                <p class="ion-text-center ion-text-md-end">¿No tienes cuenta? <a
+                                        [routerLink]="['/auth/register']"
+                                        routerLinkActive="router-link-active">Regístrate</a>
+                                </p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+            </form>
+        </ion-col>
+    </ion-row>
+</ion-content>
