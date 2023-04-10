@@ -92,6 +92,59 @@
                 "operationId": "UserController.count"
             }
         },
+        "/users/login": {
+            "post": {
+                "x-controller-name": "UserController",
+                "x-operation-name": "login",
+                "tags": [
+                    "UserController"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Valid token to login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JwtResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserLogin"
+                            }
+                        }
+                    }
+                },
+                "operationId": "UserController.login"
+            }
+        },
+        "/users/me": {
+            "get": {
+                "x-controller-name": "UserController",
+                "x-operation-name": "me",
+                "tags": [
+                    "UserController"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserMe"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "UserController.me"
+            }
+        },
         "/users/{id}": {
             "put": {
                 "x-controller-name": "UserController",
@@ -365,6 +418,38 @@
     ],
     "components": {
         "schemas": {
+            "JwtResponse": {
+                "title": "JwtResponse",
+                "type": "object",
+                "properties": {
+                    "jwt": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "jwt"
+                ],
+                "additionalProperties": false
+            },
+            "UserLogin": {
+                "title": "UserLogin",
+                "type": "object",
+                "description": "(tsType: LoginDTO, schemaOptions: { title: 'UserLogin' })",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "additionalProperties": false,
+                "x-typescript-type": "LoginDTO"
+            },
             "User": {
                 "title": "User",
                 "type": "object",
@@ -391,6 +476,31 @@
                     "surname",
                     "email",
                     "password"
+                ],
+                "additionalProperties": false
+            },
+            "UserMe": {
+                "title": "UserMe",
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "surname": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "_id",
+                    "name",
+                    "surname",
+                    "email"
                 ],
                 "additionalProperties": false
             },
@@ -678,6 +788,18 @@
                 "additionalProperties": false,
                 "x-typescript-type": "@loopback/repository#Filter<User>"
             }
+        },
+        "securitySchemes": {
+            "jwt": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
         }
-    }
+    },
+    "security": [
+        {
+            "jwt": []
+        }
+    ]
 }
