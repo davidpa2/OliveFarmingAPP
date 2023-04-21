@@ -5,9 +5,12 @@
  * (tsType: Partial<User>, schemaOptions: { partial: true })
  */
 export interface UserPartial {
-  '_id'?: string;
   email?: string;
-  name?: string;
-  password?: string;
-  surname?: string;
+  emailVerified?: boolean;
+  id?: string;
+  realm?: string;
+  username?: string;
+  verificationToken?: string;
+
+  [key: string]: any;
 }

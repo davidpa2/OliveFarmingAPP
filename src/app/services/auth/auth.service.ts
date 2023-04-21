@@ -86,6 +86,8 @@ export class AuthService {
 
     this.core.api.user.login({ body: data }).subscribe({
       next: (sess) => {
+        console.log(sess);
+        
         environment.authToken = sess.jwt;
         this.data.token = sess.jwt;
         this.core.api.user.me().subscribe({

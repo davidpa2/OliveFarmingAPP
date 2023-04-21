@@ -10,28 +10,6 @@
         }
     },
     "paths": {
-        "/hello": {
-            "get": {
-                "x-controller-name": "HelloController",
-                "x-operation-name": "hello",
-                "tags": [
-                    "HelloController"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Hello Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HelloResponse"
-                                }
-                            }
-                        }
-                    }
-                },
-                "operationId": "HelloController.hello"
-            }
-        },
         "/ping": {
             "get": {
                 "x-controller-name": "PingController",
@@ -450,19 +428,10 @@
                 "additionalProperties": false,
                 "x-typescript-type": "LoginDTO"
             },
-            "User": {
-                "title": "User",
+            "LoginDTO": {
+                "title": "LoginDTO",
                 "type": "object",
                 "properties": {
-                    "_id": {
-                        "type": "string"
-                    },
-                    "name": {
-                        "type": "string"
-                    },
-                    "surname": {
-                        "type": "string"
-                    },
                     "email": {
                         "type": "string"
                     },
@@ -471,9 +440,6 @@
                     }
                 },
                 "required": [
-                    "_id",
-                    "name",
-                    "surname",
                     "email",
                     "password"
                 ],
@@ -504,66 +470,117 @@
                 ],
                 "additionalProperties": false
             },
-            "NewUser": {
-                "title": "NewUser",
+            "User": {
+                "title": "User",
                 "type": "object",
-                "description": "(tsType: User, schemaOptions: { title: 'NewUser' })",
                 "properties": {
-                    "_id": {
+                    "id": {
                         "type": "string"
                     },
-                    "name": {
+                    "realm": {
                         "type": "string"
                     },
-                    "surname": {
+                    "username": {
                         "type": "string"
                     },
                     "email": {
                         "type": "string"
                     },
-                    "password": {
+                    "emailVerified": {
+                        "type": "boolean"
+                    },
+                    "verificationToken": {
                         "type": "string"
                     }
                 },
                 "required": [
-                    "_id",
-                    "name",
-                    "surname",
-                    "email",
-                    "password"
+                    "email"
                 ],
-                "additionalProperties": false,
+                "additionalProperties": true
+            },
+            "NewUser": {
+                "title": "NewUser",
+                "type": "object",
+                "description": "(tsType: User, schemaOptions: { title: 'NewUser' })",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "realm": {
+                        "type": "string"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "emailVerified": {
+                        "type": "boolean"
+                    },
+                    "verificationToken": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "email"
+                ],
+                "additionalProperties": true,
                 "x-typescript-type": "User"
+            },
+            "UserCredentialsWithRelations": {
+                "title": "UserCredentialsWithRelations",
+                "type": "object",
+                "description": "(tsType: UserCredentialsWithRelations, schemaOptions: { includeRelations: true })",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "userId": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "password",
+                    "userId"
+                ],
+                "additionalProperties": true,
+                "x-typescript-type": "UserCredentialsWithRelations"
             },
             "UserWithRelations": {
                 "title": "UserWithRelations",
                 "type": "object",
                 "description": "(tsType: UserWithRelations, schemaOptions: { includeRelations: true })",
                 "properties": {
-                    "_id": {
+                    "id": {
                         "type": "string"
                     },
-                    "name": {
+                    "realm": {
                         "type": "string"
                     },
-                    "surname": {
+                    "username": {
                         "type": "string"
                     },
                     "email": {
                         "type": "string"
                     },
-                    "password": {
+                    "emailVerified": {
+                        "type": "boolean"
+                    },
+                    "verificationToken": {
                         "type": "string"
+                    },
+                    "userCredentials": {
+                        "$ref": "#/components/schemas/UserCredentialsWithRelations"
                     }
                 },
                 "required": [
-                    "_id",
-                    "name",
-                    "surname",
-                    "email",
-                    "password"
+                    "email"
                 ],
-                "additionalProperties": false,
+                "additionalProperties": true,
                 "x-typescript-type": "UserWithRelations"
             },
             "UserPartial": {
@@ -571,33 +588,27 @@
                 "type": "object",
                 "description": "(tsType: Partial<User>, schemaOptions: { partial: true })",
                 "properties": {
-                    "_id": {
+                    "id": {
                         "type": "string"
                     },
-                    "name": {
+                    "realm": {
                         "type": "string"
                     },
-                    "surname": {
+                    "username": {
                         "type": "string"
                     },
                     "email": {
                         "type": "string"
                     },
-                    "password": {
+                    "emailVerified": {
+                        "type": "boolean"
+                    },
+                    "verificationToken": {
                         "type": "string"
                     }
                 },
-                "additionalProperties": false,
+                "additionalProperties": true,
                 "x-typescript-type": "Partial<User>"
-            },
-            "HelloResponse": {
-                "type": "object",
-                "title": "HelloResponse",
-                "properties": {
-                    "greeting": {
-                        "hello": "string"
-                    }
-                }
             },
             "PingResponse": {
                 "type": "object",
@@ -630,6 +641,82 @@
                 "properties": {
                     "count": {
                         "type": "number"
+                    }
+                }
+            },
+            "User.ScopeFilter": {
+                "type": "object",
+                "properties": {
+                    "offset": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "example": 100
+                    },
+                    "skip": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "order": {
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        ]
+                    },
+                    "where": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "fields": {
+                        "oneOf": [
+                            {
+                                "type": "object",
+                                "properties": {},
+                                "additionalProperties": true
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                },
+                                "uniqueItems": true
+                            }
+                        ]
+                    },
+                    "include": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {},
+                            "additionalProperties": true
+                        }
+                    }
+                },
+                "additionalProperties": false,
+                "title": "User.ScopeFilter"
+            },
+            "User.IncludeFilter.Items": {
+                "title": "User.IncludeFilter.Items",
+                "type": "object",
+                "properties": {
+                    "relation": {
+                        "type": "string",
+                        "enum": [
+                            "userCredentials"
+                        ]
+                    },
+                    "scope": {
+                        "$ref": "#/components/schemas/User.ScopeFilter"
                     }
                 }
             },
@@ -668,41 +755,51 @@
                             {
                                 "type": "object",
                                 "properties": {
-                                    "_id": {
+                                    "id": {
                                         "type": "boolean"
                                     },
-                                    "name": {
+                                    "realm": {
                                         "type": "boolean"
                                     },
-                                    "surname": {
+                                    "username": {
                                         "type": "boolean"
                                     },
                                     "email": {
                                         "type": "boolean"
                                     },
-                                    "password": {
+                                    "emailVerified": {
+                                        "type": "boolean"
+                                    },
+                                    "verificationToken": {
                                         "type": "boolean"
                                     }
                                 },
-                                "additionalProperties": false
+                                "additionalProperties": true
                             },
                             {
                                 "type": "array",
                                 "items": {
                                     "type": "string",
-                                    "enum": [
-                                        "_id",
-                                        "name",
-                                        "surname",
-                                        "email",
-                                        "password"
-                                    ],
-                                    "example": "_id"
+                                    "example": "id"
                                 },
                                 "uniqueItems": true
                             }
                         ],
                         "title": "User.Fields"
+                    },
+                    "include": {
+                        "title": "User.IncludeFilter",
+                        "type": "array",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/User.IncludeFilter.Items"
+                                },
+                                {
+                                    "type": "string"
+                                }
+                            ]
+                        }
                     }
                 },
                 "additionalProperties": false,
@@ -748,41 +845,51 @@
                             {
                                 "type": "object",
                                 "properties": {
-                                    "_id": {
+                                    "id": {
                                         "type": "boolean"
                                     },
-                                    "name": {
+                                    "realm": {
                                         "type": "boolean"
                                     },
-                                    "surname": {
+                                    "username": {
                                         "type": "boolean"
                                     },
                                     "email": {
                                         "type": "boolean"
                                     },
-                                    "password": {
+                                    "emailVerified": {
+                                        "type": "boolean"
+                                    },
+                                    "verificationToken": {
                                         "type": "boolean"
                                     }
                                 },
-                                "additionalProperties": false
+                                "additionalProperties": true
                             },
                             {
                                 "type": "array",
                                 "items": {
                                     "type": "string",
-                                    "enum": [
-                                        "_id",
-                                        "name",
-                                        "surname",
-                                        "email",
-                                        "password"
-                                    ],
-                                    "example": "_id"
+                                    "example": "id"
                                 },
                                 "uniqueItems": true
                             }
                         ],
                         "title": "User.Fields"
+                    },
+                    "include": {
+                        "title": "User.IncludeFilter",
+                        "type": "array",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/User.IncludeFilter.Items"
+                                },
+                                {
+                                    "type": "string"
+                                }
+                            ]
+                        }
                     }
                 },
                 "additionalProperties": false,
