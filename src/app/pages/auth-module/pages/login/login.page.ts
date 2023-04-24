@@ -12,7 +12,7 @@ export class LoginPage implements OnInit {
 
   loginForm!: FormGroup;
 
-  constructor(private core: CoreProvider) { }
+  constructor(public core: CoreProvider) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({

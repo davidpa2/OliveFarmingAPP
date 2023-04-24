@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-row>
+    <ion-row (click)="core.navigate('/')">
       <ion-thumbnail class="ion-margin-start">
         <img src="assets/icon/favicon.png" alt="">
       </ion-thumbnail>
@@ -10,7 +10,7 @@
     </ion-row>
 
     <ion-buttons slot="end">
-      <ion-button [routerLink]="['/auth/login']">
+      <ion-button (click)="core.navigate('/auth/login')">
         Log in <ion-icon name="log-in-outline"></ion-icon>
       </ion-button>
     </ion-buttons>

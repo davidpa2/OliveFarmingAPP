@@ -3,7 +3,7 @@
 <ion-content class="ion-padding">
     <ion-row>
         <ion-col class="ion-hide-md-down" size="6">
-            <ion-img src="src/assets/olives.png" alt="Login image"></ion-img>
+            <ion-img src="assets/olives.png" alt="Login image"></ion-img>
         </ion-col>
         <ion-col size="12" sizeMd="6">
             <h2>Iniciar sesión</h2>
@@ -24,7 +24,7 @@
                             </ion-col>
                             <ion-col size="12" sizeMd="8">
                                 <p class="ion-text-center ion-text-md-end">¿No tienes cuenta? <a
-                                        [routerLink]="['/auth/register']"
+                                        (click)="core.navigate('/auth/register')"
                                         routerLinkActive="router-link-active">Regístrate</a>
                                 </p>
                             </ion-col>

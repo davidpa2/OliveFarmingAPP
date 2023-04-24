@@ -53,4 +53,8 @@ export class CoreProvider {
       return 'Se ha producido un error de comunicación, por favor, compruebe su conexión.';
     }
   }
+
+  navigate(route: string) {
+    this.navCtrl.navigateForward(route);
+  }
 }
