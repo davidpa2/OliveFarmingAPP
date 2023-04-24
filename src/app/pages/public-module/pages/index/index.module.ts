@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PublicRoutingModule } from './public-routing.module';
+import { IndexRoutingModule } from './index-routing.module';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { IndexPage } from './index.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [IndexPage],
   imports: [
     CommonModule,
-    PublicRoutingModule,
+    IndexRoutingModule,
     ComponentsModule
   ]
 })
-export class PublicModule { }
+export class IndexModule { }
