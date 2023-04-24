@@ -6,14 +6,14 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('./pages/auth-module/auth.module').then(m => m.AuthModule)
   },
-  // {
-  //   path: '',
-  //   loadChildren: () => import('./pages/public-module/public.module').then(m => m.PublicModule)
-  // },
-  // {
-  //   path: 'private',
-  //   loadChildren: () => import('./pages/private-module/private.module').then(m => m.PrivateModule),
-  // }
+  {
+    path: '',
+    loadChildren: () => import('./pages/public-module/public.module').then(m => m.PublicModule)
+  },
+  {
+    path: 'private',
+    loadChildren: () => import('./pages/private-module/private.module').then(m => m.PrivateModule),
+  }
 ];
 
 @NgModule({
