@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PrivateRoutingModule } from './private-routing.module';
+import { PublicRoutingModule } from './public-routing.module';
 
 
 
@@ -8,7 +8,7 @@ import { PrivateRoutingModule } from './private-routing.module';
   declarations: [],
   imports: [
     CommonModule,
-    PrivateRoutingModule
+    PublicRoutingModule
   ]
 })
 export class PublicModule { }
