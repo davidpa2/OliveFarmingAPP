@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CoreProvider } from 'src/app/services/core';
 
 @Component({
   selector: 'app-index',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndexPage  implements OnInit {
 
-  constructor() { }
+  constructor(public core: CoreProvider) { }
 
   ngOnInit() {}
 
