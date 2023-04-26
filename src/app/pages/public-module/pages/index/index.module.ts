@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IndexRoutingModule } from './index-routing.module';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { IndexPage } from './index.component';
+import { IonicModule } from '@ionic/angular';
 
 
 
@@ -11,7 +12,8 @@ import { IndexPage } from './index.component';
   imports: [
     CommonModule,
     IndexRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    IonicModule
   ]
 })
 export class IndexModule { }
