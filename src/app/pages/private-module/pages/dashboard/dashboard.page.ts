@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CoreProvider } from 'src/app/services/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardPage  implements OnInit {
 
-  constructor() { }
+  constructor(public core: CoreProvider) { }
 
   ngOnInit() {}
 
