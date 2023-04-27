@@ -1,0 +1,44 @@
+.seasonLabelTitle {
+    padding: 0;
+    display: inline-block;
+    background-color: var(--ion-color-primary);
+    border-radius: 6px 0px 0px 0px;
+    text-align: center;
+    position: relative;
+    width: 180px;
+    margin-left: 10px;
+    margin-bottom: -1px;
+    p {
+        padding: 3px 8px 4px;
+        margin: 0;
+        // font-size: 9px;
+    }
+}
+
+.seasonLabel {
+    padding: 0;
+    display: inline-block;
+    background-color: white;
+    color: black;
+    border-radius: 6px 6px 0px 0px;
+    text-align: center;
+    position: relative;
+    width: 120px;
+    margin-left: 1px;
+    margin-bottom: -1px;
+    cursor: pointer;
+    p {
+        padding: 3px 8px 4px;
+        margin: 0;
+        // font-size: 9px;
+    }
+}
+
+.selectedTab {
+    background-color: var(--ion-color-secondary);
+}
+
+.tabs {
+    overflow-x: auto;
+    overflow-y: hidden;
+}

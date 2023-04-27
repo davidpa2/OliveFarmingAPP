@@ -1,5 +1,18 @@
 <app-navbar></app-navbar>
 
 <ion-content>
-  
+
+    <div class="tabs ion-margin-top">
+        <span class="seasonLabelTitle">
+            <p>Temporada agrícola:</p>
+        </span>
+        <span *ngFor="let season of core.season.seasons" class="seasonLabel"
+            [class.selectedTab]="season === selectedTab" (click)="selectedTab = season">
+            <p>{{season}}</p>
+        </span>
+    </div>
+    <ion-item color="secondary">
+
+    </ion-item>
+
 </ion-content>
