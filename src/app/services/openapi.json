@@ -32,6 +32,181 @@
                 "operationId": "PingController.ping"
             }
         },
+        "/rain": {
+            "post": {
+                "x-controller-name": "RainController",
+                "x-operation-name": "create",
+                "tags": [
+                    "RainController"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rain model instance",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Rain"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NewRainLog"
+                            }
+                        }
+                    }
+                },
+                "operationId": "RainController.create"
+            },
+            "get": {
+                "x-controller-name": "RainController",
+                "x-operation-name": "find",
+                "tags": [
+                    "RainController"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of User model instances",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RainWithRelations"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Rain.Filter"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "operationId": "RainController.find"
+            }
+        },
+        "/seasons/count": {
+            "get": {
+                "x-controller-name": "SeasonsController",
+                "x-operation-name": "count",
+                "tags": [
+                    "SeasonsController"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Seasons model count",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/loopback.Count"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "where",
+                        "in": "query",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "title": "Seasons.WhereFilter",
+                                    "additionalProperties": true,
+                                    "x-typescript-type": "@loopback/repository#Where<Seasons>"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "operationId": "SeasonsController.count"
+            }
+        },
+        "/seasons": {
+            "post": {
+                "x-controller-name": "SeasonsController",
+                "x-operation-name": "create",
+                "tags": [
+                    "SeasonsController"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Seasons model instance",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Seasons"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateSeasonSchema"
+                            }
+                        }
+                    }
+                },
+                "operationId": "SeasonsController.create"
+            },
+            "get": {
+                "x-controller-name": "SeasonsController",
+                "x-operation-name": "find",
+                "tags": [
+                    "SeasonsController"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of Seasons model instances",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "properties": {
+                                        "type": "string"
+                                    },
+                                    "example": [
+                                        "22/23"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Seasons.Filter"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "operationId": "SeasonsController.find"
+            }
+        },
         "/users/count": {
             "get": {
                 "x-controller-name": "UserController",
@@ -396,6 +571,118 @@
     ],
     "components": {
         "schemas": {
+            "RainWithRelations": {
+                "title": "RainWithRelations",
+                "type": "object",
+                "description": "(tsType: RainWithRelations, schemaOptions: { includeRelations: true })",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "season": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "liters": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "_id",
+                    "season",
+                    "date",
+                    "liters"
+                ],
+                "additionalProperties": false,
+                "x-typescript-type": "RainWithRelations"
+            },
+            "Rain": {
+                "title": "Rain",
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "season": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "liters": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "_id",
+                    "season",
+                    "date",
+                    "liters"
+                ],
+                "additionalProperties": false
+            },
+            "NewRainLog": {
+                "title": "NewRainLog",
+                "type": "object",
+                "description": "(tsType: Rain, schemaOptions: { title: 'NewRainLog' })",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "season": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "liters": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "_id",
+                    "season",
+                    "date",
+                    "liters"
+                ],
+                "additionalProperties": false,
+                "x-typescript-type": "Rain"
+            },
+            "Seasons": {
+                "title": "Seasons",
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "seasonCode": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "_id",
+                    "seasonCode"
+                ],
+                "additionalProperties": false
+            },
+            "CreateSeasonSchema": {
+                "title": "CreateSeasonSchema",
+                "type": "object",
+                "properties": {
+                    "seasonCode": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "seasonCode"
+                ],
+                "additionalProperties": false
+            },
             "JwtResponse": {
                 "title": "JwtResponse",
                 "type": "object",
@@ -634,6 +921,82 @@
                     }
                 }
             },
+            "Rain.Filter": {
+                "type": "object",
+                "title": "Rain.Filter",
+                "properties": {
+                    "offset": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "example": 100
+                    },
+                    "skip": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "order": {
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        ]
+                    },
+                    "where": {
+                        "title": "Rain.WhereFilter",
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "fields": {
+                        "oneOf": [
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "_id": {
+                                        "type": "boolean"
+                                    },
+                                    "season": {
+                                        "type": "boolean"
+                                    },
+                                    "date": {
+                                        "type": "boolean"
+                                    },
+                                    "liters": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "additionalProperties": false
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "enum": [
+                                        "_id",
+                                        "season",
+                                        "date",
+                                        "liters"
+                                    ],
+                                    "example": "_id"
+                                },
+                                "uniqueItems": true
+                            }
+                        ],
+                        "title": "Rain.Fields"
+                    }
+                },
+                "additionalProperties": false,
+                "x-typescript-type": "@loopback/repository#Filter<Rain>"
+            },
             "loopback.Count": {
                 "type": "object",
                 "title": "loopback.Count",
@@ -643,6 +1006,74 @@
                         "type": "number"
                     }
                 }
+            },
+            "Seasons.Filter": {
+                "type": "object",
+                "title": "Seasons.Filter",
+                "properties": {
+                    "offset": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "example": 100
+                    },
+                    "skip": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "order": {
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        ]
+                    },
+                    "where": {
+                        "title": "Seasons.WhereFilter",
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "fields": {
+                        "oneOf": [
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "_id": {
+                                        "type": "boolean"
+                                    },
+                                    "seasonCode": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "additionalProperties": false
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "enum": [
+                                        "_id",
+                                        "seasonCode"
+                                    ],
+                                    "example": "_id"
+                                },
+                                "uniqueItems": true
+                            }
+                        ],
+                        "title": "Seasons.Fields"
+                    }
+                },
+                "additionalProperties": false,
+                "x-typescript-type": "@loopback/repository#Filter<Seasons>"
             },
             "User.ScopeFilter": {
                 "type": "object",

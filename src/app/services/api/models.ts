@@ -1,3 +1,8 @@
+export { RainWithRelations } from './models/rain-with-relations';
+export { Rain } from './models/rain';
+export { NewRainLog } from './models/new-rain-log';
+export { Seasons } from './models/seasons';
+export { CreateSeasonSchema } from './models/create-season-schema';
 export { JwtResponse } from './models/jwt-response';
 export { UserLogin } from './models/user-login';
 export { UserMe } from './models/user-me';
