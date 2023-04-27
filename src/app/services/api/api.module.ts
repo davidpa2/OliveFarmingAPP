@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { PingControllerService } from './services/ping-controller.service';
+import { RainControllerService } from './services/rain-controller.service';
+import { SeasonsControllerService } from './services/seasons-controller.service';
 import { UserControllerService } from './services/user-controller.service';
 
 /**
@@ -16,6 +18,8 @@ import { UserControllerService } from './services/user-controller.service';
   declarations: [],
   providers: [
     PingControllerService,
+    RainControllerService,
+    SeasonsControllerService,
     UserControllerService,
     ApiConfiguration
   ],

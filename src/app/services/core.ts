@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { AuthService } from './auth/auth.service';
 import { IonLoading, NavController, ToastController } from '@ionic/angular';
+import { SeasonsService } from './seasons.service';
 
 @Injectable({ providedIn: 'root' })
 export class CoreProvider {
@@ -9,10 +10,12 @@ export class CoreProvider {
   constructor(
     public api: ApiService,
     public auth: AuthService,
+    public season: SeasonsService,
     public navCtrl: NavController,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
   ) {
     this.auth.init(this);
+    this.season.init(this);
   }
 
   public get user() {
