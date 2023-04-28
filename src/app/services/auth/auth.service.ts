@@ -58,9 +58,9 @@ export class AuthService {
           this.data = { user: null, token: null };
           environment.authToken = '';
           this.updateStorage();
-          this.core.errorToast(
-            undefined, 'Su sesión anterior ha sido cerrada por seguridad', 15000
-          );
+          // this.core.errorToast(
+          //   undefined, 'Su sesión anterior ha sido cerrada por seguridad', 15000
+          // );
         }
       })
     } else {
