@@ -13,6 +13,27 @@
     </div>
     <ion-item color="secondary">
 
+        <ion-grid>
+            <h2>Nuevo registro de lluvia:</h2>
+            <ion-row>
+                <ion-col size="12" sizeSm="6">
+                    <ion-input type="number" [value]="liters" label="Cantidad de litros" labelPlacement="floating" placeholder="00"></ion-input>
+                </ion-col>
+                <ion-col size="12" sizeSm="6">
+                    <ion-input id="datePopover" [value]="rainDate" type="text" label="Fecha" labelPlacement="floating" readonly></ion-input>
+                    <ion-popover trigger="datePopover">
+                        <ng-template>
+                            <ion-datetime (ionChange)="changeDate($event)"></ion-datetime>
+                        </ng-template>
+                    </ion-popover>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-button (click)="saveRainLog()">Guardar</ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
     </ion-item>
 
 </ion-content>

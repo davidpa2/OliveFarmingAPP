@@ -6,8 +6,10 @@ import { CoreProvider } from 'src/app/services/core';
   templateUrl: './rain.page.html',
   styleUrls: ['./rain.page.scss'],
 })
-export class RainPage  implements OnInit {
+export class RainPage implements OnInit {
   selectedTab = '';
+  rainDate = '';
+  liters!: number;
 
   constructor(public core: CoreProvider) {
     if (!this.core.season.currentSeason) this.core.season.setCurrentSeason();
@@ -15,5 +17,20 @@ export class RainPage  implements OnInit {
   }
 
   ngOnInit() { }
+
+  saveRainLog() {
+    this.core.api.rain.create({ body: { date: this.rainDate, liters: this.liters, season: this.selectedTab } }).subscribe({
+      next: res => {
+        console.log(res);
+      },
+      error: err => {
+        console.log(err);
+      }
+    })
+  }
+
+  changeDate(event: any) {
+    this.rainDate = event.detail.value;
+  }
 
 }
