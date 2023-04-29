@@ -89,7 +89,6 @@ export class SeasonsControllerService extends BaseService {
    * This method doesn't expect any request body.
    */
   find$Response(params?: {
-    filter?: any;
   },
   context?: HttpContext
 
@@ -97,7 +96,6 @@ export class SeasonsControllerService extends BaseService {
 
     const rb = new RequestBuilder(this.rootUrl, SeasonsControllerService.SeasonsControllerFindPath, 'get');
     if (params) {
-      rb.query('filter', params.filter, {});
     }
 
     return this.http.request(rb.build({
@@ -119,7 +117,6 @@ export class SeasonsControllerService extends BaseService {
    * This method doesn't expect any request body.
    */
   find(params?: {
-    filter?: any;
   },
   context?: HttpContext
 
