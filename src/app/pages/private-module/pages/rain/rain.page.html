@@ -6,10 +6,18 @@
         <span class="seasonLabelTitle">
             <p>Temporada agrícola:</p>
         </span>
-        <span *ngFor="let season of core.season.seasons" class="seasonLabel"
+        <span class="seasonLabel selectedTab">
+            <p>{{selectedTab}}</p>
+        </span>
+        <ng-container *ngFor="let season of core.season.seasons">
+            <span *ngIf="selectedTab !== season" (click)="selectedTab = season" class="seasonLabel">
+                <p>{{season}}</p>
+            </span>
+        </ng-container>
+        <!-- <span *ngFor="let season of core.season.seasons" class="seasonLabel"
             [class.selectedTab]="season === selectedTab" (click)="selectedTab = season">
             <p>{{season}}</p>
-        </span>
+        </span> -->
     </div>
     <ion-item color="secondary">
 
@@ -17,10 +25,12 @@
             <h2>Nuevo registro de lluvia:</h2>
             <ion-row>
                 <ion-col size="12" sizeSm="6">
-                    <ion-input type="number" [value]="liters" label="Cantidad de litros" labelPlacement="floating" placeholder="00"></ion-input>
+                    <ion-input type="number" [value]="liters" label="Cantidad de litros" labelPlacement="floating"
+                        placeholder="00"></ion-input>
                 </ion-col>
                 <ion-col size="12" sizeSm="6">
-                    <ion-input id="datePopover" [value]="rainDate" type="text" label="Fecha" labelPlacement="floating" readonly></ion-input>
+                    <ion-input id="datePopover" [value]="rainDate" type="text" label="Fecha" labelPlacement="floating"
+                        readonly></ion-input>
                     <ion-popover trigger="datePopover">
                         <ng-template>
                             <ion-datetime (ionChange)="changeDate($event)"></ion-datetime>
