@@ -25,56 +25,6 @@ export class RainControllerService extends BaseService {
   }
 
   /**
-   * Path part for operation rainControllerFindOrderedBySeason
-   */
-  static readonly RainControllerFindOrderedBySeasonPath = '/rain/orderedBySeason';
-
-  /**
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `findOrderedBySeason()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  findOrderedBySeason$Response(params?: {
-  },
-  context?: HttpContext
-
-): Observable<StrictHttpResponse<Rain>> {
-
-    const rb = new RequestBuilder(this.rootUrl, RainControllerService.RainControllerFindOrderedBySeasonPath, 'get');
-    if (params) {
-    }
-
-    return this.http.request(rb.build({
-      responseType: 'json',
-      accept: 'application/json',
-      context: context
-    })).pipe(
-      filter((r: any) => r instanceof HttpResponse),
-      map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Rain>;
-      })
-    );
-  }
-
-  /**
-   * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `findOrderedBySeason$Response()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  findOrderedBySeason(params?: {
-  },
-  context?: HttpContext
-
-): Observable<Rain> {
-
-    return this.findOrderedBySeason$Response(params,context).pipe(
-      map((r: StrictHttpResponse<Rain>) => r.body as Rain)
-    );
-  }
-
-  /**
    * Path part for operation rainControllerFindBySeason
    */
   static readonly RainControllerFindBySeasonPath = '/rain/season/{season}';
@@ -124,6 +74,59 @@ export class RainControllerService extends BaseService {
 
     return this.findBySeason$Response(params,context).pipe(
       map((r: StrictHttpResponse<Array<RainWithRelations>>) => r.body as Array<RainWithRelations>)
+    );
+  }
+
+  /**
+   * Path part for operation rainControllerDeleteById
+   */
+  static readonly RainControllerDeleteByIdPath = '/rain/{id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `deleteById()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  deleteById$Response(params: {
+    id: string;
+  },
+  context?: HttpContext
+
+): Observable<StrictHttpResponse<any>> {
+
+    const rb = new RequestBuilder(this.rootUrl, RainControllerService.RainControllerDeleteByIdPath, 'delete');
+    if (params) {
+      rb.path('id', params.id, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json',
+      context: context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<any>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `deleteById$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  deleteById(params: {
+    id: string;
+  },
+  context?: HttpContext
+
+): Observable<any> {
+
+    return this.deleteById$Response(params,context).pipe(
+      map((r: StrictHttpResponse<any>) => r.body as any)
     );
   }
 

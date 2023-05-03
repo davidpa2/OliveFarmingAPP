@@ -32,28 +32,6 @@
                 "operationId": "PingController.ping"
             }
         },
-        "/rain/orderedBySeason": {
-            "get": {
-                "x-controller-name": "RainController",
-                "x-operation-name": "findOrderedBySeason",
-                "tags": [
-                    "RainController"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Array of Rain model instances",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Rain"
-                                }
-                            }
-                        }
-                    }
-                },
-                "operationId": "RainController.findOrderedBySeason"
-            }
-        },
         "/rain/season/{season}": {
             "get": {
                 "x-controller-name": "RainController",
@@ -87,6 +65,38 @@
                     }
                 ],
                 "operationId": "RainController.findBySeason"
+            }
+        },
+        "/rain/{id}": {
+            "delete": {
+                "x-controller-name": "RainController",
+                "x-operation-name": "deleteById",
+                "tags": [
+                    "RainController"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "Rain DELETE success"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "operationId": "RainController.deleteById"
             }
         },
         "/rain": {
