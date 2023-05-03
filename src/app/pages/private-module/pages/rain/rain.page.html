@@ -40,7 +40,7 @@
             </ion-row>
             <ion-row>
                 <ion-col>
-                    <ion-button (click)="saveRainLog()">Guardar</ion-button>
+                    <ion-button [disabled]="!rainDate && !liters" (click)="saveRainLog()">Guardar</ion-button>
                 </ion-col>
             </ion-row>
         </ion-grid>

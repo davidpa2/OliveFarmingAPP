@@ -57,3 +57,18 @@
         overscroll-behavior-x: contain;
     }
 }
+
+ion-input {
+    color: black;
+    background-color: white;
+    border-radius: 5px;
+
+    ::ng-deep {
+        div {
+            padding-left: 15px;
+        }
+        .native-wrapper {
+            padding-left: 25px;
+        }
+    }
+}
