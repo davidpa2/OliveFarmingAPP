@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { RainWithRelations } from 'src/app/services/api/models';
 import { CoreProvider } from 'src/app/services/core';
+
+export interface RainSeasons {
+  [season: string]: RainWithRelations[];
+}
 
 @Component({
   selector: 'app-rain',
@@ -11,22 +16,41 @@ export class RainPage implements OnInit {
   rainDate = '';
   liters!: number;
 
+  rainSeasons: RainSeasons = {};
+
   constructor(public core: CoreProvider) {
     if (!this.core.season.currentSeason) this.core.season.setCurrentSeason();
     this.selectedTab = this.core.season.currentSeason;
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.updateSeason(this.selectedTab);
+  }
 
   saveRainLog() {
     this.core.api.rain.create({ body: { date: this.rainDate, liters: this.liters, season: this.selectedTab } }).subscribe({
       next: res => {
-        console.log(res);
+        if (res) {
+          console.log(res);
+          this.updateSeason(this.selectedTab);
+        }
       },
       error: err => {
         console.log(err);
       }
     })
+  }
+
+  updateSeason(season: string) {
+    this.core.api.rain.findBySeason({ season }).subscribe({
+      next: res => {
+        if (res) {
+          this.rainSeasons[season] = res;
+        }
+        console.log(this.rainSeasons);
+      }
+    })
+
   }
 
   changeDate(event: any) {
