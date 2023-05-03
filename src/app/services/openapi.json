@@ -32,6 +32,63 @@
                 "operationId": "PingController.ping"
             }
         },
+        "/rain/orderedBySeason": {
+            "get": {
+                "x-controller-name": "RainController",
+                "x-operation-name": "findOrderedBySeason",
+                "tags": [
+                    "RainController"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of Rain model instances",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Rain"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "RainController.findOrderedBySeason"
+            }
+        },
+        "/rain/season/{season}": {
+            "get": {
+                "x-controller-name": "RainController",
+                "x-operation-name": "findBySeason",
+                "tags": [
+                    "RainController"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of Rain model instances",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RainWithRelations"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "season",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "operationId": "RainController.findBySeason"
+            }
+        },
         "/rain": {
             "post": {
                 "x-controller-name": "RainController",
@@ -70,7 +127,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Array of User model instances",
+                        "description": "Array of Rain model instances",
                         "content": {
                             "application/json": {
                                 "schema": {

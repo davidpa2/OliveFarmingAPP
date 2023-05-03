@@ -25,6 +25,109 @@ export class RainControllerService extends BaseService {
   }
 
   /**
+   * Path part for operation rainControllerFindOrderedBySeason
+   */
+  static readonly RainControllerFindOrderedBySeasonPath = '/rain/orderedBySeason';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `findOrderedBySeason()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  findOrderedBySeason$Response(params?: {
+  },
+  context?: HttpContext
+
+): Observable<StrictHttpResponse<Rain>> {
+
+    const rb = new RequestBuilder(this.rootUrl, RainControllerService.RainControllerFindOrderedBySeasonPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json',
+      context: context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Rain>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `findOrderedBySeason$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  findOrderedBySeason(params?: {
+  },
+  context?: HttpContext
+
+): Observable<Rain> {
+
+    return this.findOrderedBySeason$Response(params,context).pipe(
+      map((r: StrictHttpResponse<Rain>) => r.body as Rain)
+    );
+  }
+
+  /**
+   * Path part for operation rainControllerFindBySeason
+   */
+  static readonly RainControllerFindBySeasonPath = '/rain/season/{season}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `findBySeason()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  findBySeason$Response(params: {
+    season: string;
+  },
+  context?: HttpContext
+
+): Observable<StrictHttpResponse<Array<RainWithRelations>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, RainControllerService.RainControllerFindBySeasonPath, 'get');
+    if (params) {
+      rb.path('season', params.season, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json',
+      context: context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<RainWithRelations>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `findBySeason$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  findBySeason(params: {
+    season: string;
+  },
+  context?: HttpContext
+
+): Observable<Array<RainWithRelations>> {
+
+    return this.findBySeason$Response(params,context).pipe(
+      map((r: StrictHttpResponse<Array<RainWithRelations>>) => r.body as Array<RainWithRelations>)
+    );
+  }
+
+  /**
    * Path part for operation rainControllerFind
    */
   static readonly RainControllerFindPath = '/rain';
