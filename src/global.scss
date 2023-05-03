@@ -25,7 +25,7 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-ion-button {
+.btn {
     color: white;
     --border-radius: 20px;
     --padding-top: 18px;
@@ -48,4 +48,14 @@ h1 {
         height: 100%;
         margin-right: 1.75rem;
     }
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.evenly {
+    display: flex;
+    justify-content: space-evenly;
 }

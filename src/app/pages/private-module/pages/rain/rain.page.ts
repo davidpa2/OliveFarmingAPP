@@ -12,9 +12,10 @@ export interface RainSeasons {
   styleUrls: ['./rain.page.scss'],
 })
 export class RainPage implements OnInit {
+  showNewRainLogForm = false;
   selectedTab = '';
   rainDate = '';
-  liters!: number;
+  liters!: number | null;
 
   rainSeasons: RainSeasons = {};
 
@@ -28,7 +29,22 @@ export class RainPage implements OnInit {
   }
 
   saveRainLog() {
-    this.core.api.rain.create({ body: { date: this.rainDate, liters: this.liters, season: this.selectedTab } }).subscribe({
+    this.core.api.rain.create({ body: { date: this.rainDate, liters: this.liters!, season: this.selectedTab } }).subscribe({
+      next: res => {
+        if (res) {
+          this.updateSeason(this.selectedTab);
+          this.liters = null;
+          this.rainDate = '';
+        }
+      },
+      error: err => {
+        console.log(err);
+      }
+    })
+  }
+
+  deleteRainLog(uuid: string) {
+    this.core.api.rain.deleteById({ id: uuid }).subscribe({
       next: res => {
         if (res) {
           console.log(res);

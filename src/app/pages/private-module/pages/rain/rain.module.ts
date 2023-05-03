@@ -4,6 +4,7 @@ import { RainRoutingModule } from './rain-routing.module';
 import { RainPage } from './rain.page';
 import { IonicModule } from '@ionic/angular';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -13,7 +14,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CommonModule,
     IonicModule,
     RainRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    FormsModule
   ]
 })
 export class RainModule { }
