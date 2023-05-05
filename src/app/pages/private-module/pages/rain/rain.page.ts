@@ -16,8 +16,12 @@ export class RainPage implements OnInit {
   selectedTab = '';
   rainDate = '';
   liters!: number | null;
+  //Properties to manage the animation of a new rain log
+  newLogPosition: number | null = null; 
+  deleteLogPosition: number | null = null;
 
   rainSeasons: RainSeasons = {};
+  previousRainLogs: RainWithRelations[] = [];
 
   constructor(public core: CoreProvider) {
     if (!this.core.season.currentSeason) this.core.season.setCurrentSeason();
@@ -25,14 +29,15 @@ export class RainPage implements OnInit {
   }
 
   ngOnInit() {
-    this.updateSeason(this.selectedTab);
+    this.updateSeason(this.selectedTab, false);
   }
 
   saveRainLog() {
     this.core.api.rain.create({ body: { date: this.rainDate, liters: this.liters!, season: this.selectedTab } }).subscribe({
       next: res => {
         if (res) {
-          this.updateSeason(this.selectedTab);
+          this.previousRainLogs = this.rainSeasons[this.selectedTab];
+          this.updateSeason(this.selectedTab, true);
           this.liters = null;
           this.rainDate = '';
         }
@@ -44,11 +49,12 @@ export class RainPage implements OnInit {
   }
 
   deleteRainLog(uuid: string) {
+    this.newLogPosition = null;
     this.core.api.rain.deleteById({ id: uuid }).subscribe({
       next: res => {
         if (res) {
-          console.log(res);
-          this.updateSeason(this.selectedTab);
+          this.previousRainLogs = this.rainSeasons[this.selectedTab];
+          this.updateSeason(this.selectedTab, false, true);
         }
       },
       error: err => {
@@ -57,19 +63,35 @@ export class RainPage implements OnInit {
     })
   }
 
-  updateSeason(season: string) {
+  updateSeason(season: string, animation: boolean, deleting: boolean = false) {
     this.core.api.rain.findBySeason({ season }).subscribe({
       next: res => {
-        if (res) {
-          this.rainSeasons[season] = res;
+        if (res.length) {
+          if (deleting) {
+            document.getElementById(`${this.deleteLogPosition}`)?.classList.add('disappearTr');
+            setTimeout(() => {
+              this.rainSeasons[season] = res;
+              this.deleteLogPosition = null;
+            }, 2000);
+          } else {
+            if (animation) {
+              this.newLogPosition = this.core.findNewIndex(res, this.previousRainLogs);
+            }
+            this.rainSeasons[season] = res;
+          }
+        } else {
+          delete this.rainSeasons[season];
         }
         console.log(this.rainSeasons);
+      },
+      error: err => {
+        console.log(err);
       }
     })
-
   }
 
   changeDate(event: any) {
+    this.previousRainLogs = [];
     this.rainDate = event.detail.value;
   }
 

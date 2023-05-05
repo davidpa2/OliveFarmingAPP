@@ -3,6 +3,7 @@ import { ApiService } from './api.service';
 import { AuthService } from './auth/auth.service';
 import { IonLoading, NavController, ToastController } from '@ionic/angular';
 import { SeasonsService } from './seasons.service';
+import { RainWithRelations } from './api/models';
 
 @Injectable({ providedIn: 'root' })
 export class CoreProvider {
@@ -23,6 +24,18 @@ export class CoreProvider {
   };
   public get isLoggedIn() { return this.auth.token !== ''; };
 
+
+  public findNewIndex(newArray: RainWithRelations[], oldArray: RainWithRelations[]) {
+    if (oldArray) {
+      for (let i = 0; i < newArray.length; i++) {
+        if (!oldArray[i]) return i;
+        if (newArray[i]._id !== oldArray[i]._id) {
+          return i;
+        }
+      }
+    }  
+    return null;
+  }
 
   public async errorToast(loading?: IonLoading, message: any | string = null, duration: number = 10000) {
     if (loading) { loading.dismiss(); }
