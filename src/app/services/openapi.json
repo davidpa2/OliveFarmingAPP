@@ -67,6 +67,38 @@
                 "operationId": "RainController.findBySeason"
             }
         },
+        "/rain/seasonLiters/{season}": {
+            "get": {
+                "x-controller-name": "RainController",
+                "x-operation-name": "seasonLiters",
+                "tags": [
+                    "RainController"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of Rain model instances",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SeasonLitersResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "season",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "operationId": "RainController.seasonLiters"
+            }
+        },
         "/rain/{id}": {
             "delete": {
                 "x-controller-name": "RainController",
@@ -721,6 +753,19 @@
                 "required": [
                     "season",
                     "date",
+                    "liters"
+                ],
+                "additionalProperties": false
+            },
+            "SeasonLitersResponse": {
+                "title": "SeasonLitersResponse",
+                "type": "object",
+                "properties": {
+                    "liters": {
+                        "type": "number"
+                    }
+                },
+                "required": [
                     "liters"
                 ],
                 "additionalProperties": false

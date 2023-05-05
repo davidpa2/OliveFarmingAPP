@@ -12,6 +12,7 @@ import { map, filter } from 'rxjs/operators';
 import { NewRainLog } from '../models/new-rain-log';
 import { Rain } from '../models/rain';
 import { RainWithRelations } from '../models/rain-with-relations';
+import { SeasonLitersResponse } from '../models/season-liters-response';
 
 @Injectable({
   providedIn: 'root',
@@ -74,6 +75,59 @@ export class RainControllerService extends BaseService {
 
     return this.findBySeason$Response(params,context).pipe(
       map((r: StrictHttpResponse<Array<RainWithRelations>>) => r.body as Array<RainWithRelations>)
+    );
+  }
+
+  /**
+   * Path part for operation rainControllerSeasonLiters
+   */
+  static readonly RainControllerSeasonLitersPath = '/rain/seasonLiters/{season}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `seasonLiters()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  seasonLiters$Response(params: {
+    season: string;
+  },
+  context?: HttpContext
+
+): Observable<StrictHttpResponse<SeasonLitersResponse>> {
+
+    const rb = new RequestBuilder(this.rootUrl, RainControllerService.RainControllerSeasonLitersPath, 'get');
+    if (params) {
+      rb.path('season', params.season, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json',
+      context: context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<SeasonLitersResponse>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `seasonLiters$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  seasonLiters(params: {
+    season: string;
+  },
+  context?: HttpContext
+
+): Observable<SeasonLitersResponse> {
+
+    return this.seasonLiters$Response(params,context).pipe(
+      map((r: StrictHttpResponse<SeasonLitersResponse>) => r.body as SeasonLitersResponse)
     );
   }
 

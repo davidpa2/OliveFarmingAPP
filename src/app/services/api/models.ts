@@ -1,6 +1,7 @@
 export { RainWithRelations } from './models/rain-with-relations';
 export { Rain } from './models/rain';
 export { NewRainLog } from './models/new-rain-log';
+export { SeasonLitersResponse } from './models/season-liters-response';
 export { Seasons } from './models/seasons';
 export { CreateSeasonSchema } from './models/create-season-schema';
 export { JwtResponse } from './models/jwt-response';
