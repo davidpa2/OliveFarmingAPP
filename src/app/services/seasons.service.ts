@@ -8,6 +8,7 @@ export class SeasonsService {
   private core!: CoreProvider;
   seasons: string[] = [];
   currentSeason: string = '';
+  currentSeasonLiters: number = 0;
 
   constructor() { }
 
@@ -27,8 +28,18 @@ export class SeasonsService {
             next: res => {
               if (res) {
                 this.seasons.push(res.seasonCode)
+                this.currentSeasonLiters = 0;
                 console.log('A new season has been created');
               }
+            },
+            error: err => {
+              console.log(err);
+            }
+          })
+        } else {
+          this.core.api.rain.seasonLiters({season: this.currentSeason}).subscribe({
+            next: res => {
+              this.currentSeasonLiters = res.liters;
             },
             error: err => {
               console.log(err);
