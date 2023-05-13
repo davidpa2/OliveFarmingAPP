@@ -11,7 +11,7 @@
         </span>
         <ng-container *ngFor="let season of core.season.seasons">
             <span *ngIf="selectedTab !== season" class="seasonLabel"
-                (click)="selectedTab = season; rainSeasons[season] ? '' : updateSeason(season, false)">
+                (click)="selectedTab = season; rainSeasons[season] ? '' : updateSeason(season, false); updateSeasonLiters()">
                 <p>{{season}}</p>
             </span>
         </ng-container>
@@ -83,6 +83,15 @@
                                 </ion-button>
                             </div>
                         </td>
+                    </tr>
+                    <tr id="totalLitersRow">
+                        <td>
+                            Litros totales:
+                        </td>
+                        <td class="ion-text-center">
+                            {{seasonsTotalLiters[selectedTab]}}
+                        </td>
+                        <td></td>
                     </tr>
                 </table>
                 <ion-col *ngIf="!rainSeasons[selectedTab]">

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { RainWithRelations } from 'src/app/services/api/models';
+import { RainWithRelations, SeasonLitersResponse } from 'src/app/services/api/models';
 import { CoreProvider } from 'src/app/services/core';
 
 export interface RainSeasons {
   [season: string]: RainWithRelations[];
+}
+export interface SeasonsTotalLiters {
+  [season: string]: number;
 }
 
 @Component({
@@ -17,11 +20,12 @@ export class RainPage implements OnInit {
   rainDate = '';
   liters!: number | null;
   //Properties to manage the animation of a new rain log
-  newLogPosition: number | null = null; 
+  newLogPosition: number | null = null;
   deleteLogPosition: number | null = null;
 
   rainSeasons: RainSeasons = {};
   previousRainLogs: RainWithRelations[] = [];
+  seasonsTotalLiters: SeasonsTotalLiters = {};
 
   constructor(public core: CoreProvider) {
     if (!this.core.season.currentSeason) this.core.season.setCurrentSeason();
@@ -82,6 +86,7 @@ export class RainPage implements OnInit {
         } else {
           delete this.rainSeasons[season];
         }
+        this.updateSeasonLiters();
         console.log(this.rainSeasons);
       },
       error: err => {
@@ -93,6 +98,18 @@ export class RainPage implements OnInit {
   changeDate(event: any) {
     this.previousRainLogs = [];
     this.rainDate = event.detail.value;
+  }
+
+  updateSeasonLiters() {
+    this.core.api.rain.seasonLiters({ season: this.selectedTab }).subscribe({
+      next: res => {
+        this.seasonsTotalLiters[this.selectedTab] = res.liters;
+        console.log(this.liters);
+      },
+      error: err => {
+        console.log(err);
+      }
+    })
   }
 
 }
