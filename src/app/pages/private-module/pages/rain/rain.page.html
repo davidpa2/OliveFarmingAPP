@@ -103,4 +103,16 @@
         </ion-grid>
     </ion-item>
 
+    <!-- <ion-item>
+        <ion-grid>
+            <ion-row>
+                <ion-col> -->
+        <div class="chart-container" *ngIf="chart">
+            <canvas id="RainChart">{{ chart }}</canvas>
+        </div>
+        <!-- </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-item> -->
+
 </ion-content>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RainWithRelations, SeasonLitersResponse } from 'src/app/services/api/models';
 import { CoreProvider } from 'src/app/services/core';
+import { Chart } from 'chart.js';
 
 export interface RainSeasons {
   [season: string]: RainWithRelations[];
@@ -27,6 +28,8 @@ export class RainPage implements OnInit {
   previousRainLogs: RainWithRelations[] = [];
   seasonsTotalLiters: SeasonsTotalLiters = {};
 
+  chart: any;
+
   constructor(public core: CoreProvider) {
     if (!this.core.season.currentSeason) this.core.season.setCurrentSeason();
     this.selectedTab = this.core.season.currentSeason;
@@ -34,6 +37,8 @@ export class RainPage implements OnInit {
 
   ngOnInit() {
     this.updateSeason(this.selectedTab, false);
+
+    this.createChart();
   }
 
   saveRainLog() {
@@ -112,4 +117,35 @@ export class RainPage implements OnInit {
     })
   }
 
+  createChart() {
+    const canvas = <HTMLCanvasElement> document.getElementById("RainChart")!;
+    const ctx = canvas.getContext("2d")!;
+
+    this.chart = new Chart(ctx, {
+      type: 'bar', //this denotes tha type of chart
+
+      data: {// values on X-Axis
+        labels: ['2022-05-10', '2022-05-11', '2022-05-12', '2022-05-13',
+          '2022-05-14', '2022-05-15', '2022-05-16', '2022-05-17',],
+        datasets: [
+          {
+            label: "Sales",
+            data: ['467', '576', '572', '79', '92',
+              '574', '573', '576'],
+            backgroundColor: 'blue'
+          },
+          {
+            label: "Profit",
+            data: ['542', '542', '536', '327', '17',
+              '0.00', '538', '541'],
+            backgroundColor: 'limegreen'
+          }
+        ]
+      },
+      options: {
+        aspectRatio: 2.5
+      }
+
+    });
+  }
 }
