@@ -4,6 +4,7 @@ import { AuthService } from './auth/auth.service';
 import { IonLoading, NavController, ToastController } from '@ionic/angular';
 import { SeasonsService } from './seasons.service';
 import { RainWithRelations } from './api/models';
+import { DatePipe } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
 export class CoreProvider {
@@ -14,6 +15,7 @@ export class CoreProvider {
     public season: SeasonsService,
     public navCtrl: NavController,
     public toastCtrl: ToastController,
+    public datePipe: DatePipe
   ) {
     this.auth.init(this);
     this.season.init(this);

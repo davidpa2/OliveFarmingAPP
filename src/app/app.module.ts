@@ -12,6 +12,7 @@ import { ApiModule } from './services/api/api.module';
 import { environment } from 'src/environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { ComponentsModule } from './components/components.module';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +28,7 @@ import { ComponentsModule } from './components/components.module';
     ApiService,
     AuthService,
     CoreProvider,
+    DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: ApiAuthInterceptor, multi: true },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
