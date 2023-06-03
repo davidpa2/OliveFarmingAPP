@@ -42,11 +42,11 @@ export class RainPage implements OnInit {
   }
 
   ngOnInit() {
-    this.updateSeason(this.selectedTab, false).then(value => {
-      if (value) {
-        this.createChart();
-      }
-    });
+    this.updateSeason(this.selectedTab, false)//.then(value => {
+    //   if (value) {
+    //     this.createChart();
+    //   }
+    // });
   }
 
   saveRainLog() {
@@ -80,35 +80,32 @@ export class RainPage implements OnInit {
     })
   }
 
-  updateSeason(season: string, animation: boolean, deleting: boolean = false): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      this.core.api.rain.findBySeason({ season }).subscribe({
-        next: res => {
-          if (res.length) {
-            if (deleting) {
-              document.getElementById(`${this.deleteLogPosition}`)?.classList.add('disappearTr');
-              setTimeout(() => {
-                this.rainSeasons[season] = res;
-                this.deleteLogPosition = null;
-              }, 2000);
-            } else {
-              if (animation) {
-                this.newLogPosition = this.core.findNewIndex(res, this.previousRainLogs);
-              }
+  updateSeason(season: string, animation: boolean, deleting: boolean = false) {
+    this.core.api.rain.findBySeason({ season }).subscribe({
+      next: res => {
+        if (res.length) {
+          if (deleting) {
+            document.getElementById(`${this.deleteLogPosition}`)?.classList.add('disappearTr');
+            setTimeout(() => {
               this.rainSeasons[season] = res;
-              resolve(true)
-            }
+              this.deleteLogPosition = null;
+            }, 2000);
           } else {
-            delete this.rainSeasons[season];
+            if (animation) {
+              this.newLogPosition = this.core.findNewIndex(res, this.previousRainLogs);
+            }
+            this.rainSeasons[season] = res;
+            this.createChart();
           }
-          this.updateSeasonLiters();
-          console.log(this.rainSeasons);
-        },
-        error: err => {
-          console.log(err);
-          reject(err);
+        } else {
+          delete this.rainSeasons[season];
         }
-      })
+        this.updateSeasonLiters();
+        console.log(this.rainSeasons);
+      },
+      error: err => {
+        console.log(err);
+      }
     })
   }
 
@@ -120,8 +117,12 @@ export class RainPage implements OnInit {
   updateSeasonLiters() {
     this.core.api.rain.seasonLiters({ season: this.selectedTab }).subscribe({
       next: res => {
-        this.seasonsTotalLiters[this.selectedTab] = res.liters;
-        console.log(this.liters);
+        if (res.liters) {
+          this.seasonsTotalLiters[this.selectedTab] = res.liters;
+          console.log(this.seasonsTotalLiters[this.selectedTab]);
+        } else {
+          this.destroyChart();
+        }
       },
       error: err => {
         console.log(err);
@@ -130,16 +131,17 @@ export class RainPage implements OnInit {
   }
 
   createChart() {
+    this.destroyChart();
     this.ctx = this.rainChart.nativeElement.getContext('2d')
 
     var labels: string[] = []
     var liters: number[] = []
-
+    
     this.rainSeasons[this.selectedTab].forEach(element => {
       labels.push(this.datePipe.transform(element.date)!);
       liters.push(element.liters)
     })
-
+    console.log('Generating chart...');
     this.chart = new Chart(this.ctx, {
       type: 'bar', //this denotes tha type of chart
 
@@ -163,5 +165,11 @@ export class RainPage implements OnInit {
         aspectRatio: 2.5
       }
     });
+  }
+
+  destroyChart() {
+    if (this.chart) {
+      this.chart.destroy();
+    }
   }
 }

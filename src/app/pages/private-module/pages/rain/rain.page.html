@@ -11,7 +11,7 @@
         </span>
         <ng-container *ngFor="let season of core.season.seasons">
             <span *ngIf="selectedTab !== season" class="seasonLabel"
-                (click)="selectedTab = season; rainSeasons[season] ? '' : updateSeason(season, false); updateSeasonLiters()">
+                (click)="selectedTab = season; rainSeasons[season] ? createChart() : updateSeason(season, false);">
                 <p>{{season}}</p>
             </span>
         </ng-container>
@@ -103,8 +103,8 @@
         </ion-grid>
     </ion-item>
 
-    <div class="chart-container">
-        <canvas #RainChart id="RainChart">{{ chart }}</canvas>
+    <div id="RainChart">
+        <canvas #RainChart>{{ chart }}</canvas>
     </div>
 
 </ion-content>
