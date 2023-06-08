@@ -149,7 +149,7 @@ export class RainPage implements OnInit {
         labels: labels.reverse(),
         datasets: [
           {
-            label: "Litros de lluvia",
+            label: `Litros de lluvia temporada ${this.selectedTab}`,
             data: liters.reverse(),
             backgroundColor: 'limegreen'
           },

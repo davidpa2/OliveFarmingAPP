@@ -46,18 +46,6 @@
     display: flex;
 }
 
-@media screen and (max-width: 600px) {
-    .seasonLabel {
-        min-width: 60px;
-    }
-
-    .tabs {
-        overflow-x: scroll;
-        overflow-y: hidden;
-        overscroll-behavior-x: contain;
-    }
-}
-
 ion-input {
     color: black;
     background-color: white;
@@ -143,5 +131,30 @@ ion-input {
     to {
         opacity: 0;
         transform: translateX(-550px);
+    }
+}
+
+#RainChart {
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+@media screen and (max-width: 600px) {
+    .seasonLabel {
+        min-width: 60px;
+    }
+
+    .tabs {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        overscroll-behavior-x: contain;
+    }
+
+    #RainChart {
+        max-width: 100%;
     }
 }
