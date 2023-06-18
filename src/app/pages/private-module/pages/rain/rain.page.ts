@@ -42,11 +42,7 @@ export class RainPage implements OnInit {
   }
 
   ngOnInit() {
-    this.updateSeason(this.selectedTab, false)//.then(value => {
-    //   if (value) {
-    //     this.createChart();
-    //   }
-    // });
+    this.updateSeason(this.selectedTab, false);
   }
 
   saveRainLog() {
@@ -95,7 +91,6 @@ export class RainPage implements OnInit {
               this.newLogPosition = this.core.findNewIndex(res, this.previousRainLogs);
             }
             this.rainSeasons[season] = res;
-            this.createChart();
           }
         } else {
           delete this.rainSeasons[season];
@@ -120,8 +115,9 @@ export class RainPage implements OnInit {
         if (res.liters) {
           this.seasonsTotalLiters[this.selectedTab] = res.liters;
           console.log(this.seasonsTotalLiters[this.selectedTab]);
+          this.createChart();
         } else {
-          this.destroyChart();
+          this.destroyChart(true);
         }
       },
       error: err => {
@@ -131,45 +127,62 @@ export class RainPage implements OnInit {
   }
 
   createChart() {
-    this.destroyChart();
-    this.ctx = this.rainChart.nativeElement.getContext('2d')
+    this.ctx = this.rainChart.nativeElement.getContext('2d');
 
     var labels: string[] = []
     var liters: number[] = []
-    
+
     this.rainSeasons[this.selectedTab].forEach(element => {
       labels.push(this.datePipe.transform(element.date)!);
       liters.push(element.liters)
     })
-    console.log('Generating chart...');
-    this.chart = new Chart(this.ctx, {
-      type: 'bar', //this denotes tha type of chart
+    if (liters.length) {
+      this.destroyChart(false, false);
+      console.log('Generating chart...');
+      this.chart = new Chart(this.ctx, {
+        type: 'bar', //this denotes tha type of chart
 
-      data: {// values on X-Axis
-        labels: labels.reverse(),
-        datasets: [
-          {
-            label: `Litros de lluvia temporada ${this.selectedTab}`,
-            data: liters.reverse(),
-            backgroundColor: 'limegreen'
-          },
-          // {
-          //   label: "Profit",
-          //   data: ['542', '542', '536', '327', '17',
-          //     '0.00', '538', '541'],
-          //   backgroundColor: 'limegreen'
-          // }
-        ]
-      },
-      options: {
-        aspectRatio: 2.5
-      }
-    });
+        data: {// values on X-Axis
+          labels: labels.reverse(),
+          datasets: [
+            {
+              label: `Litros de lluvia temporada ${this.selectedTab}`,
+              data: liters.reverse(),
+              backgroundColor: 'limegreen'
+            },
+            // {
+            //   label: "Profit",
+            //   data: ['542', '542', '536', '327', '17',
+            //     '0.00', '538', '541'],
+            //   backgroundColor: 'limegreen'
+            // }
+          ]
+        },
+        options: {
+          aspectRatio: 2.5
+        }
+      });
+      var chartDiv = document.getElementById("RainChart")!;
+      chartDiv.classList.remove('dNone', 'disappearTr');
+      chartDiv.classList.add('dBlock', 'appearTr');
+    } else {
+      this.destroyChart(true);
+    }
   }
 
-  destroyChart() {
+  destroyChart(animation: boolean, hideChart: boolean = true) {
+    var chartDiv = document.getElementById("RainChart")!;
     if (this.chart) {
-      this.chart.destroy();
+      if (animation) chartDiv.classList.add('disappearTr')
+      
+      if (hideChart) {
+        setTimeout(() => {
+          if (animation) chartDiv.classList.add('dNone')
+          this.chart.destroy();
+        }, 2000);
+      } else {
+        this.chart.destroy();
+      }
     }
   }
 }
