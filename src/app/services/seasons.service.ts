@@ -5,6 +5,7 @@ import { CoreProvider } from './core';
   providedIn: 'root'
 })
 export class SeasonsService {
+  app: any;
   private core!: CoreProvider;
   seasons: string[] = [];
   currentSeason: string = '';
