@@ -3,7 +3,7 @@ import { ApiService } from './api.service';
 import { AuthService } from './auth/auth.service';
 import { IonLoading, NavController, ToastController } from '@ionic/angular';
 import { SeasonsService } from './seasons.service';
-import { RainWithRelations } from './api/models';
+import { RainLog, RainLogCreateDto } from './api/models';
 import { DatePipe } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
@@ -27,11 +27,11 @@ export class CoreProvider {
   public get isLoggedIn() { return this.auth.token !== ''; };
 
 
-  public findNewIndex(newArray: RainWithRelations[], oldArray: RainWithRelations[]) {
+  public findNewIndex(newArray: RainLog[], oldArray: RainLog[]) {
     if (oldArray) {
       for (let i = 0; i < newArray.length; i++) {
         if (!oldArray[i]) return i;
-        if (newArray[i]._id !== oldArray[i]._id) {
+        if (newArray[i].id !== oldArray[i].id) {
           return i;
         }
       }

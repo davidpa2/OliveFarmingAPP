@@ -1,4 +1,3 @@
-export { PingControllerService } from './services/ping-controller.service';
-export { RainControllerService } from './services/rain-controller.service';
-export { SeasonsControllerService } from './services/seasons-controller.service';
-export { UserControllerService } from './services/user-controller.service';
+export { RainService } from './services/rain.service';
+export { SeasonsService } from './services/seasons.service';
+export { UsersService } from './services/users.service';

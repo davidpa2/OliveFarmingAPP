@@ -4,10 +4,9 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
-import { PingControllerService } from './services/ping-controller.service';
-import { RainControllerService } from './services/rain-controller.service';
-import { SeasonsControllerService } from './services/seasons-controller.service';
-import { UserControllerService } from './services/user-controller.service';
+import { RainService } from './services/rain.service';
+import { SeasonsService } from './services/seasons.service';
+import { UsersService } from './services/users.service';
 
 /**
  * Module that provides all services and configuration.
@@ -17,10 +16,9 @@ import { UserControllerService } from './services/user-controller.service';
   exports: [],
   declarations: [],
   providers: [
-    PingControllerService,
-    RainControllerService,
-    SeasonsControllerService,
-    UserControllerService,
+    RainService,
+    SeasonsService,
+    UsersService,
     ApiConfiguration
   ],
 })
