@@ -25,24 +25,24 @@ export class RainService extends BaseService {
   }
 
   /**
-   * Path part for operation apiRainSeasonSeasonNameGet
+   * Path part for operation findBySeason
    */
-  static readonly ApiRainSeasonSeasonNameGetPath = '/api/Rain/season/{seasonName}';
+  static readonly FindBySeasonPath = '/api/Rain/season/{seasonName}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiRainSeasonSeasonNameGet$Plain()` instead.
+   * To access only the response body, use `findBySeason$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiRainSeasonSeasonNameGet$Plain$Response(params: {
+  findBySeason$Plain$Response(params: {
     seasonName: string;
   },
   context?: HttpContext
 
 ): Observable<StrictHttpResponse<Array<RainLog>>> {
 
-    const rb = new RequestBuilder(this.rootUrl, RainService.ApiRainSeasonSeasonNameGetPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, RainService.FindBySeasonPath, 'get');
     if (params) {
       rb.path('seasonName', params.seasonName, {});
     }
@@ -61,36 +61,36 @@ export class RainService extends BaseService {
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiRainSeasonSeasonNameGet$Plain$Response()` instead.
+   * To access the full response (for headers, for example), `findBySeason$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiRainSeasonSeasonNameGet$Plain(params: {
+  findBySeason$Plain(params: {
     seasonName: string;
   },
   context?: HttpContext
 
 ): Observable<Array<RainLog>> {
 
-    return this.apiRainSeasonSeasonNameGet$Plain$Response(params,context).pipe(
+    return this.findBySeason$Plain$Response(params,context).pipe(
       map((r: StrictHttpResponse<Array<RainLog>>) => r.body as Array<RainLog>)
     );
   }
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiRainSeasonSeasonNameGet$Json()` instead.
+   * To access only the response body, use `findBySeason$Json()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiRainSeasonSeasonNameGet$Json$Response(params: {
+  findBySeason$Json$Response(params: {
     seasonName: string;
   },
   context?: HttpContext
 
 ): Observable<StrictHttpResponse<Array<RainLog>>> {
 
-    const rb = new RequestBuilder(this.rootUrl, RainService.ApiRainSeasonSeasonNameGetPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, RainService.FindBySeasonPath, 'get');
     if (params) {
       rb.path('seasonName', params.seasonName, {});
     }
@@ -109,41 +109,41 @@ export class RainService extends BaseService {
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiRainSeasonSeasonNameGet$Json$Response()` instead.
+   * To access the full response (for headers, for example), `findBySeason$Json$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiRainSeasonSeasonNameGet$Json(params: {
+  findBySeason$Json(params: {
     seasonName: string;
   },
   context?: HttpContext
 
 ): Observable<Array<RainLog>> {
 
-    return this.apiRainSeasonSeasonNameGet$Json$Response(params,context).pipe(
+    return this.findBySeason$Json$Response(params,context).pipe(
       map((r: StrictHttpResponse<Array<RainLog>>) => r.body as Array<RainLog>)
     );
   }
 
   /**
-   * Path part for operation apiRainPost
+   * Path part for operation newRainLog
    */
-  static readonly ApiRainPostPath = '/api/Rain';
+  static readonly NewRainLogPath = '/api/Rain';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiRainPost$Plain()` instead.
+   * To access only the response body, use `newRainLog$Plain()` instead.
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  apiRainPost$Plain$Response(params?: {
+  newRainLog$Plain$Response(params?: {
     body?: RainLogCreateDto
   },
   context?: HttpContext
 
 ): Observable<StrictHttpResponse<string>> {
 
-    const rb = new RequestBuilder(this.rootUrl, RainService.ApiRainPostPath, 'post');
+    const rb = new RequestBuilder(this.rootUrl, RainService.NewRainLogPath, 'post');
     if (params) {
       rb.body(params.body, 'application/*+json');
     }
@@ -162,36 +162,36 @@ export class RainService extends BaseService {
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiRainPost$Plain$Response()` instead.
+   * To access the full response (for headers, for example), `newRainLog$Plain$Response()` instead.
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  apiRainPost$Plain(params?: {
+  newRainLog$Plain(params?: {
     body?: RainLogCreateDto
   },
   context?: HttpContext
 
 ): Observable<string> {
 
-    return this.apiRainPost$Plain$Response(params,context).pipe(
+    return this.newRainLog$Plain$Response(params,context).pipe(
       map((r: StrictHttpResponse<string>) => r.body as string)
     );
   }
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiRainPost$Json()` instead.
+   * To access only the response body, use `newRainLog$Json()` instead.
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  apiRainPost$Json$Response(params?: {
+  newRainLog$Json$Response(params?: {
     body?: RainLogCreateDto
   },
   context?: HttpContext
 
 ): Observable<StrictHttpResponse<string>> {
 
-    const rb = new RequestBuilder(this.rootUrl, RainService.ApiRainPostPath, 'post');
+    const rb = new RequestBuilder(this.rootUrl, RainService.NewRainLogPath, 'post');
     if (params) {
       rb.body(params.body, 'application/*+json');
     }
@@ -210,41 +210,41 @@ export class RainService extends BaseService {
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiRainPost$Json$Response()` instead.
+   * To access the full response (for headers, for example), `newRainLog$Json$Response()` instead.
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  apiRainPost$Json(params?: {
+  newRainLog$Json(params?: {
     body?: RainLogCreateDto
   },
   context?: HttpContext
 
 ): Observable<string> {
 
-    return this.apiRainPost$Json$Response(params,context).pipe(
+    return this.newRainLog$Json$Response(params,context).pipe(
       map((r: StrictHttpResponse<string>) => r.body as string)
     );
   }
 
   /**
-   * Path part for operation apiRainIdDelete
+   * Path part for operation deleteRainLog
    */
-  static readonly ApiRainIdDeletePath = '/api/Rain/{id}';
+  static readonly DeleteRainLogPath = '/api/Rain/{id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiRainIdDelete$Plain()` instead.
+   * To access only the response body, use `deleteRainLog$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiRainIdDelete$Plain$Response(params: {
+  deleteRainLog$Plain$Response(params: {
     id: number;
   },
   context?: HttpContext
 
 ): Observable<StrictHttpResponse<string>> {
 
-    const rb = new RequestBuilder(this.rootUrl, RainService.ApiRainIdDeletePath, 'delete');
+    const rb = new RequestBuilder(this.rootUrl, RainService.DeleteRainLogPath, 'delete');
     if (params) {
       rb.path('id', params.id, {});
     }
@@ -263,36 +263,36 @@ export class RainService extends BaseService {
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiRainIdDelete$Plain$Response()` instead.
+   * To access the full response (for headers, for example), `deleteRainLog$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiRainIdDelete$Plain(params: {
+  deleteRainLog$Plain(params: {
     id: number;
   },
   context?: HttpContext
 
 ): Observable<string> {
 
-    return this.apiRainIdDelete$Plain$Response(params,context).pipe(
+    return this.deleteRainLog$Plain$Response(params,context).pipe(
       map((r: StrictHttpResponse<string>) => r.body as string)
     );
   }
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiRainIdDelete$Json()` instead.
+   * To access only the response body, use `deleteRainLog$Json()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiRainIdDelete$Json$Response(params: {
+  deleteRainLog$Json$Response(params: {
     id: number;
   },
   context?: HttpContext
 
 ): Observable<StrictHttpResponse<string>> {
 
-    const rb = new RequestBuilder(this.rootUrl, RainService.ApiRainIdDeletePath, 'delete');
+    const rb = new RequestBuilder(this.rootUrl, RainService.DeleteRainLogPath, 'delete');
     if (params) {
       rb.path('id', params.id, {});
     }
@@ -311,41 +311,41 @@ export class RainService extends BaseService {
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiRainIdDelete$Json$Response()` instead.
+   * To access the full response (for headers, for example), `deleteRainLog$Json$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiRainIdDelete$Json(params: {
+  deleteRainLog$Json(params: {
     id: number;
   },
   context?: HttpContext
 
 ): Observable<string> {
 
-    return this.apiRainIdDelete$Json$Response(params,context).pipe(
+    return this.deleteRainLog$Json$Response(params,context).pipe(
       map((r: StrictHttpResponse<string>) => r.body as string)
     );
   }
 
   /**
-   * Path part for operation apiRainSeasonSeasonNameLitersGet
+   * Path part for operation seasonLiters
    */
-  static readonly ApiRainSeasonSeasonNameLitersGetPath = '/api/Rain/season/{seasonName}/liters';
+  static readonly SeasonLitersPath = '/api/Rain/season/{seasonName}/liters';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiRainSeasonSeasonNameLitersGet$Plain()` instead.
+   * To access only the response body, use `seasonLiters$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiRainSeasonSeasonNameLitersGet$Plain$Response(params: {
+  seasonLiters$Plain$Response(params: {
     seasonName: string;
   },
   context?: HttpContext
 
 ): Observable<StrictHttpResponse<SeasonLitersDto>> {
 
-    const rb = new RequestBuilder(this.rootUrl, RainService.ApiRainSeasonSeasonNameLitersGetPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, RainService.SeasonLitersPath, 'get');
     if (params) {
       rb.path('seasonName', params.seasonName, {});
     }
@@ -364,36 +364,36 @@ export class RainService extends BaseService {
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiRainSeasonSeasonNameLitersGet$Plain$Response()` instead.
+   * To access the full response (for headers, for example), `seasonLiters$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiRainSeasonSeasonNameLitersGet$Plain(params: {
+  seasonLiters$Plain(params: {
     seasonName: string;
   },
   context?: HttpContext
 
 ): Observable<SeasonLitersDto> {
 
-    return this.apiRainSeasonSeasonNameLitersGet$Plain$Response(params,context).pipe(
+    return this.seasonLiters$Plain$Response(params,context).pipe(
       map((r: StrictHttpResponse<SeasonLitersDto>) => r.body as SeasonLitersDto)
     );
   }
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiRainSeasonSeasonNameLitersGet$Json()` instead.
+   * To access only the response body, use `seasonLiters$Json()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiRainSeasonSeasonNameLitersGet$Json$Response(params: {
+  seasonLiters$Json$Response(params: {
     seasonName: string;
   },
   context?: HttpContext
 
 ): Observable<StrictHttpResponse<SeasonLitersDto>> {
 
-    const rb = new RequestBuilder(this.rootUrl, RainService.ApiRainSeasonSeasonNameLitersGetPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, RainService.SeasonLitersPath, 'get');
     if (params) {
       rb.path('seasonName', params.seasonName, {});
     }
@@ -412,18 +412,18 @@ export class RainService extends BaseService {
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiRainSeasonSeasonNameLitersGet$Json$Response()` instead.
+   * To access the full response (for headers, for example), `seasonLiters$Json$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiRainSeasonSeasonNameLitersGet$Json(params: {
+  seasonLiters$Json(params: {
     seasonName: string;
   },
   context?: HttpContext
 
 ): Observable<SeasonLitersDto> {
 
-    return this.apiRainSeasonSeasonNameLitersGet$Json$Response(params,context).pipe(
+    return this.seasonLiters$Json$Response(params,context).pipe(
       map((r: StrictHttpResponse<SeasonLitersDto>) => r.body as SeasonLitersDto)
     );
   }

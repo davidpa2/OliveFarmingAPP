@@ -24,23 +24,23 @@ export class SeasonsService extends BaseService {
   }
 
   /**
-   * Path part for operation apiSeasonsGet
+   * Path part for operation getAllSeasons
    */
-  static readonly ApiSeasonsGetPath = '/api/Seasons';
+  static readonly GetAllSeasonsPath = '/api/Seasons';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiSeasonsGet$Plain()` instead.
+   * To access only the response body, use `getAllSeasons$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiSeasonsGet$Plain$Response(params?: {
+  getAllSeasons$Plain$Response(params?: {
   },
   context?: HttpContext
 
 ): Observable<StrictHttpResponse<Array<string>>> {
 
-    const rb = new RequestBuilder(this.rootUrl, SeasonsService.ApiSeasonsGetPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, SeasonsService.GetAllSeasonsPath, 'get');
     if (params) {
     }
 
@@ -58,34 +58,34 @@ export class SeasonsService extends BaseService {
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiSeasonsGet$Plain$Response()` instead.
+   * To access the full response (for headers, for example), `getAllSeasons$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiSeasonsGet$Plain(params?: {
+  getAllSeasons$Plain(params?: {
   },
   context?: HttpContext
 
 ): Observable<Array<string>> {
 
-    return this.apiSeasonsGet$Plain$Response(params,context).pipe(
+    return this.getAllSeasons$Plain$Response(params,context).pipe(
       map((r: StrictHttpResponse<Array<string>>) => r.body as Array<string>)
     );
   }
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiSeasonsGet$Json()` instead.
+   * To access only the response body, use `getAllSeasons$Json()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiSeasonsGet$Json$Response(params?: {
+  getAllSeasons$Json$Response(params?: {
   },
   context?: HttpContext
 
 ): Observable<StrictHttpResponse<Array<string>>> {
 
-    const rb = new RequestBuilder(this.rootUrl, SeasonsService.ApiSeasonsGetPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, SeasonsService.GetAllSeasonsPath, 'get');
     if (params) {
     }
 
@@ -103,40 +103,40 @@ export class SeasonsService extends BaseService {
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiSeasonsGet$Json$Response()` instead.
+   * To access the full response (for headers, for example), `getAllSeasons$Json$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiSeasonsGet$Json(params?: {
+  getAllSeasons$Json(params?: {
   },
   context?: HttpContext
 
 ): Observable<Array<string>> {
 
-    return this.apiSeasonsGet$Json$Response(params,context).pipe(
+    return this.getAllSeasons$Json$Response(params,context).pipe(
       map((r: StrictHttpResponse<Array<string>>) => r.body as Array<string>)
     );
   }
 
   /**
-   * Path part for operation apiSeasonsPost
+   * Path part for operation addSeason
    */
-  static readonly ApiSeasonsPostPath = '/api/Seasons';
+  static readonly AddSeasonPath = '/api/Seasons';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiSeasonsPost()` instead.
+   * To access only the response body, use `addSeason()` instead.
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  apiSeasonsPost$Response(params?: {
+  addSeason$Response(params?: {
     body?: SeasonsCreateDto
   },
   context?: HttpContext
 
 ): Observable<StrictHttpResponse<void>> {
 
-    const rb = new RequestBuilder(this.rootUrl, SeasonsService.ApiSeasonsPostPath, 'post');
+    const rb = new RequestBuilder(this.rootUrl, SeasonsService.AddSeasonPath, 'post');
     if (params) {
       rb.body(params.body, 'application/*+json');
     }
@@ -155,40 +155,40 @@ export class SeasonsService extends BaseService {
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiSeasonsPost$Response()` instead.
+   * To access the full response (for headers, for example), `addSeason$Response()` instead.
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  apiSeasonsPost(params?: {
+  addSeason(params?: {
     body?: SeasonsCreateDto
   },
   context?: HttpContext
 
 ): Observable<void> {
 
-    return this.apiSeasonsPost$Response(params,context).pipe(
+    return this.addSeason$Response(params,context).pipe(
       map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
 
   /**
-   * Path part for operation apiSeasonsCountGet
+   * Path part for operation getSeasonsCount
    */
-  static readonly ApiSeasonsCountGetPath = '/api/Seasons/count';
+  static readonly GetSeasonsCountPath = '/api/Seasons/count';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiSeasonsCountGet$Plain()` instead.
+   * To access only the response body, use `getSeasonsCount$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiSeasonsCountGet$Plain$Response(params?: {
+  getSeasonsCount$Plain$Response(params?: {
   },
   context?: HttpContext
 
 ): Observable<StrictHttpResponse<SeasonCountDto>> {
 
-    const rb = new RequestBuilder(this.rootUrl, SeasonsService.ApiSeasonsCountGetPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, SeasonsService.GetSeasonsCountPath, 'get');
     if (params) {
     }
 
@@ -206,34 +206,34 @@ export class SeasonsService extends BaseService {
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiSeasonsCountGet$Plain$Response()` instead.
+   * To access the full response (for headers, for example), `getSeasonsCount$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiSeasonsCountGet$Plain(params?: {
+  getSeasonsCount$Plain(params?: {
   },
   context?: HttpContext
 
 ): Observable<SeasonCountDto> {
 
-    return this.apiSeasonsCountGet$Plain$Response(params,context).pipe(
+    return this.getSeasonsCount$Plain$Response(params,context).pipe(
       map((r: StrictHttpResponse<SeasonCountDto>) => r.body as SeasonCountDto)
     );
   }
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiSeasonsCountGet$Json()` instead.
+   * To access only the response body, use `getSeasonsCount$Json()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiSeasonsCountGet$Json$Response(params?: {
+  getSeasonsCount$Json$Response(params?: {
   },
   context?: HttpContext
 
 ): Observable<StrictHttpResponse<SeasonCountDto>> {
 
-    const rb = new RequestBuilder(this.rootUrl, SeasonsService.ApiSeasonsCountGetPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, SeasonsService.GetSeasonsCountPath, 'get');
     if (params) {
     }
 
@@ -251,17 +251,17 @@ export class SeasonsService extends BaseService {
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiSeasonsCountGet$Json$Response()` instead.
+   * To access the full response (for headers, for example), `getSeasonsCount$Json$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiSeasonsCountGet$Json(params?: {
+  getSeasonsCount$Json(params?: {
   },
   context?: HttpContext
 
 ): Observable<SeasonCountDto> {
 
-    return this.apiSeasonsCountGet$Json$Response(params,context).pipe(
+    return this.getSeasonsCount$Json$Response(params,context).pipe(
       map((r: StrictHttpResponse<SeasonCountDto>) => r.body as SeasonCountDto)
     );
   }

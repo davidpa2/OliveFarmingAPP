@@ -46,7 +46,7 @@ export class RainPage implements OnInit {
   }
 
   saveRainLog() {
-    this.core.api.rain.apiRainPost$Json({ body: { date: this.rainDate, liters: this.liters!, seasonName: this.selectedTab } }).subscribe({
+    this.core.api.rain.newRainLog$Json({ body: { date: this.rainDate, liters: this.liters!, seasonName: this.selectedTab } }).subscribe({
       next: res => {
         if (res) {
           this.previousRainLogs = this.rainSeasons[this.selectedTab];
@@ -63,7 +63,7 @@ export class RainPage implements OnInit {
 
   deleteRainLog(id: number) {
     this.newLogPosition = null;
-    this.core.api.rain.apiRainIdDelete$Json({ id }).subscribe({
+    this.core.api.rain.deleteRainLog$Json({ id }).subscribe({
       next: res => {
         if (res) {
           this.previousRainLogs = this.rainSeasons[this.selectedTab];
@@ -77,7 +77,7 @@ export class RainPage implements OnInit {
   }
 
   updateSeason(season: string, animation: boolean, deleting: boolean = false) {
-    this.core.api.rain.apiRainSeasonSeasonNameGet$Json({ seasonName: season }).subscribe({
+    this.core.api.rain.findBySeason$Json({ seasonName: season }).subscribe({
       next: res => {
         if (res.length) {
           if (deleting) {
@@ -110,7 +110,7 @@ export class RainPage implements OnInit {
   }
 
   updateSeasonLiters() {
-    this.core.api.rain.apiRainSeasonSeasonNameLitersGet$Json({ seasonName: this.selectedTab }).subscribe({
+    this.core.api.rain.seasonLiters$Json({ seasonName: this.selectedTab }).subscribe({
       next: res => {
         if (res.liters) {
           this.seasonsTotalLiters[this.selectedTab] = res.liters;
