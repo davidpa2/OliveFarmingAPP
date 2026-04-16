@@ -10,6 +10,7 @@
         "tags": [
           "Rain"
         ],
+        "operationId": "FindBySeason",
         "parameters": [
           {
             "name": "seasonName",
@@ -58,6 +59,7 @@
         "tags": [
           "Rain"
         ],
+        "operationId": "NewRainLog",
         "requestBody": {
           "content": {
             "application/json": {
@@ -106,6 +108,7 @@
         "tags": [
           "Rain"
         ],
+        "operationId": "DeleteRainLog",
         "parameters": [
           {
             "name": "id",
@@ -146,6 +149,7 @@
         "tags": [
           "Rain"
         ],
+        "operationId": "SeasonLiters",
         "parameters": [
           {
             "name": "seasonName",
@@ -185,6 +189,7 @@
         "tags": [
           "Seasons"
         ],
+        "operationId": "GetAllSeasons",
         "responses": {
           "200": {
             "description": "OK",
@@ -221,6 +226,7 @@
         "tags": [
           "Seasons"
         ],
+        "operationId": "AddSeason",
         "requestBody": {
           "content": {
             "application/json": {
@@ -252,6 +258,7 @@
         "tags": [
           "Seasons"
         ],
+        "operationId": "GetSeasonsCount",
         "responses": {
           "200": {
             "description": "OK",
@@ -281,6 +288,7 @@
         "tags": [
           "Users"
         ],
+        "operationId": "Register",
         "requestBody": {
           "content": {
             "application/json": {
@@ -312,6 +320,7 @@
         "tags": [
           "Users"
         ],
+        "operationId": "Login",
         "requestBody": {
           "content": {
             "application/json": {
@@ -333,7 +342,24 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginDTO"
+                }
+              }
+            }
           }
         }
       }
@@ -343,9 +369,27 @@
         "tags": [
           "Users"
         ],
+        "operationId": "Me",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMeDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMeDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMeDTO"
+                }
+              }
+            }
           }
         }
       }
@@ -353,6 +397,19 @@
   },
   "components": {
     "schemas": {
+      "LoginDTO": {
+        "required": [
+          "jwt"
+        ],
+        "type": "object",
+        "properties": {
+          "jwt": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RainLog": {
         "type": "object",
         "properties": {
@@ -442,6 +499,29 @@
             "nullable": true
           },
           "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserMeDTO": {
+        "required": [
+          "email",
+          "name",
+          "surname"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
             "type": "string",
             "nullable": true
           }

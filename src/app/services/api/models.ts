@@ -1,7 +1,9 @@
+export { LoginDto } from './models/login-dto';
 export { RainLog } from './models/rain-log';
 export { RainLogCreateDto } from './models/rain-log-create-dto';
 export { SeasonCountDto } from './models/season-count-dto';
 export { SeasonLitersDto } from './models/season-liters-dto';
 export { SeasonsCreateDto } from './models/seasons-create-dto';
 export { UserLoginDto } from './models/user-login-dto';
+export { UserMeDto } from './models/user-me-dto';
 export { UserRegisterDto } from './models/user-register-dto';
