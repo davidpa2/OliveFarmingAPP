@@ -5,7 +5,7 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/Rain/season/{seasonName}": {
+    "/api/Rain/season": {
       "get": {
         "tags": [
           "Rain"
@@ -14,8 +14,7 @@
         "parameters": [
           {
             "name": "seasonName",
-            "in": "path",
-            "required": true,
+            "in": "query",
             "schema": {
               "type": "string"
             }

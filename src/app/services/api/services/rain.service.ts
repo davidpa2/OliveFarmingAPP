@@ -27,7 +27,7 @@ export class RainService extends BaseService {
   /**
    * Path part for operation findBySeason
    */
-  static readonly FindBySeasonPath = '/api/Rain/season/{seasonName}';
+  static readonly FindBySeasonPath = '/api/Rain/season';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -35,8 +35,8 @@ export class RainService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findBySeason$Plain$Response(params: {
-    seasonName: string;
+  findBySeason$Plain$Response(params?: {
+    seasonName?: string;
   },
   context?: HttpContext
 
@@ -44,7 +44,7 @@ export class RainService extends BaseService {
 
     const rb = new RequestBuilder(this.rootUrl, RainService.FindBySeasonPath, 'get');
     if (params) {
-      rb.path('seasonName', params.seasonName, {});
+      rb.query('seasonName', params.seasonName, {});
     }
 
     return this.http.request(rb.build({
@@ -65,8 +65,8 @@ export class RainService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findBySeason$Plain(params: {
-    seasonName: string;
+  findBySeason$Plain(params?: {
+    seasonName?: string;
   },
   context?: HttpContext
 
@@ -83,8 +83,8 @@ export class RainService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findBySeason$Json$Response(params: {
-    seasonName: string;
+  findBySeason$Json$Response(params?: {
+    seasonName?: string;
   },
   context?: HttpContext
 
@@ -92,7 +92,7 @@ export class RainService extends BaseService {
 
     const rb = new RequestBuilder(this.rootUrl, RainService.FindBySeasonPath, 'get');
     if (params) {
-      rb.path('seasonName', params.seasonName, {});
+      rb.query('seasonName', params.seasonName, {});
     }
 
     return this.http.request(rb.build({
@@ -113,8 +113,8 @@ export class RainService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findBySeason$Json(params: {
-    seasonName: string;
+  findBySeason$Json(params?: {
+    seasonName?: string;
   },
   context?: HttpContext
 
