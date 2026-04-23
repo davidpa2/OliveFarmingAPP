@@ -330,7 +330,7 @@ export class RainService extends BaseService {
   /**
    * Path part for operation seasonLiters
    */
-  static readonly SeasonLitersPath = '/api/Rain/season/{seasonName}/liters';
+  static readonly SeasonLitersPath = '/api/Rain/seasonLiters';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -338,8 +338,8 @@ export class RainService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  seasonLiters$Plain$Response(params: {
-    seasonName: string;
+  seasonLiters$Plain$Response(params?: {
+    seasonName?: string;
   },
   context?: HttpContext
 
@@ -347,7 +347,7 @@ export class RainService extends BaseService {
 
     const rb = new RequestBuilder(this.rootUrl, RainService.SeasonLitersPath, 'get');
     if (params) {
-      rb.path('seasonName', params.seasonName, {});
+      rb.query('seasonName', params.seasonName, {});
     }
 
     return this.http.request(rb.build({
@@ -368,8 +368,8 @@ export class RainService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  seasonLiters$Plain(params: {
-    seasonName: string;
+  seasonLiters$Plain(params?: {
+    seasonName?: string;
   },
   context?: HttpContext
 
@@ -386,8 +386,8 @@ export class RainService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  seasonLiters$Json$Response(params: {
-    seasonName: string;
+  seasonLiters$Json$Response(params?: {
+    seasonName?: string;
   },
   context?: HttpContext
 
@@ -395,7 +395,7 @@ export class RainService extends BaseService {
 
     const rb = new RequestBuilder(this.rootUrl, RainService.SeasonLitersPath, 'get');
     if (params) {
-      rb.path('seasonName', params.seasonName, {});
+      rb.query('seasonName', params.seasonName, {});
     }
 
     return this.http.request(rb.build({
@@ -416,8 +416,8 @@ export class RainService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  seasonLiters$Json(params: {
-    seasonName: string;
+  seasonLiters$Json(params?: {
+    seasonName?: string;
   },
   context?: HttpContext
 
