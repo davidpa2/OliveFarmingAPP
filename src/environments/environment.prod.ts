@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   authToken: 'RUNTIME',
-  endpoint: 'http://[::1]:3000',
+  endpoint: 'http://[::1]:7030',
 };

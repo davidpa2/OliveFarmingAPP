@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CoreProvider } from '../core';
 import { environment } from 'src/environments/environment';
-import { UserLogin } from '../api/models';
+import { UserLoginDto } from '../api/models';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +43,7 @@ export class AuthService {
     }
 
     if (this.token) {
-      this.core.api.user.me().subscribe({
+      this.core.api.user.me$Json().subscribe({
         next: user => {
           if (!this.initedData) {
             this.initedData = true;
@@ -71,7 +71,7 @@ export class AuthService {
   }
 
   public login(
-    data: UserLogin,
+    data: UserLoginDto,
     cbSuccess: Function,
     cbErr: Function
   ) {
@@ -84,23 +84,25 @@ export class AuthService {
       }
     };
 
-    this.core.api.user.login({ body: data }).subscribe({
+    this.core.api.user.login$Json({ body: data }).subscribe({
       next: (sess) => {
         console.log(sess);
         
-        environment.authToken = sess.jwt;
-        this.data.token = sess.jwt;
-        this.core.api.user.me().subscribe({
-          next: user => {
-            this.data.user = user;
-            if (cbSuccess) {
-              cbSuccess();
+        if (sess.jwt) {
+          environment.authToken = sess.jwt;
+          this.data.token = sess.jwt;
+          this.core.api.user.me$Json().subscribe({
+            next: user => {
+              this.data.user = user;
+              if (cbSuccess) {
+                cbSuccess();
+              }
+            },
+            error: err => {
+              handleErr(err);
             }
-          },
-          error: err => {
-            handleErr(err);
-          }
-        })
+          })
+        }
       },
       error: (err) => {
         handleErr(err);

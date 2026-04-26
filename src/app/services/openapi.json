@@ -1,1392 +1,564 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-        "title": "olive-farming-api",
-        "version": "0.0.1",
-        "description": "API to manage olive farming",
-        "contact": {
-            "name": "David Padilla",
-            "email": "davidpaag2002@gmail.com"
-        }
-    },
-    "paths": {
-        "/ping": {
-            "get": {
-                "x-controller-name": "PingController",
-                "x-operation-name": "ping",
-                "tags": [
-                    "PingController"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ping Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/PingResponse"
-                                }
-                            }
-                        }
-                    }
-                },
-                "operationId": "PingController.ping"
+  "openapi": "3.0.4",
+  "info": {
+    "title": "OliveFamingAPI",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Rain/season": {
+      "get": {
+        "tags": [
+          "Rain"
+        ],
+        "operationId": "FindBySeason",
+        "parameters": [
+          {
+            "name": "seasonName",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
-        },
-        "/rain/season/{season}": {
-            "get": {
-                "x-controller-name": "RainController",
-                "x-operation-name": "findBySeason",
-                "tags": [
-                    "RainController"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Array of Rain model instances",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/RainWithRelations"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "parameters": [
-                    {
-                        "name": "season",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    }
-                ],
-                "operationId": "RainController.findBySeason"
-            }
-        },
-        "/rain/seasonLiters/{season}": {
-            "get": {
-                "x-controller-name": "RainController",
-                "x-operation-name": "seasonLiters",
-                "tags": [
-                    "RainController"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Array of Rain model instances",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/SeasonLitersResponse"
-                                }
-                            }
-                        }
-                    }
-                },
-                "parameters": [
-                    {
-                        "name": "season",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    }
-                ],
-                "operationId": "RainController.seasonLiters"
-            }
-        },
-        "/rain/{id}": {
-            "delete": {
-                "x-controller-name": "RainController",
-                "x-operation-name": "deleteById",
-                "tags": [
-                    "RainController"
-                ],
-                "responses": {
-                    "204": {
-                        "description": "No Content",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "description": "Rain DELETE success"
-                                }
-                            }
-                        }
-                    }
-                },
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    }
-                ],
-                "operationId": "RainController.deleteById"
-            }
-        },
-        "/rain": {
-            "post": {
-                "x-controller-name": "RainController",
-                "x-operation-name": "create",
-                "tags": [
-                    "RainController"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Rain model instance",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Rain"
-                                }
-                            }
-                        }
-                    }
-                },
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/NewRainLog"
-                            }
-                        }
-                    }
-                },
-                "operationId": "RainController.create"
-            },
-            "get": {
-                "x-controller-name": "RainController",
-                "x-operation-name": "find",
-                "tags": [
-                    "RainController"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Array of Rain model instances",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/RainWithRelations"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "parameters": [
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Rain.Filter"
-                                }
-                            }
-                        }
-                    }
-                ],
-                "operationId": "RainController.find"
-            }
-        },
-        "/seasons/count": {
-            "get": {
-                "x-controller-name": "SeasonsController",
-                "x-operation-name": "count",
-                "tags": [
-                    "SeasonsController"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Seasons model count",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/loopback.Count"
-                                }
-                            }
-                        }
-                    }
-                },
-                "parameters": [
-                    {
-                        "name": "where",
-                        "in": "query",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "title": "Seasons.WhereFilter",
-                                    "additionalProperties": true,
-                                    "x-typescript-type": "@loopback/repository#Where<Seasons>"
-                                }
-                            }
-                        }
-                    }
-                ],
-                "operationId": "SeasonsController.count"
-            }
-        },
-        "/seasons": {
-            "post": {
-                "x-controller-name": "SeasonsController",
-                "x-operation-name": "create",
-                "tags": [
-                    "SeasonsController"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Seasons model instance",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Seasons"
-                                }
-                            }
-                        }
-                    }
-                },
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CreateSeasonSchema"
-                            }
-                        }
-                    }
-                },
-                "operationId": "SeasonsController.create"
-            },
-            "get": {
-                "x-controller-name": "SeasonsController",
-                "x-operation-name": "find",
-                "tags": [
-                    "SeasonsController"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Array of Seasons model instances",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "properties": {
-                                        "type": "string"
-                                    },
-                                    "example": [
-                                        "22/23"
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                },
-                "operationId": "SeasonsController.find"
-            }
-        },
-        "/users/count": {
-            "get": {
-                "x-controller-name": "UserController",
-                "x-operation-name": "count",
-                "tags": [
-                    "UserController"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "User model count",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/loopback.Count"
-                                }
-                            }
-                        }
-                    }
-                },
-                "parameters": [
-                    {
-                        "name": "where",
-                        "in": "query",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "title": "User.WhereFilter",
-                                    "additionalProperties": true,
-                                    "x-typescript-type": "@loopback/repository#Where<User>"
-                                }
-                            }
-                        }
-                    }
-                ],
-                "operationId": "UserController.count"
-            }
-        },
-        "/users/login": {
-            "post": {
-                "x-controller-name": "UserController",
-                "x-operation-name": "login",
-                "tags": [
-                    "UserController"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Valid token to login",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JwtResponse"
-                                }
-                            }
-                        }
-                    }
-                },
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UserLogin"
-                            }
-                        }
-                    }
-                },
-                "operationId": "UserController.login"
-            }
-        },
-        "/users/me": {
-            "get": {
-                "x-controller-name": "UserController",
-                "x-operation-name": "me",
-                "tags": [
-                    "UserController"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "User data",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserMe"
-                                }
-                            }
-                        }
-                    }
-                },
-                "operationId": "UserController.me"
-            }
-        },
-        "/users/{id}": {
-            "put": {
-                "x-controller-name": "UserController",
-                "x-operation-name": "replaceById",
-                "tags": [
-                    "UserController"
-                ],
-                "responses": {
-                    "204": {
-                        "description": "No Content",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "description": "User PUT success"
-                                }
-                            }
-                        }
-                    }
-                },
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/User"
-                            }
-                        }
-                    },
-                    "x-parameter-index": 1
-                },
-                "operationId": "UserController.replaceById"
-            },
-            "patch": {
-                "x-controller-name": "UserController",
-                "x-operation-name": "updateById",
-                "tags": [
-                    "UserController"
-                ],
-                "responses": {
-                    "204": {
-                        "description": "No Content",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "description": "User PATCH success"
-                                }
-                            }
-                        }
-                    }
-                },
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UserPartial"
-                            }
-                        }
-                    },
-                    "x-parameter-index": 1
-                },
-                "operationId": "UserController.updateById"
-            },
-            "get": {
-                "x-controller-name": "UserController",
-                "x-operation-name": "findById",
-                "tags": [
-                    "UserController"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "User model instance",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserWithRelations"
-                                }
-                            }
-                        }
-                    }
-                },
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/User.Filter"
-                                }
-                            }
-                        }
-                    }
-                ],
-                "operationId": "UserController.findById"
-            },
-            "delete": {
-                "x-controller-name": "UserController",
-                "x-operation-name": "deleteById",
-                "tags": [
-                    "UserController"
-                ],
-                "responses": {
-                    "204": {
-                        "description": "No Content",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "description": "User DELETE success"
-                                }
-                            }
-                        }
-                    }
-                },
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    }
-                ],
-                "operationId": "UserController.deleteById"
-            }
-        },
-        "/users": {
-            "post": {
-                "x-controller-name": "UserController",
-                "x-operation-name": "create",
-                "tags": [
-                    "UserController"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "User model instance",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/User"
-                                }
-                            }
-                        }
-                    }
-                },
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/NewUser"
-                            }
-                        }
-                    }
-                },
-                "operationId": "UserController.create"
-            },
-            "patch": {
-                "x-controller-name": "UserController",
-                "x-operation-name": "updateAll",
-                "tags": [
-                    "UserController"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "User PATCH success count",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/loopback.Count"
-                                }
-                            }
-                        }
-                    }
-                },
-                "parameters": [
-                    {
-                        "name": "where",
-                        "in": "query",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "title": "User.WhereFilter",
-                                    "additionalProperties": true,
-                                    "x-typescript-type": "@loopback/repository#Where<User>"
-                                }
-                            }
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UserPartial"
-                            }
-                        }
-                    }
-                },
-                "operationId": "UserController.updateAll"
-            },
-            "get": {
-                "x-controller-name": "UserController",
-                "x-operation-name": "find",
-                "tags": [
-                    "UserController"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Array of User model instances",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/UserWithRelations"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "parameters": [
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/User.Filter1"
-                                }
-                            }
-                        }
-                    }
-                ],
-                "operationId": "UserController.find"
-            }
-        }
-    },
-    "servers": [
-        {
-            "url": "http://[::1]:3000"
-        }
-    ],
-    "components": {
-        "schemas": {
-            "RainWithRelations": {
-                "title": "RainWithRelations",
-                "type": "object",
-                "description": "(tsType: RainWithRelations, schemaOptions: { includeRelations: true })",
-                "properties": {
-                    "_id": {
-                        "type": "string"
-                    },
-                    "season": {
-                        "type": "string"
-                    },
-                    "date": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "liters": {
-                        "type": "number"
-                    }
-                },
-                "required": [
-                    "_id",
-                    "season",
-                    "date",
-                    "liters"
-                ],
-                "additionalProperties": false,
-                "x-typescript-type": "RainWithRelations"
-            },
-            "Rain": {
-                "title": "Rain",
-                "type": "object",
-                "properties": {
-                    "_id": {
-                        "type": "string"
-                    },
-                    "season": {
-                        "type": "string"
-                    },
-                    "date": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "liters": {
-                        "type": "number"
-                    }
-                },
-                "required": [
-                    "_id",
-                    "season",
-                    "date",
-                    "liters"
-                ],
-                "additionalProperties": false
-            },
-            "NewRainLog": {
-                "title": "NewRainLog",
-                "type": "object",
-                "description": "(tsType: CreateRain, schemaOptions: { title: 'NewRainLog' })",
-                "properties": {
-                    "season": {
-                        "type": "string"
-                    },
-                    "date": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "liters": {
-                        "type": "number"
-                    }
-                },
-                "required": [
-                    "season",
-                    "date",
-                    "liters"
-                ],
-                "additionalProperties": false,
-                "x-typescript-type": "CreateRain"
-            },
-            "CreateRain": {
-                "title": "CreateRain",
-                "type": "object",
-                "properties": {
-                    "season": {
-                        "type": "string"
-                    },
-                    "date": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "liters": {
-                        "type": "number"
-                    }
-                },
-                "required": [
-                    "season",
-                    "date",
-                    "liters"
-                ],
-                "additionalProperties": false
-            },
-            "SeasonLitersResponse": {
-                "title": "SeasonLitersResponse",
-                "type": "object",
-                "properties": {
-                    "liters": {
-                        "type": "number"
-                    }
-                },
-                "required": [
-                    "liters"
-                ],
-                "additionalProperties": false
-            },
-            "Seasons": {
-                "title": "Seasons",
-                "type": "object",
-                "properties": {
-                    "_id": {
-                        "type": "string"
-                    },
-                    "seasonCode": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "_id",
-                    "seasonCode"
-                ],
-                "additionalProperties": false
-            },
-            "CreateSeasonSchema": {
-                "title": "CreateSeasonSchema",
-                "type": "object",
-                "properties": {
-                    "seasonCode": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "seasonCode"
-                ],
-                "additionalProperties": false
-            },
-            "JwtResponse": {
-                "title": "JwtResponse",
-                "type": "object",
-                "properties": {
-                    "jwt": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "jwt"
-                ],
-                "additionalProperties": false
-            },
-            "UserLogin": {
-                "title": "UserLogin",
-                "type": "object",
-                "description": "(tsType: LoginDTO, schemaOptions: { title: 'UserLogin' })",
-                "properties": {
-                    "email": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "email",
-                    "password"
-                ],
-                "additionalProperties": false,
-                "x-typescript-type": "LoginDTO"
-            },
-            "LoginDTO": {
-                "title": "LoginDTO",
-                "type": "object",
-                "properties": {
-                    "email": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "email",
-                    "password"
-                ],
-                "additionalProperties": false
-            },
-            "UserMe": {
-                "title": "UserMe",
-                "type": "object",
-                "properties": {
-                    "_id": {
-                        "type": "string"
-                    },
-                    "name": {
-                        "type": "string"
-                    },
-                    "surname": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "_id",
-                    "name",
-                    "surname",
-                    "email"
-                ],
-                "additionalProperties": false
-            },
-            "User": {
-                "title": "User",
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "realm": {
-                        "type": "string"
-                    },
-                    "username": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    },
-                    "emailVerified": {
-                        "type": "boolean"
-                    },
-                    "verificationToken": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "email"
-                ],
-                "additionalProperties": true
-            },
-            "NewUser": {
-                "title": "NewUser",
-                "type": "object",
-                "description": "(tsType: User, schemaOptions: { title: 'NewUser' })",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "realm": {
-                        "type": "string"
-                    },
-                    "username": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    },
-                    "emailVerified": {
-                        "type": "boolean"
-                    },
-                    "verificationToken": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "email"
-                ],
-                "additionalProperties": true,
-                "x-typescript-type": "User"
-            },
-            "UserCredentialsWithRelations": {
-                "title": "UserCredentialsWithRelations",
-                "type": "object",
-                "description": "(tsType: UserCredentialsWithRelations, schemaOptions: { includeRelations: true })",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    },
-                    "userId": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "password",
-                    "userId"
-                ],
-                "additionalProperties": true,
-                "x-typescript-type": "UserCredentialsWithRelations"
-            },
-            "UserWithRelations": {
-                "title": "UserWithRelations",
-                "type": "object",
-                "description": "(tsType: UserWithRelations, schemaOptions: { includeRelations: true })",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "realm": {
-                        "type": "string"
-                    },
-                    "username": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    },
-                    "emailVerified": {
-                        "type": "boolean"
-                    },
-                    "verificationToken": {
-                        "type": "string"
-                    },
-                    "userCredentials": {
-                        "$ref": "#/components/schemas/UserCredentialsWithRelations"
-                    }
-                },
-                "required": [
-                    "email"
-                ],
-                "additionalProperties": true,
-                "x-typescript-type": "UserWithRelations"
-            },
-            "UserPartial": {
-                "title": "UserPartial",
-                "type": "object",
-                "description": "(tsType: Partial<User>, schemaOptions: { partial: true })",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "realm": {
-                        "type": "string"
-                    },
-                    "username": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    },
-                    "emailVerified": {
-                        "type": "boolean"
-                    },
-                    "verificationToken": {
-                        "type": "string"
-                    }
-                },
-                "additionalProperties": true,
-                "x-typescript-type": "Partial<User>"
-            },
-            "PingResponse": {
-                "type": "object",
-                "title": "PingResponse",
-                "properties": {
-                    "greeting": {
-                        "type": "string"
-                    },
-                    "date": {
-                        "type": "string"
-                    },
-                    "url": {
-                        "type": "string"
-                    },
-                    "headers": {
-                        "type": "object",
-                        "properties": {
-                            "Content-Type": {
-                                "type": "string"
-                            }
-                        },
-                        "additionalProperties": true
-                    }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RainLog"
+                  }
                 }
-            },
-            "Rain.Filter": {
-                "type": "object",
-                "title": "Rain.Filter",
-                "properties": {
-                    "offset": {
-                        "type": "integer",
-                        "minimum": 0
-                    },
-                    "limit": {
-                        "type": "integer",
-                        "minimum": 1,
-                        "example": 100
-                    },
-                    "skip": {
-                        "type": "integer",
-                        "minimum": 0
-                    },
-                    "order": {
-                        "oneOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            }
-                        ]
-                    },
-                    "where": {
-                        "title": "Rain.WhereFilter",
-                        "type": "object",
-                        "additionalProperties": true
-                    },
-                    "fields": {
-                        "oneOf": [
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "_id": {
-                                        "type": "boolean"
-                                    },
-                                    "season": {
-                                        "type": "boolean"
-                                    },
-                                    "date": {
-                                        "type": "boolean"
-                                    },
-                                    "liters": {
-                                        "type": "boolean"
-                                    }
-                                },
-                                "additionalProperties": false
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "type": "string",
-                                    "enum": [
-                                        "_id",
-                                        "season",
-                                        "date",
-                                        "liters"
-                                    ],
-                                    "example": "_id"
-                                },
-                                "uniqueItems": true
-                            }
-                        ],
-                        "title": "Rain.Fields"
-                    }
-                },
-                "additionalProperties": false,
-                "x-typescript-type": "@loopback/repository#Filter<Rain>"
-            },
-            "loopback.Count": {
-                "type": "object",
-                "title": "loopback.Count",
-                "x-typescript-type": "@loopback/repository#Count",
-                "properties": {
-                    "count": {
-                        "type": "number"
-                    }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RainLog"
+                  }
                 }
-            },
-            "User.ScopeFilter": {
-                "type": "object",
-                "properties": {
-                    "offset": {
-                        "type": "integer",
-                        "minimum": 0
-                    },
-                    "limit": {
-                        "type": "integer",
-                        "minimum": 1,
-                        "example": 100
-                    },
-                    "skip": {
-                        "type": "integer",
-                        "minimum": 0
-                    },
-                    "order": {
-                        "oneOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            }
-                        ]
-                    },
-                    "where": {
-                        "type": "object",
-                        "additionalProperties": true
-                    },
-                    "fields": {
-                        "oneOf": [
-                            {
-                                "type": "object",
-                                "properties": {},
-                                "additionalProperties": true
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                },
-                                "uniqueItems": true
-                            }
-                        ]
-                    },
-                    "include": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {},
-                            "additionalProperties": true
-                        }
-                    }
-                },
-                "additionalProperties": false,
-                "title": "User.ScopeFilter"
-            },
-            "User.IncludeFilter.Items": {
-                "title": "User.IncludeFilter.Items",
-                "type": "object",
-                "properties": {
-                    "relation": {
-                        "type": "string",
-                        "enum": [
-                            "userCredentials"
-                        ]
-                    },
-                    "scope": {
-                        "$ref": "#/components/schemas/User.ScopeFilter"
-                    }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RainLog"
+                  }
                 }
-            },
-            "User.Filter": {
-                "type": "object",
-                "title": "User.Filter",
-                "properties": {
-                    "offset": {
-                        "type": "integer",
-                        "minimum": 0
-                    },
-                    "limit": {
-                        "type": "integer",
-                        "minimum": 1,
-                        "example": 100
-                    },
-                    "skip": {
-                        "type": "integer",
-                        "minimum": 0
-                    },
-                    "order": {
-                        "oneOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            }
-                        ]
-                    },
-                    "fields": {
-                        "oneOf": [
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "type": "boolean"
-                                    },
-                                    "realm": {
-                                        "type": "boolean"
-                                    },
-                                    "username": {
-                                        "type": "boolean"
-                                    },
-                                    "email": {
-                                        "type": "boolean"
-                                    },
-                                    "emailVerified": {
-                                        "type": "boolean"
-                                    },
-                                    "verificationToken": {
-                                        "type": "boolean"
-                                    }
-                                },
-                                "additionalProperties": true
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "type": "string",
-                                    "example": "id"
-                                },
-                                "uniqueItems": true
-                            }
-                        ],
-                        "title": "User.Fields"
-                    },
-                    "include": {
-                        "title": "User.IncludeFilter",
-                        "type": "array",
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/User.IncludeFilter.Items"
-                                },
-                                {
-                                    "type": "string"
-                                }
-                            ]
-                        }
-                    }
-                },
-                "additionalProperties": false,
-                "x-typescript-type": "@loopback/repository#Filter<User>"
-            },
-            "User.Filter1": {
-                "type": "object",
-                "title": "User.Filter",
-                "properties": {
-                    "offset": {
-                        "type": "integer",
-                        "minimum": 0
-                    },
-                    "limit": {
-                        "type": "integer",
-                        "minimum": 1,
-                        "example": 100
-                    },
-                    "skip": {
-                        "type": "integer",
-                        "minimum": 0
-                    },
-                    "order": {
-                        "oneOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            }
-                        ]
-                    },
-                    "where": {
-                        "title": "User.WhereFilter",
-                        "type": "object",
-                        "additionalProperties": true
-                    },
-                    "fields": {
-                        "oneOf": [
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "type": "boolean"
-                                    },
-                                    "realm": {
-                                        "type": "boolean"
-                                    },
-                                    "username": {
-                                        "type": "boolean"
-                                    },
-                                    "email": {
-                                        "type": "boolean"
-                                    },
-                                    "emailVerified": {
-                                        "type": "boolean"
-                                    },
-                                    "verificationToken": {
-                                        "type": "boolean"
-                                    }
-                                },
-                                "additionalProperties": true
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "type": "string",
-                                    "example": "id"
-                                },
-                                "uniqueItems": true
-                            }
-                        ],
-                        "title": "User.Fields"
-                    },
-                    "include": {
-                        "title": "User.IncludeFilter",
-                        "type": "array",
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/User.IncludeFilter.Items"
-                                },
-                                {
-                                    "type": "string"
-                                }
-                            ]
-                        }
-                    }
-                },
-                "additionalProperties": false,
-                "x-typescript-type": "@loopback/repository#Filter<User>"
+              }
             }
-        },
-        "securitySchemes": {
-            "jwt": {
-                "type": "http",
-                "scheme": "bearer",
-                "bearerFormat": "JWT"
-            }
+          }
         }
+      }
     },
-    "security": [
-        {
-            "jwt": []
+    "/api/Rain": {
+      "post": {
+        "tags": [
+          "Rain"
+        ],
+        "operationId": "NewRainLog",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RainLogCreateDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RainLogCreateDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RainLogCreateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
         }
-    ]
+      }
+    },
+    "/api/Rain/{id}": {
+      "delete": {
+        "tags": [
+          "Rain"
+        ],
+        "operationId": "DeleteRainLog",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Rain/seasonLiters": {
+      "get": {
+        "tags": [
+          "Rain"
+        ],
+        "operationId": "SeasonLiters",
+        "parameters": [
+          {
+            "name": "seasonName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SeasonLitersDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SeasonLitersDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SeasonLitersDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Seasons": {
+      "get": {
+        "tags": [
+          "Seasons"
+        ],
+        "operationId": "GetAllSeasons",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Seasons"
+        ],
+        "operationId": "AddSeason",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SeasonsCreateDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SeasonsCreateDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SeasonsCreateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Seasons/count": {
+      "get": {
+        "tags": [
+          "Seasons"
+        ],
+        "operationId": "GetSeasonsCount",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SeasonCountDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SeasonCountDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SeasonCountDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Users/register": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "Register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegisterDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegisterDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegisterDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Users/login": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "Login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Users/me": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "Me",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMeDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMeDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMeDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoginDTO": {
+        "required": [
+          "jwt"
+        ],
+        "type": "object",
+        "properties": {
+          "jwt": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RainLog": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "liters": {
+            "type": "number",
+            "format": "double"
+          },
+          "seasonId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RainLogCreateDTO": {
+        "required": [
+          "seasonName"
+        ],
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "liters": {
+            "type": "number",
+            "format": "double"
+          },
+          "seasonName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SeasonCountDTO": {
+        "type": "object",
+        "properties": {
+          "seasonCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SeasonLitersDTO": {
+        "type": "object",
+        "properties": {
+          "liters": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SeasonsCreateDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserLoginDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserMeDTO": {
+        "required": [
+          "email",
+          "name",
+          "surname"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserRegisterDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Rain"
+    },
+    {
+      "name": "Seasons"
+    },
+    {
+      "name": "Users"
+    }
+  ]
 }

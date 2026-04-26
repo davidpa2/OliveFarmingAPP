@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  endpoint: 'http://[::1]:3000',
+  endpoint: 'https://[::1]:7030',
   authToken: 'RUNTIME',
 };
 

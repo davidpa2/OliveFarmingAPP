@@ -18,28 +18,26 @@ export class SeasonsService {
   };
 
   private initChecks() {
-    this.core.api.seasons.find().subscribe({
+    this.core.api.seasons.getAllSeasons$Json().subscribe({
       next: res => {
         this.seasons = res;
         this.setCurrentSeason();
 
         if (!this.seasons.includes(this.currentSeason)) {
-          this.core.api.seasons.create({ body: { seasonCode: this.currentSeason } }).subscribe({
+          this.core.api.seasons.addSeason({ body: { name: this.currentSeason } }).subscribe({
             next: res => {
-              if (res) {
-                this.seasons.push(res.seasonCode)
-                this.currentSeasonLiters = 0;
-                console.log('A new season has been created');
-              }
+              this.seasons.push(this.currentSeason)
+              this.currentSeasonLiters = 0;
+              console.log('A new season has been created');
             },
             error: err => {
               console.log(err);
             }
           })
         } else {
-          this.core.api.rain.seasonLiters({season: this.currentSeason}).subscribe({
+          this.core.api.rain.seasonLiters$Json({seasonName: this.currentSeason}).subscribe({
             next: res => {
-              this.currentSeasonLiters = res.liters;
+              this.currentSeasonLiters = res.liters || 0;
             },
             error: err => {
               console.log(err);

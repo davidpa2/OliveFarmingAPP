@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { RainWithRelations } from 'src/app/services/api/models';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { RainLog, RainLogCreateDto } from 'src/app/services/api/models';
 import { CoreProvider } from 'src/app/services/core';
 import { Chart, registerables } from 'chart.js';
 import { DatePipe } from '@angular/common';
 
 export interface RainSeasons {
-  [season: string]: RainWithRelations[];
+  [season: string]: RainLog[];
 }
 export interface SeasonsTotalLiters {
   [season: string]: number;
@@ -26,7 +26,7 @@ export class RainPage implements OnInit {
   deleteLogPosition: number | null = null;
 
   rainSeasons: RainSeasons = {};
-  previousRainLogs: RainWithRelations[] = [];
+  previousRainLogs: RainLog[] = [];
   seasonsTotalLiters: SeasonsTotalLiters = {};
 
   chart: any;
@@ -46,7 +46,7 @@ export class RainPage implements OnInit {
   }
 
   saveRainLog() {
-    this.core.api.rain.create({ body: { date: this.rainDate, liters: this.liters!, season: this.selectedTab } }).subscribe({
+    this.core.api.rain.newRainLog$Json({ body: { date: this.rainDate, liters: this.liters!, seasonName: this.selectedTab } }).subscribe({
       next: res => {
         if (res) {
           this.previousRainLogs = this.rainSeasons[this.selectedTab];
@@ -55,15 +55,15 @@ export class RainPage implements OnInit {
           this.rainDate = '';
         }
       },
-      error: err => {
+      error: (err: any) => {
         console.log(err);
       }
     })
   }
 
-  deleteRainLog(uuid: string) {
+  deleteRainLog(id: number) {
     this.newLogPosition = null;
-    this.core.api.rain.deleteById({ id: uuid }).subscribe({
+    this.core.api.rain.deleteRainLog$Json({ id }).subscribe({
       next: res => {
         if (res) {
           this.previousRainLogs = this.rainSeasons[this.selectedTab];
@@ -77,7 +77,7 @@ export class RainPage implements OnInit {
   }
 
   updateSeason(season: string, animation: boolean, deleting: boolean = false) {
-    this.core.api.rain.findBySeason({ season }).subscribe({
+    this.core.api.rain.findBySeason$Json({ seasonName: season }).subscribe({
       next: res => {
         if (res.length) {
           if (deleting) {
@@ -110,7 +110,7 @@ export class RainPage implements OnInit {
   }
 
   updateSeasonLiters() {
-    this.core.api.rain.seasonLiters({ season: this.selectedTab }).subscribe({
+    this.core.api.rain.seasonLiters$Json({ seasonName: this.selectedTab }).subscribe({
       next: res => {
         if (res.liters) {
           this.seasonsTotalLiters[this.selectedTab] = res.liters;
@@ -134,7 +134,7 @@ export class RainPage implements OnInit {
 
     this.rainSeasons[this.selectedTab].forEach(element => {
       labels.push(this.datePipe.transform(element.date)!);
-      liters.push(element.liters)
+      liters.push(element.liters || 0)
     })
     if (liters.length) {
       this.destroyChart(false, false);

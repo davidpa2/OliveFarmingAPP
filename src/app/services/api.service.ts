@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RainControllerService, SeasonsControllerService, UserControllerService } from './api/services';
+import { RainService, SeasonsService, UsersService } from './api/services';
 
 @Injectable({
   providedIn: 'root'
@@ -7,8 +7,8 @@ import { RainControllerService, SeasonsControllerService, UserControllerService 
 export class ApiService {
 
   constructor(
-    public user: UserControllerService,
-    public rain: RainControllerService,
-    public seasons: SeasonsControllerService
+    public user: UsersService,
+    public rain: RainService,
+    public seasons: SeasonsService
   ) { }
 }
