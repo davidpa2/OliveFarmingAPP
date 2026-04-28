@@ -86,11 +86,10 @@ export class AuthService {
 
     this.core.api.user.login$Json({ body: data }).subscribe({
       next: (sess) => {
-        console.log(sess);
-        
         if (sess.jwt) {
           environment.authToken = sess.jwt;
           this.data.token = sess.jwt;
+
           this.core.api.user.me$Json().subscribe({
             next: user => {
               this.data.user = user;

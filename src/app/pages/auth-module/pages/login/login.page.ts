@@ -21,19 +21,26 @@ export class LoginPage implements OnInit {
     })
   }
 
-  login() {
-    this.core.auth.login({
-      email: this.loginForm.controls['email'].value,
-      password: this.loginForm.controls['password'].value
-    }, () => {
-      console.log('Logged in');
-    }, (err: any) => {
-      console.log(err);
-    })
-  }
+  async login() {
+    if (this.loginForm.valid) {
+      this.core.auth.login({
+        email: this.loginForm.controls['email'].value,
+        password: this.loginForm.controls['password'].value
+      }, () => {
+        console.log('Logged in');
+        this.core.router.navigate(["/private/dashboard"]);
+      }, (err: any) => {
+        console.log(err);
+      })
+    } else {
+      let toast = await this.core.toastCtrl.create({
+        message: "Datos incorrectos",
+        duration: 5000,
+        color: 'danger',
+        buttons: [{ text: 'OK', role: 'cancel' }]
+      });
 
-  hey() {
-    console.log(environment.authToken);
-    
+      toast.present();
+    }
   }
 }
