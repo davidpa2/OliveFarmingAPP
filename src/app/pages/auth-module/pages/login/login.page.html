@@ -29,6 +29,15 @@
                                 </p>
                             </ion-col>
                         </ion-row>
+                        <ion-text *ngIf="!loginForm.valid && loginForm.get('email')?.hasError('pattern')" class="ion-text-center" color="danger">
+                            <p>Debe escribir un email correcto</p>
+                        </ion-text>
+                        <ion-text *ngIf="!loginForm.valid && loginForm.get('email')?.hasError('required')" class="ion-text-center" color="danger">
+                            <p>Debe escribir un email</p>
+                        </ion-text>
+                        <ion-text *ngIf="!loginForm.valid && loginForm.get('email')?.hasError('required')" class="ion-text-center" color="danger">
+                            <p>Debe escribir una contraseña</p>
+                        </ion-text>
                     </ion-grid>
                 </ion-item>
             </form>
