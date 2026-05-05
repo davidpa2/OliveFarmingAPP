@@ -43,4 +43,9 @@ export class LoginPage implements OnInit {
       toast.present();
     }
   }
+
+  get myForm() {
+    // this.loginForm.
+    return this.loginForm.controls;
+  }
 }

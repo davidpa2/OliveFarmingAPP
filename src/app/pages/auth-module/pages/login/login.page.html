@@ -29,15 +29,24 @@
                                 </p>
                             </ion-col>
                         </ion-row>
-                        <ion-text *ngIf="!loginForm.valid && loginForm.get('email')?.hasError('pattern')" class="ion-text-center" color="danger">
-                            <p>Debe escribir un email correcto</p>
-                        </ion-text>
-                        <ion-text *ngIf="!loginForm.valid && loginForm.get('email')?.hasError('required')" class="ion-text-center" color="danger">
-                            <p>Debe escribir un email</p>
-                        </ion-text>
-                        <ion-text *ngIf="!loginForm.valid && loginForm.get('email')?.hasError('required')" class="ion-text-center" color="danger">
-                            <p>Debe escribir una contraseña</p>
-                        </ion-text>
+
+                        <ng-container *ngIf="loginForm.invalid && loginForm.pending && myForm['email'].errors">
+                            <ion-text *ngIf="myForm['email'].errors['pattern']"
+                                class="ion-text-center" color="danger">
+                                <p>Debe escribir un email correcto</p>
+                            </ion-text>
+                            <ion-text *ngIf="myForm['email'].errors['required']"
+                                class="ion-text-center" color="danger">
+                                <p>Debe escribir un email</p>
+                            </ion-text>
+                        </ng-container>
+
+                        <ng-container *ngIf="loginForm.dirty && myForm['password'].errors">
+                            <ion-text *ngIf="!loginForm.valid && myForm['password'].errors['required']"
+                                class="ion-text-center" color="danger">
+                                <p>Debe escribir una contraseña</p>
+                            </ion-text>
+                        </ng-container>
                     </ion-grid>
                 </ion-item>
             </form>
