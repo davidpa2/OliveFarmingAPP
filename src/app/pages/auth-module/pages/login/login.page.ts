@@ -33,6 +33,8 @@ export class LoginPage implements OnInit {
         console.log(err);
       })
     } else {
+      this.loginForm.markAllAsTouched();
+      
       let toast = await this.core.toastCtrl.create({
         message: "Datos incorrectos",
         duration: 5000,

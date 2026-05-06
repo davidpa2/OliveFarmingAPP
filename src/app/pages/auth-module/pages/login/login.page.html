@@ -5,48 +5,61 @@
         <ion-col class="ion-hide-md-down" size="6">
             <ion-img src="assets/olives.png" alt="Login image"></ion-img>
         </ion-col>
+
         <ion-col size="12" sizeMd="6">
             <h2>Iniciar sesión</h2>
+
             <form [formGroup]="loginForm">
-                <ion-item>
-                    <ion-input formControlName="email" label="Email" labelPlacement="floating"
-                        placeholder="Email"></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-input formControlName="password" label="Password" labelPlacement="floating"
-                        placeholder="Password"></ion-input>
-                </ion-item>
-                <ion-item>
+                <ion-item lines="none">
                     <ion-grid>
                         <ion-row>
+                            <ion-input formControlName="email" label="Email" labelPlacement="floating"
+                                placeholder="Email"></ion-input>
+                        </ion-row>
+
+                        <ion-row>
+                            <div class="ion-padding-start"
+                                *ngIf="myForm['email'].invalid && (myForm['email'].dirty || myForm['email'].touched)">
+                                <ion-text color="danger" *ngIf="myForm['email'].hasError('required')">
+                                    <small>Debe escribir un email</small>
+                                </ion-text>
+                                <ion-text color="danger" *ngIf="myForm['email'].hasError('pattern')">
+                                    <small>Debe escribir un email válido</small>
+                                </ion-text>
+                            </div>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+
+                <ion-item lines="none">
+                    <ion-grid>
+                        <ion-row>
+                            <ion-input type="password" formControlName="password" label="Password"
+                                labelPlacement="floating" placeholder="Password"></ion-input>
+                        </ion-row>
+                        <ion-row>
+                            <div class="ion-padding-start"
+                                *ngIf="myForm['password'].invalid && (myForm['password'].dirty || myForm['password'].touched)">
+                                <ion-text color="danger" *ngIf="myForm['password'].hasError('required')">
+                                    <small>Debe escribir una contraseña</small>
+                                </ion-text>
+                            </div>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+
+                <ion-item lines="none">
+                    <ion-grid>
+                        <ion-row class="ion-align-items-center">
                             <ion-col size="12" sizeMd="4">
-                                <ion-button (click)="login()">Acceder</ion-button>
+                                <ion-button expand="block" (click)="login()">Acceder</ion-button>
                             </ion-col>
                             <ion-col size="12" sizeMd="8">
-                                <p class="ion-text-center ion-text-md-end">¿No tienes cuenta? <a
-                                        (click)="core.navigate('/auth/register')"
-                                        routerLinkActive="router-link-active">Regístrate</a>
+                                <p class="ion-text-center ion-text-md-end">¿No tienes cuenta?
+                                    <a (click)="core.navigate('/auth/register')" style="cursor: pointer;">Regístrate</a>
                                 </p>
                             </ion-col>
                         </ion-row>
-
-                        <ng-container *ngIf="loginForm.invalid && loginForm.pending && myForm['email'].errors">
-                            <ion-text *ngIf="myForm['email'].errors['pattern']"
-                                class="ion-text-center" color="danger">
-                                <p>Debe escribir un email correcto</p>
-                            </ion-text>
-                            <ion-text *ngIf="myForm['email'].errors['required']"
-                                class="ion-text-center" color="danger">
-                                <p>Debe escribir un email</p>
-                            </ion-text>
-                        </ng-container>
-
-                        <ng-container *ngIf="loginForm.dirty && myForm['password'].errors">
-                            <ion-text *ngIf="!loginForm.valid && myForm['password'].errors['required']"
-                                class="ion-text-center" color="danger">
-                                <p>Debe escribir una contraseña</p>
-                            </ion-text>
-                        </ng-container>
                     </ion-grid>
                 </ion-item>
             </form>
