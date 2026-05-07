@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 export class LoginPage implements OnInit {
 
   loginForm!: FormGroup;
+  errorMessage: string = "";
 
   constructor(public core: CoreProvider) { }
 
@@ -27,10 +28,13 @@ export class LoginPage implements OnInit {
         email: this.loginForm.controls['email'].value,
         password: this.loginForm.controls['password'].value
       }, () => {
+        this.errorMessage = "";
         console.log('Logged in');
         this.core.router.navigate(["/private/dashboard"]);
       }, (err: any) => {
         console.log(err);
+        console.log(err.error.errors[0]);
+        this.errorMessage = err.error.errors[0];
       })
     } else {
       this.loginForm.markAllAsTouched();

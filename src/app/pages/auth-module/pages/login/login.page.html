@@ -20,11 +20,11 @@
                         <ion-row>
                             <div class="ion-padding-start"
                                 *ngIf="myForm['email'].invalid && (myForm['email'].dirty || myForm['email'].touched)">
-                                <ion-text color="danger" *ngIf="myForm['email'].hasError('required')">
-                                    <small>Debe escribir un email</small>
+                                <ion-text class="noMarginText" color="danger" *ngIf="myForm['email'].hasError('required')">
+                                    Debe escribir un email
                                 </ion-text>
-                                <ion-text color="danger" *ngIf="myForm['email'].hasError('pattern')">
-                                    <small>Debe escribir un email válido</small>
+                                <ion-text class="noMarginText" color="danger" *ngIf="myForm['email'].hasError('pattern')">
+                                    Debe escribir un email válido
                                 </ion-text>
                             </div>
                         </ion-row>
@@ -40,11 +40,15 @@
                         <ion-row>
                             <div class="ion-padding-start"
                                 *ngIf="myForm['password'].invalid && (myForm['password'].dirty || myForm['password'].touched)">
-                                <ion-text color="danger" *ngIf="myForm['password'].hasError('required')">
-                                    <small>Debe escribir una contraseña</small>
+                                <ion-text class="noMarginText" color="danger" *ngIf="myForm['password'].hasError('required')">
+                                    Debe escribir una contraseña
                                 </ion-text>
                             </div>
                         </ion-row>
+                        
+                        <ion-text class="noMarginText" color="danger" *ngIf="errorMessage">
+                            {{errorMessage}}
+                        </ion-text>
                     </ion-grid>
                 </ion-item>
 
