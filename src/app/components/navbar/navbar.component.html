@@ -10,7 +10,7 @@
     </ion-row>
 
     <ion-buttons slot="end">
-      <ion-button (click)="core.navigate('/auth/login')">
+      <ion-button *ngIf="!core.isLoggedIn" (click)="core.navigate('/auth/login')">
         Log in <ion-icon name="log-in-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
