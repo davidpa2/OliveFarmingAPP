@@ -29,8 +29,8 @@ export class LoginPage implements OnInit {
         password: this.loginForm.controls['password'].value
       }, () => {
         this.errorMessage = "";
-        console.log('Logged in');
         this.core.router.navigate(["/private/dashboard"]);
+        
       }, (err: any) => {
         console.log(err);
         console.log(err.error.errors[0]);

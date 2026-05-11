@@ -14,7 +14,6 @@ export class AuthServiceGuard implements CanActivate {
         next: ActivatedRouteSnapshot,
         _state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
         let res = this.core.isLoggedIn;
-        console.log(res);
         
         if (next.data) res = res; //&& this.core.isShowed(next.data);
 
