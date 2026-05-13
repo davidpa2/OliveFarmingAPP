@@ -9,6 +9,12 @@ export class NavbarComponent implements OnInit {
 
   constructor(public core: CoreProvider) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
+  logout() {
+    this.core.auth.logout(() => {      
+      this.core.popoverCtrl.dismiss();
+      this.core.navCtrl.navigateRoot('/');
+    });
+  }
 }

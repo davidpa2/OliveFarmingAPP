@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { AuthService } from './auth/auth.service';
-import { IonLoading, NavController, ToastController } from '@ionic/angular';
+import { IonLoading, NavController, PopoverController, ToastController } from '@ionic/angular';
 import { SeasonsService } from './seasons.service';
 import { RainLog, RainLogCreateDto } from './api/models';
 import { DatePipe } from '@angular/common';
@@ -16,6 +16,7 @@ export class CoreProvider {
     public season: SeasonsService,
     public navCtrl: NavController,
     public toastCtrl: ToastController,
+    public popoverCtrl: PopoverController,
     public datePipe: DatePipe,
     public router: Router
   ) {

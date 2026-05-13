@@ -21,7 +21,16 @@
 
     <ion-popover trigger="profilePopover" side="bottom" alignment="center">
     <ng-template>
-      <ion-content class="ion-padding">Hello World!</ion-content>
+      <ion-content class="ion-padding-horizontal">
+        <h4>¡Hola, {{core.user.name}} {{core.user.surname}}!</h4>
+        <hr>
+        <div class="ion-display-flex ion-justify-content-center">
+          <ion-button (click)="logout()">
+              <ion-icon name="log-out-outline" size="large"></ion-icon> 
+              <span>Cerrar sesión</span>
+          </ion-button>
+        </div>
+      </ion-content>
     </ng-template>
   </ion-popover>
   </ion-toolbar>
