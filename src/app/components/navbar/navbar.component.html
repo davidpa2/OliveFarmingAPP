@@ -14,24 +14,27 @@
         Log in <ion-icon name="log-in-outline"></ion-icon>
       </ion-button>
 
-      <ion-button id="profilePopover" *ngIf="core.isLoggedIn">
-        <ion-icon name="person-circle-outline" size="large"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+      <ng-container *ngIf="core.isLoggedIn">
+        <ion-button *ngIf="core.isLoggedIn" (click)="presentPopover($event)">
+          <ion-icon name="person-circle-outline" size="large"></ion-icon>
+        </ion-button>
 
-    <ion-popover trigger="profilePopover" side="bottom" alignment="center">
-    <ng-template>
-      <ion-content class="ion-padding-horizontal">
-        <h4>¡Hola, {{core.user.name}} {{core.user.surname}}!</h4>
-        <hr>
-        <div class="ion-display-flex ion-justify-content-center">
-          <ion-button (click)="logout()">
-              <ion-icon name="log-out-outline" size="large"></ion-icon> 
-              <span>Cerrar sesión</span>
-          </ion-button>
-        </div>
-      </ion-content>
-    </ng-template>
-  </ion-popover>
+        <ion-popover #popover [isOpen]="isPopoverOpen" [event]="popoverEvent" side="bottom" alignment="center">
+          <ng-template>
+            <ion-content class="ion-padding-horizontal">
+              <h4>¡Hola, {{core.user.name}} {{core.user.surname}}!</h4>
+              <hr>
+              <div class="ion-display-flex ion-justify-content-center">
+                <ion-button (click)="logout()">
+                  <ion-icon name="log-out-outline" size="large"></ion-icon>
+                  <span>Cerrar sesión</span>
+                </ion-button>
+              </div>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      </ng-container>
+
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>

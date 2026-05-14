@@ -6,14 +6,25 @@ import { CoreProvider } from '../../services/core'
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  popoverEvent: any = null;
+  isPopoverOpen = false;
 
   constructor(public core: CoreProvider) { }
 
   ngOnInit() { }
 
+  presentPopover(e: Event) {
+    this.popoverEvent = e;
+    this.isPopoverOpen = true;
+  }
+
   logout() {
-    this.core.auth.logout(() => {      
-      this.core.popoverCtrl.dismiss();
+    this.core.auth.logout(async () => {
+      await this.core.popoverCtrl.dismiss();
+
+      this.popoverEvent = null;
+      this.isPopoverOpen = false;
+
       this.core.navCtrl.navigateRoot('/');
     });
   }
