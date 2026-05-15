@@ -19,11 +19,13 @@
 
                         <ion-row>
                             <div class="ion-padding-start"
-                                *ngIf="myForm['email'].invalid && (myForm['email'].dirty || myForm['email'].touched)">
-                                <ion-text class="noMarginText" color="danger" *ngIf="myForm['email'].hasError('required')">
+                                *ngIf="myForm['email'].invalid && isSubmitted">
+                                <ion-text class="noMarginText" color="danger"
+                                    *ngIf="myForm['email'].hasError('required')">
                                     Debe escribir un email
                                 </ion-text>
-                                <ion-text class="noMarginText" color="danger" *ngIf="myForm['email'].hasError('pattern')">
+                                <ion-text class="noMarginText" color="danger"
+                                    *ngIf="myForm['email'].hasError('pattern') && !myForm['email'].hasError('required')">
                                     Debe escribir un email válido
                                 </ion-text>
                             </div>
@@ -39,13 +41,14 @@
                         </ion-row>
                         <ion-row>
                             <div class="ion-padding-start"
-                                *ngIf="myForm['password'].invalid && (myForm['password'].dirty || myForm['password'].touched)">
-                                <ion-text class="noMarginText" color="danger" *ngIf="myForm['password'].hasError('required')">
+                                *ngIf="myForm['password'].invalid && isSubmitted">
+                                <ion-text class="noMarginText" color="danger"
+                                    *ngIf="myForm['password'].hasError('required')">
                                     Debe escribir una contraseña
                                 </ion-text>
                             </div>
                         </ion-row>
-                        
+
                         <ion-text class="noMarginText" color="danger" *ngIf="errorMessage">
                             {{errorMessage}}
                         </ion-text>

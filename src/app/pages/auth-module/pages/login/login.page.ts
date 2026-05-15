@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CoreProvider } from 'src/app/services/core';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -11,18 +10,21 @@ import { environment } from 'src/environments/environment';
 export class LoginPage implements OnInit {
 
   loginForm!: FormGroup;
+  isSubmitted: boolean = false;
   errorMessage: string = "";
 
   constructor(public core: CoreProvider) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$')]),
+      email: new FormControl('', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]),
       password: new FormControl('', [Validators.required])
     })
   }
 
   async login() {
+    this.isSubmitted = true;
+
     if (this.loginForm.valid) {
       this.core.auth.login({
         email: this.loginForm.controls['email'].value,
