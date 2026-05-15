@@ -19,12 +19,12 @@
           <ion-icon name="person-circle-outline" size="large"></ion-icon>
         </ion-button>
 
-        <ion-popover #popover [isOpen]="isPopoverOpen" [event]="popoverEvent" side="bottom" alignment="center">
+        <ion-popover #popover [isOpen]="isPopoverOpen" [event]="popoverEvent" (didDismiss)="isPopoverOpen = false" side="bottom" alignment="center">
           <ng-template>
             <ion-content class="ion-padding-horizontal">
               <h4>¡Hola, {{core.user.name}} {{core.user.surname}}!</h4>
               <hr>
-              <div class="ion-display-flex ion-justify-content-center">
+              <div class="logoutDiv">
                 <ion-button (click)="logout()">
                   <ion-icon name="log-out-outline" size="large"></ion-icon>
                   <span>Cerrar sesión</span>

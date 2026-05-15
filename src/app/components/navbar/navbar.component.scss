@@ -5,3 +5,9 @@ ion-toolbar {
 hr {
     border-top: 2px solid var(--ion-color-primary);
 }
+
+.logoutDiv {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
