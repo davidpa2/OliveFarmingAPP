@@ -14,9 +14,10 @@ export class AuthServiceGuard implements CanActivate {
         next: ActivatedRouteSnapshot,
         _state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
         let res = this.core.isLoggedIn;
-        if (next.data) res = res && this.core.isShowed(next.data);
+        
+        if (next.data) res = res; //&& this.core.isShowed(next.data);
 
-        if (!res && !this.core.isLoggedIn) this.router.navigateByUrl('/login');
+        if (!res && !this.core.isLoggedIn) this.router.navigateByUrl('/auth/login');
         if (!res && this.core.isLoggedIn) {
             this.router.navigateByUrl('/');
             this.core.errorToast(undefined, 'No tiene permiso');

@@ -37,9 +37,10 @@ export class AuthService {
   private initChecks() {
     //TODO: Add token refresh every hour since last refresh/login
     const sess = JSON.parse(localStorage.getItem('appSession')!);
+    
     if (sess && sess.token) {
       this.data = sess;
-      environment.authToken = this.data.token.access_token;
+      environment.authToken = this.data.token;
     }
 
     if (this.token) {
@@ -86,14 +87,15 @@ export class AuthService {
 
     this.core.api.user.login$Json({ body: data }).subscribe({
       next: (sess) => {
-        console.log(sess);
-        
         if (sess.jwt) {
           environment.authToken = sess.jwt;
           this.data.token = sess.jwt;
+
           this.core.api.user.me$Json().subscribe({
             next: user => {
               this.data.user = user;
+              this.updateStorage();
+
               if (cbSuccess) {
                 cbSuccess();
               }

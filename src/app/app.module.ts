@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { ComponentsModule } from './components/components.module';
 import { DatePipe } from '@angular/common';
+import { AuthServiceGuard } from './services/auth/auth.service.guard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,6 +29,7 @@ import { DatePipe } from '@angular/common';
     ApiService,
     AuthService,
     CoreProvider,
+    AuthServiceGuard,
     DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: ApiAuthInterceptor, multi: true },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

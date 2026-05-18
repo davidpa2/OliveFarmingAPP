@@ -10,9 +10,31 @@
     </ion-row>
 
     <ion-buttons slot="end">
-      <ion-button (click)="core.navigate('/auth/login')">
+      <ion-button *ngIf="!core.isLoggedIn" (click)="core.navigate('/auth/login')">
         Log in <ion-icon name="log-in-outline"></ion-icon>
       </ion-button>
+
+      <ng-container *ngIf="core.isLoggedIn">
+        <ion-button *ngIf="core.isLoggedIn" (click)="presentPopover($event)">
+          <ion-icon name="person-circle-outline" size="large"></ion-icon>
+        </ion-button>
+
+        <ion-popover #popover [isOpen]="isPopoverOpen" [event]="popoverEvent" (didDismiss)="isPopoverOpen = false" side="bottom" alignment="center">
+          <ng-template>
+            <ion-content class="ion-padding-horizontal">
+              <h4>¡Hola, {{core.user.name}} {{core.user.surname}}!</h4>
+              <hr>
+              <div class="logoutDiv">
+                <ion-button (click)="logout()" fill="clear">
+                  <ion-icon name="power-outline" size="medium"></ion-icon>
+                  <span>&nbsp;Cerrar sesión</span>
+                </ion-button>
+              </div>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      </ng-container>
+
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

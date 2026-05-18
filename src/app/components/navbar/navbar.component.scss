@@ -2,3 +2,16 @@ ion-toolbar {
     --background: linear-gradient(to right, #00c210, #808000);
 }
 
+hr {
+    border-top: 2px solid var(--ion-color-primary);
+}
+
+.logoutDiv {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+
+    ion-button {
+        color: white;
+    }
+}
