@@ -10,10 +10,12 @@
             <p>{{selectedTab}}</p>
         </span>
         <ng-container *ngFor="let season of core.season.seasons">
-            <span *ngIf="selectedTab !== season" class="seasonLabel"
-                (click)="selectedTab = season; rainSeasons[season] ? createChart() : updateSeason(season, false);">
-                <p>{{season}}</p>
-            </span>
+            @if (selectedTab !== season) {
+                <span class="seasonLabel"
+                    (click)="selectedTab = season; rainSeasons[season] ? createChart() : updateSeason(season, false);">
+                    <p>{{season}}</p>
+                </span>
+            }
         </ng-container>
         <!-- <span *ngFor="let season of core.season.seasons" class="seasonLabel"
             [class.selectedTab]="season === selectedTab" (click)="selectedTab = season">
@@ -22,83 +24,95 @@
     </div>
     <ion-item color="secondary">
         <ion-grid>
-            <ng-container *ngIf="!showNewRainLogForm && rainSeasons[selectedTab]">
-                <ion-row>
-                    <ion-col class="center">
-                        <ion-button class="btn" (click)="showNewRainLogForm = true">
-                            Añadir nuevo registro de lluvia
-                        </ion-button>
-                    </ion-col>
-                </ion-row>
-            </ng-container>
-            <ng-container *ngIf="showNewRainLogForm || !rainSeasons[selectedTab]">
-                <h2>Nuevo registro de lluvia:</h2>
-                <ion-row>
-                    <ion-col size="12" sizeSm="6">
-                        <ion-input type="number" [(ngModel)]="liters" label="Cantidad de litros"
-                            labelPlacement="floating" placeholder="00"></ion-input>
-                    </ion-col>
-                    <ion-col size="12" sizeSm="6">
-                        <ion-input id="datePopover" [value]="rainDate | date" type="text" label="Fecha"
-                            labelPlacement="floating" readonly></ion-input>
-                        <ion-popover trigger="datePopover">
-                            <ng-template>
-                                <ion-datetime (ionChange)="changeDate($event)"></ion-datetime>
-                            </ng-template>
-                        </ion-popover>
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col class="evenly">
-                        <ion-button class="btn" [disabled]="!rainDate || !liters"
-                            (click)="saveRainLog()">Guardar</ion-button>
-                        <ng-container *ngIf="rainSeasons[selectedTab]">
-                            <ion-button color="danger" class="btn" (click)="showNewRainLogForm = false">
-                                Cancelar
+            @if (!showNewRainLogForm && rainSeasons[selectedTab]) {
+                <ng-container>
+                    <ion-row>
+                        <ion-col class="center">
+                            <ion-button class="btn" (click)="showNewRainLogForm = true">
+                                Añadir nuevo registro de lluvia
                             </ion-button>
-                        </ng-container>
-                    </ion-col>
-                </ion-row>
-            </ng-container>
+                        </ion-col>
+                    </ion-row>
+                </ng-container>
+            }
+            @if (showNewRainLogForm || !rainSeasons[selectedTab]) {
+                <ng-container>
+                    <h2>Nuevo registro de lluvia:</h2>
+                    <ion-row>
+                        <ion-col size="12" sizeSm="6">
+                            <ion-input type="number" [(ngModel)]="liters" label="Cantidad de litros"
+                                labelPlacement="floating" placeholder="00"></ion-input>
+                        </ion-col>
+                        <ion-col size="12" sizeSm="6">
+                            <ion-input id="datePopover" [value]="rainDate | date" type="text" label="Fecha"
+                                labelPlacement="floating" readonly></ion-input>
+                            <ion-popover trigger="datePopover">
+                                <ng-template>
+                                    <ion-datetime (ionChange)="changeDate($event)"></ion-datetime>
+                                </ng-template>
+                            </ion-popover>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col class="evenly">
+                            <ion-button class="btn" [disabled]="!rainDate || !liters"
+                                (click)="saveRainLog()">Guardar</ion-button>
+
+                                @if (rainSeasons[selectedTab]) {
+                                    <ng-container>
+                                        <ion-button color="danger" class="btn" (click)="showNewRainLogForm = false">
+                                            Cancelar
+                                        </ion-button>
+                                    </ng-container>
+                                }
+                        </ion-col>
+                    </ion-row>
+                </ng-container>
+            }
 
 
             <ion-row class="ion-margin-vertical">
-                <table id="rainTable" *ngIf="rainSeasons[selectedTab]" class="appearTr">
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Litros</th>
-                        <th>Acciones</th>
-                    </tr>
-                    <tr *ngFor="let rainLog of rainSeasons[selectedTab]; let i = index" [id]="i"
-                        [class.appearTr]="newLogPosition === i">
-                        <td>{{rainLog.date | date}}</td>
-                        <td class="ion-text-center">{{rainLog.liters}}</td>
-                        <td>
-                            <div class="center">
-                                <ion-button>
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </ion-button>
-                                <ion-button color="danger" (click)="deleteRainLog(rainLog.id!); deleteLogPosition = i">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </ion-button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr id="totalLitersRow">
-                        <td>
-                            Litros totales:
-                        </td>
-                        <td class="ion-text-center">
-                            {{seasonsTotalLiters[selectedTab]}}
-                        </td>
-                        <td></td>
-                    </tr>
-                </table>
-                <ion-col *ngIf="!rainSeasons[selectedTab]">
-                    <div class="ion-text-center">
-                        <h3>Aún no hay registros de lluvia en esta temporada.</h3>
-                    </div>
-                </ion-col>
+                @if (rainSeasons[selectedTab]) {
+                    <table id="rainTable" class="appearTr">
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Litros</th>
+                            <th>Acciones</th>
+                        </tr>
+                        <tr *ngFor="let rainLog of rainSeasons[selectedTab]; let i = index" [id]="i"
+                            [class.appearTr]="newLogPosition === i">
+                            <td>{{rainLog.date | date}}</td>
+                            <td class="ion-text-center">{{rainLog.liters}}</td>
+                            <td>
+                                <div class="center">
+                                    <ion-button>
+                                        <ion-icon name="create-outline"></ion-icon>
+                                    </ion-button>
+                                    <ion-button color="danger" (click)="deleteRainLog(rainLog.id!); deleteLogPosition = i">
+                                        <ion-icon name="trash-outline"></ion-icon>
+                                    </ion-button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr id="totalLitersRow">
+                            <td>
+                                Litros totales:
+                            </td>
+                            <td class="ion-text-center">
+                                {{seasonsTotalLiters[selectedTab]}}
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                }
+
+                @if (!rainSeasons[selectedTab]) {
+                    <ion-col>
+                        <div class="ion-text-center">
+                            <h3>Aún no hay registros de lluvia en esta temporada.</h3>
+                        </div>
+                    </ion-col>
+                }
             </ion-row>
         </ion-grid>
     </ion-item>
