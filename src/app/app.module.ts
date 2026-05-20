@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { ApiService } from './services/api.service';
 import { AuthService } from './services/auth/auth.service';
 import { CoreProvider } from './services/core';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ApiAuthInterceptor } from './services/auth/api-auth.interceptor';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -15,25 +15,19 @@ import { ComponentsModule } from './components/components.module';
 import { DatePipe } from '@angular/common';
 import { AuthServiceGuard } from './services/auth/auth.service.guard';
 
-@NgModule({
-  declarations: [AppComponent],
-  imports: [
-    HttpClientModule,
-    BrowserModule,
-    IonicModule.forRoot(),
-    ApiModule.forRoot({rootUrl:environment.endpoint}),
-    AppRoutingModule,
-    ComponentsModule
-  ],
-  providers: [
-    ApiService,
-    AuthService,
-    CoreProvider,
-    AuthServiceGuard,
-    DatePipe,
-    { provide: HTTP_INTERCEPTORS, useClass: ApiAuthInterceptor, multi: true },
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [AppComponent],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        IonicModule.forRoot(),
+        ApiModule.forRoot({ rootUrl: environment.endpoint }),
+        AppRoutingModule,
+        ComponentsModule], providers: [
+        ApiService,
+        AuthService,
+        CoreProvider,
+        AuthServiceGuard,
+        DatePipe,
+        { provide: HTTP_INTERCEPTORS, useClass: ApiAuthInterceptor, multi: true },
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }
