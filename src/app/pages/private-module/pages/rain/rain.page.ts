@@ -12,9 +12,10 @@ export interface SeasonsTotalLiters {
 }
 
 @Component({
-  selector: 'app-rain',
-  templateUrl: './rain.page.html',
-  styleUrls: ['./rain.page.scss'],
+    selector: 'app-rain',
+    templateUrl: './rain.page.html',
+    styleUrls: ['./rain.page.scss'],
+    standalone: false
 })
 export class RainPage implements OnInit {
   showNewRainLogForm = false;
