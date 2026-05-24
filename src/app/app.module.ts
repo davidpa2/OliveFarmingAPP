@@ -8,7 +8,6 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@a
 import { ApiAuthInterceptor } from './services/auth/api-auth.interceptor';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { ApiModule } from './services/api/api.module';
 import { environment } from 'src/environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { ComponentsModule } from './components/components.module';
@@ -18,7 +17,6 @@ import { AuthServiceGuard } from './services/auth/auth.service.guard';
 @NgModule({ declarations: [AppComponent],
     bootstrap: [AppComponent], imports: [BrowserModule,
         IonicModule.forRoot(),
-        ApiModule.forRoot({ rootUrl: environment.endpoint }),
         AppRoutingModule,
         ComponentsModule], providers: [
         ApiService,

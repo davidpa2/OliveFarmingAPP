@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { RainService, SeasonsService, UsersService } from './api/services';
+import { ApiConfiguration } from './api/api-configuration';
+import { UsersService } from './api/fn/users';
+import { RainService } from './api/fn/rain';
+import { SeasonsService } from './api/fn/rain';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -7,8 +11,11 @@ import { RainService, SeasonsService, UsersService } from './api/services';
 export class ApiService {
 
   constructor(
+    public apiConfig: ApiConfiguration,
     public user: UsersService,
     public rain: RainService,
     public seasons: SeasonsService
-  ) { }
+  ) {
+    this.apiConfig.rootUrl = environment.endpoint;
+  }
 }
