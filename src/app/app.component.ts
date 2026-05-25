@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { ApiConfiguration } from './services/api/api-configuration';
+import { environment } from 'src/environments/environment';
+
 @Component({
     selector: 'app-root',
     templateUrl: 'app.component.html',
@@ -6,5 +9,7 @@ import { Component } from '@angular/core';
     standalone: false
 })
 export class AppComponent {
-  constructor() {}
+  constructor(private apiConfig: ApiConfiguration) {
+    this.apiConfig.rootUrl = environment.endpoint;
+  }
 }

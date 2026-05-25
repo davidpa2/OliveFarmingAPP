@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
 import { AuthService } from './auth/auth.service';
 import { IonLoading, NavController, PopoverController, ToastController } from '@ionic/angular';
 import { SeasonsService } from './seasons.service';
@@ -11,7 +10,6 @@ import { Router } from '@angular/router';
 export class CoreProvider {
 
   constructor(
-    public api: ApiService,
     public auth: AuthService,
     public season: SeasonsService,
     public navCtrl: NavController,

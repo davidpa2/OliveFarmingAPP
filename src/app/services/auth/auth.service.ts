@@ -1,7 +1,11 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { CoreProvider } from '../core';
 import { environment } from 'src/environments/environment';
-import { UserLoginDto } from '../api/models';
+import { UserLoginDto, LoginDto } from '../api/models';
+import { login$Json } from '../api/fn/users/login-json';
+import { HttpClient } from '@angular/common/http';
+import { ApiConfiguration } from '../api/api-configuration';
+import { me$Json } from '../api/functions';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +20,9 @@ export class AuthService {
   } = { user: null, token: null };
   private initedData = false;
   private core!: CoreProvider;
+
+  private http = inject(HttpClient);
+  private apiConfig = inject(ApiConfiguration);
 
   constructor() { }
 
@@ -44,7 +51,7 @@ export class AuthService {
     }
 
     if (this.token) {
-      this.core.api.user.me$Json().subscribe({
+      me$Json(this.http, this.apiConfig.rootUrl).subscribe({
         next: user => {
           if (!this.initedData) {
             this.initedData = true;
@@ -85,13 +92,13 @@ export class AuthService {
       }
     };
 
-    this.core.api.user.login$Json({ body: data }).subscribe({
+    login$Json(this.http, this.apiConfig.rootUrl, { body: data }).subscribe({
       next: (sess) => {
         if (sess.jwt) {
           environment.authToken = sess.jwt;
           this.data.token = sess.jwt;
 
-          this.core.api.user.me$Json().subscribe({
+          me$Json(this.http, this.apiConfig.rootUrl).subscribe({
             next: user => {
               this.data.user = user;
               this.updateStorage();

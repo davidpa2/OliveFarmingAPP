@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ApiService } from './services/api.service';
 import { AuthService } from './services/auth/auth.service';
 import { CoreProvider } from './services/core';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -19,7 +18,6 @@ import { AuthServiceGuard } from './services/auth/auth.service.guard';
         IonicModule.forRoot(),
         AppRoutingModule,
         ComponentsModule], providers: [
-        ApiService,
         AuthService,
         CoreProvider,
         AuthServiceGuard,
