@@ -1,8 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { RainLog, RainLogCreateDto } from 'src/app/services/api/models';
 import { CoreProvider } from 'src/app/services/core';
 import { Chart, registerables } from 'chart.js';
 import { DatePipe } from '@angular/common';
+import { deleteRainLog$Json, findBySeason$Json, newRainLog$Json, seasonLiters$Json } from 'src/app/services/api/functions';
+import { ApiConfiguration } from 'src/app/services/api/api-configuration';
+import { HttpClient } from '@angular/common/http';
 
 export interface RainSeasons {
   [season: string]: RainLog[];
@@ -33,6 +36,9 @@ export class RainPage implements OnInit {
   chart: any;
   ctx: any;
 
+  private http = inject(HttpClient);
+  private apiConfig = inject(ApiConfiguration);
+
   @ViewChild('RainChart') rainChart!: ElementRef;
 
   constructor(public core: CoreProvider, private datePipe: DatePipe) {
@@ -47,7 +53,7 @@ export class RainPage implements OnInit {
   }
 
   saveRainLog() {
-    this.core.api.rain.newRainLog$Json({ body: { date: this.rainDate, liters: this.liters!, seasonName: this.selectedTab } }).subscribe({
+    newRainLog$Json(this.http, this.apiConfig.rootUrl, { body: { date: this.rainDate, liters: this.liters!, seasonName: this.selectedTab } }).subscribe({
       next: res => {
         if (res) {
           this.previousRainLogs = this.rainSeasons[this.selectedTab];
@@ -64,7 +70,7 @@ export class RainPage implements OnInit {
 
   deleteRainLog(id: number) {
     this.newLogPosition = null;
-    this.core.api.rain.deleteRainLog$Json({ id }).subscribe({
+    deleteRainLog$Json(this.http, this.apiConfig.rootUrl, { id }).subscribe({
       next: res => {
         if (res) {
           this.previousRainLogs = this.rainSeasons[this.selectedTab];
@@ -78,20 +84,20 @@ export class RainPage implements OnInit {
   }
 
   updateSeason(season: string, animation: boolean, deleting: boolean = false) {
-    this.core.api.rain.findBySeason$Json({ seasonName: season }).subscribe({
+    findBySeason$Json(this.http, this.apiConfig.rootUrl, { seasonName: season }).subscribe({
       next: res => {
-        if (res.length) {
+        if (res.body.length) {
           if (deleting) {
             document.getElementById(`${this.deleteLogPosition}`)?.classList.add('disappearTr');
             setTimeout(() => {
-              this.rainSeasons[season] = res;
+              this.rainSeasons[season] = res.body;
               this.deleteLogPosition = null;
             }, 2000);
           } else {
             if (animation) {
-              this.newLogPosition = this.core.findNewIndex(res, this.previousRainLogs);
+              this.newLogPosition = this.core.findNewIndex(res.body, this.previousRainLogs);
             }
-            this.rainSeasons[season] = res;
+            this.rainSeasons[season] = res.body;
           }
         } else {
           delete this.rainSeasons[season];
@@ -111,10 +117,10 @@ export class RainPage implements OnInit {
   }
 
   updateSeasonLiters() {
-    this.core.api.rain.seasonLiters$Json({ seasonName: this.selectedTab }).subscribe({
+    seasonLiters$Json(this.http, this.apiConfig.rootUrl, { seasonName: this.selectedTab }).subscribe({
       next: res => {
-        if (res.liters) {
-          this.seasonsTotalLiters[this.selectedTab] = res.liters;
+        if (res.body.liters) {
+          this.seasonsTotalLiters[this.selectedTab] = res.body.liters;
           console.log(this.seasonsTotalLiters[this.selectedTab]);
           this.createChart();
         } else {

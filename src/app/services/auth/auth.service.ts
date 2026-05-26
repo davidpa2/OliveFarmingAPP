@@ -92,31 +92,31 @@ export class AuthService {
       }
     };
 
-    login$Json(this.http, this.apiConfig.rootUrl, { body: data }).subscribe({
-      next: (sess) => {
-        if (sess.jwt) {
-          environment.authToken = sess.jwt;
-          this.data.token = sess.jwt;
+      login$Json(this.http, this.apiConfig.rootUrl, { body: data }).subscribe({
+        next: (response) => {
+          if (response.body.jwt) {
+            environment.authToken = response.body.jwt;
+            this.data.token = response.body.jwt;
 
-          me$Json(this.http, this.apiConfig.rootUrl).subscribe({
-            next: user => {
-              this.data.user = user;
-              this.updateStorage();
+            me$Json(this.http, this.apiConfig.rootUrl).subscribe({
+              next: user => {
+                this.data.user = user;
+                this.updateStorage();
 
-              if (cbSuccess) {
-                cbSuccess();
+                if (cbSuccess) {
+                  cbSuccess();
+                }
+              },
+              error: err => {
+                handleErr(err);
               }
-            },
-            error: err => {
-              handleErr(err);
-            }
-          })
+            })
+          }
+        },
+        error: (err) => {
+          handleErr(err);
         }
-      },
-      error: (err) => {
-        handleErr(err);
-      }
-    })
+      })
   }
 
   public logout(cb: Function) {
