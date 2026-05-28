@@ -43,7 +43,8 @@ export class AuthService {
 
   private initChecks() {
     //TODO: Add token refresh every hour since last refresh/login
-    const sess = JSON.parse(localStorage.getItem('appSession')!);
+    const savedSession = JSON.parse(localStorage.getItem('appSession')!);
+    const sess = savedSession ? JSON.parse(savedSession) : null;
     
     if (sess && sess.token) {
       this.data = sess;
@@ -66,9 +67,10 @@ export class AuthService {
           this.data = { user: null, token: null };
           environment.authToken = '';
           this.updateStorage();
-          // this.core.errorToast(
-          //   undefined, 'Su sesión anterior ha sido cerrada por seguridad', 15000
-          // );
+          
+          this.core.errorToast(
+            undefined, 'Su sesión anterior ha sido cerrada por seguridad', 15000
+          );
         }
       })
     } else {
@@ -124,29 +126,6 @@ export class AuthService {
     environment.authToken = '';
     this.updateStorage();
     cb();
-    // this.core.api.auth.authLogout().subscribe(
-    //   () => {
-    //     this.data = { user: null, token: null };
-    //     environment.authToken = '';
-    //     this.updateStorage();
-    //     if (cb) {
-    //       cb();
-    //     }
-    //   },
-    //   (err) => {
-    //     if (err.status === 401) {
-    //       // Handle already invalid session
-    //       this.data = { user: null, token: null };
-    //       environment.authToken = '';
-    //       this.updateStorage();
-    //       if (cb) {
-    //         cb();
-    //       }
-    //     } else {
-    //       this.core.errorToast(null, err);
-    //     }
-    //   }
-    // );
   }
 
   updateStorage() {
