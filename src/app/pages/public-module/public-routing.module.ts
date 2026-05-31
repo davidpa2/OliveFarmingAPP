@@ -5,9 +5,10 @@ const routes: Routes = [
   {
     path: '', loadChildren: () => import('./pages/index/index.module').then(m => m.IndexModule)
   }
-]
+];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class PublicRoutingModule { }
