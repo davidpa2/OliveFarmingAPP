@@ -5,6 +5,7 @@ import { SeasonsService } from './seasons.service';
 import { RainLog, RainLogCreateDto } from './api/models';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { RainService } from './rain.service';
 
 @Injectable({ providedIn: 'root' })
 export class CoreProvider {
@@ -12,6 +13,7 @@ export class CoreProvider {
   constructor(
     public auth: AuthService,
     public season: SeasonsService,
+    public rain: RainService,
     public navCtrl: NavController,
     public toastCtrl: ToastController,
     public popoverCtrl: PopoverController,
@@ -20,6 +22,7 @@ export class CoreProvider {
   ) {
     this.auth.init(this);
     this.season.init(this);
+    this.rain.init(this);
   }
 
   public get user() {
