@@ -60,7 +60,7 @@ export class RainPage implements OnInit {
       this.updateSeason(this.selectedTab, true);
       this.liters = null;
       this.rainDate = '';
-      
+
     }, (err: any) => {
       console.log(err);
     });
@@ -68,17 +68,15 @@ export class RainPage implements OnInit {
 
   deleteRainLog(id: number) {
     this.newLogPosition = null;
-    deleteRainLog$Json(this.http, this.apiConfig.rootUrl, { id }).subscribe({
-      next: res => {
-        if (res) {
-          this.previousRainLogs = this.rainSeasons[this.selectedTab];
-          this.updateSeason(this.selectedTab, false, true);
-        }
-      },
-      error: err => {
+
+    this.core.rain.deleteRainLog({ id },
+      () => {
+        this.previousRainLogs = this.rainSeasons[this.selectedTab];
+        this.updateSeason(this.selectedTab, false, true);
+      }, (err: any) => {
         console.log(err);
       }
-    })
+    );
   }
 
   updateSeason(season: string, animation: boolean, deleting: boolean = false) {
