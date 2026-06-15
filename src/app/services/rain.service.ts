@@ -2,8 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { CoreProvider } from './core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration } from './api/api-configuration';
-import { deleteRainLog$Json, DeleteRainLog$Json$Params, newRainLog$Json } from './api/functions';
-import { RainLogCreateDto } from './api/models';
+import { deleteRainLog$Json, DeleteRainLog$Json$Params, findBySeason$Json, FindBySeason$Json$Params, newRainLog$Json } from './api/functions';
+import { RainLog, RainLogCreateDto } from './api/models';
 
 @Injectable({
   providedIn: 'root'
@@ -71,6 +71,33 @@ export class RainService {
       next: res => {
         if (res) {
           if (cbSuccess) cbSuccess();
+        }
+      },
+      error: (err: any) => {
+        handleErr(err);
+      }
+    })
+  }
+
+  public findBySeason(
+    data: FindBySeason$Json$Params,
+    cbSuccess: (rainLogs: RainLog[]) => void,
+    cbErr: Function
+  ) {
+
+    const handleErr = (err: any) => {
+      if (cbErr) {
+        cbErr(err);
+      } else {
+        this.core.errorToast();
+        console.error('Error in FindBySeason request', err);
+      }
+    };
+
+    findBySeason$Json(this.http, this.apiConfig.rootUrl, data).subscribe({
+      next: res => {
+        if (res) {
+          if (cbSuccess) cbSuccess(res.body);
         }
       },
       error: (err: any) => {

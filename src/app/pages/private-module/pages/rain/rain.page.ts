@@ -80,31 +80,31 @@ export class RainPage implements OnInit {
   }
 
   updateSeason(season: string, animation: boolean, deleting: boolean = false) {
-    findBySeason$Json(this.http, this.apiConfig.rootUrl, { seasonName: season }).subscribe({
-      next: res => {
-        if (res.body.length) {
+    this.core.rain.findBySeason({ seasonName: season },
+      (res: RainLog[]) => {
+        if (res.length) {
           if (deleting) {
             document.getElementById(`${this.deleteLogPosition}`)?.classList.add('disappearTr');
             setTimeout(() => {
-              this.rainSeasons[season] = res.body;
+              this.rainSeasons[season] = res;
               this.deleteLogPosition = null;
             }, 2000);
           } else {
             if (animation) {
-              this.newLogPosition = this.core.findNewIndex(res.body, this.previousRainLogs);
+              this.newLogPosition = this.core.findNewIndex(res, this.previousRainLogs);
             }
-            this.rainSeasons[season] = res.body;
+            this.rainSeasons[season] = res;
           }
         } else {
           delete this.rainSeasons[season];
         }
+
         this.updateSeasonLiters();
         console.log(this.rainSeasons);
-      },
-      error: err => {
+      }, (err: any) => {
         console.log(err);
       }
-    })
+    );
   }
 
   changeDate(event: any) {
