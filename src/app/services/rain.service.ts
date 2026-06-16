@@ -2,8 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { CoreProvider } from './core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration } from './api/api-configuration';
-import { deleteRainLog$Json, DeleteRainLog$Json$Params, findBySeason$Json, FindBySeason$Json$Params, newRainLog$Json } from './api/functions';
-import { RainLog, RainLogCreateDto } from './api/models';
+import { deleteRainLog$Json, DeleteRainLog$Json$Params, findBySeason$Json, FindBySeason$Json$Params, newRainLog$Json, seasonLiters$Json, SeasonLiters$Json$Params } from './api/functions';
+import { RainLog, RainLogCreateDto, SeasonLitersDto } from './api/models';
 
 @Injectable({
   providedIn: 'root'
@@ -101,6 +101,33 @@ export class RainService {
         }
       },
       error: (err: any) => {
+        handleErr(err);
+      }
+    })
+  }
+
+  public seasonLiters(
+    data: SeasonLiters$Json$Params,
+    cbSuccess: (rainLogs: SeasonLitersDto) => void,
+    cbErr: Function
+  ) {
+
+    const handleErr = (err: any) => {
+      if (cbErr) {
+        cbErr(err);
+      } else {
+        this.core.errorToast();
+        console.error('Error in FindBySeason request', err);
+      }
+    };
+
+    seasonLiters$Json(this.http, this.apiConfig.rootUrl, data).subscribe({
+      next: res => {
+        if (res) {
+          if (cbSuccess) cbSuccess(res.body);
+        }
+      },
+      error: err => {
         handleErr(err);
       }
     })

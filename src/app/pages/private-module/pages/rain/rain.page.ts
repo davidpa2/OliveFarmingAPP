@@ -1,9 +1,8 @@
 import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
-import { RainLog } from 'src/app/services/api/models';
+import { RainLog, SeasonLitersDto } from 'src/app/services/api/models';
 import { CoreProvider } from 'src/app/services/core';
 import { Chart, registerables } from 'chart.js';
 import { DatePipe } from '@angular/common';
-import { deleteRainLog$Json, findBySeason$Json, seasonLiters$Json } from 'src/app/services/api/functions';
 import { ApiConfiguration } from 'src/app/services/api/api-configuration';
 import { HttpClient } from '@angular/common/http';
 
@@ -113,20 +112,19 @@ export class RainPage implements OnInit {
   }
 
   updateSeasonLiters() {
-    seasonLiters$Json(this.http, this.apiConfig.rootUrl, { seasonName: this.selectedTab }).subscribe({
-      next: res => {
-        if (res.body.liters) {
-          this.seasonsTotalLiters[this.selectedTab] = res.body.liters;
+    this.core.rain.seasonLiters({ seasonName: this.selectedTab },
+      (res: SeasonLitersDto) => {
+        if (res.liters) {
+          this.seasonsTotalLiters[this.selectedTab] = res.liters;
           console.log(this.seasonsTotalLiters[this.selectedTab]);
           this.createChart();
         } else {
           this.destroyChart(true);
         }
-      },
-      error: err => {
-        console.log(err);
+      }, (err: any) => {
+        console.log(err)
       }
-    })
+    );
   }
 
   createChart() {
