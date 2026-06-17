@@ -48,10 +48,15 @@
             </ion-row>
             
             <ion-row class="ion-margin-vertical ion-justify-content-center">
-                <ion-button *ngIf="core.isLoggedIn; else loginButton" (click)="core.navigate('/private/dashboard')">Ir al puesto de mandos</ion-button>
-                <ng-template #loginButton>
-                    <ion-button  (click)="core.navigate('/auth/login')">Iniciar sesión</ion-button>
-                </ng-template>
+                @if (core.isLoggedIn) {
+                    <ion-button (click)="core.navigate('/private/dashboard')">
+                        Ir al puesto de mandos
+                    </ion-button>
+                } @else {
+                    <ion-button (click)="core.navigate('/auth/login')">
+                        Iniciar sesión
+                    </ion-button>
+                }
             </ion-row>
         </ion-grid>
     </ion-item>

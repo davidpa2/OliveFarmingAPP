@@ -1,5 +1,8 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { CoreProvider } from './core';
+import { HttpClient } from '@angular/common/http';
+import { ApiConfiguration } from './api/api-configuration';
+import { addSeason, getAllSeasons$Json, seasonLiters$Json } from './api/functions';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +13,9 @@ export class SeasonsService {
   currentSeason: string = '';
   currentSeasonLiters: number = 0;
 
+  private http = inject(HttpClient);
+  private apiConfig = inject(ApiConfiguration);
+
   constructor() { }
 
   public init = (core: CoreProvider) => {
@@ -18,13 +24,13 @@ export class SeasonsService {
   };
 
   private initChecks() {
-    this.core.api.seasons.getAllSeasons$Json().subscribe({
+    getAllSeasons$Json(this.http, this.apiConfig.rootUrl).subscribe({
       next: res => {
-        this.seasons = res;
+        this.seasons = res.body;
         this.setCurrentSeason();
 
         if (!this.seasons.includes(this.currentSeason)) {
-          this.core.api.seasons.addSeason({ body: { name: this.currentSeason } }).subscribe({
+          addSeason(this.http, this.apiConfig.rootUrl, { body: { name: this.currentSeason } }).subscribe({
             next: res => {
               this.seasons.push(this.currentSeason)
               this.currentSeasonLiters = 0;
@@ -35,9 +41,9 @@ export class SeasonsService {
             }
           })
         } else {
-          this.core.api.rain.seasonLiters$Json({seasonName: this.currentSeason}).subscribe({
+          seasonLiters$Json(this.http, this.apiConfig.rootUrl, {seasonName: this.currentSeason}).subscribe({
             next: res => {
-              this.currentSeasonLiters = res.liters || 0;
+              this.currentSeasonLiters = res.body.liters || 0;
             },
             error: err => {
               console.log(err);

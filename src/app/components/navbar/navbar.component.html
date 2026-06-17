@@ -10,12 +10,14 @@
     </ion-row>
 
     <ion-buttons slot="end">
-      <ion-button *ngIf="!core.isLoggedIn" (click)="core.navigate('/auth/login')">
-        Log in <ion-icon name="log-in-outline"></ion-icon>
-      </ion-button>
+      @if (!core.isLoggedIn) {
+        <ion-button (click)="core.navigate('/auth/login')">
+          Log in <ion-icon name="log-in-outline"></ion-icon>
+        </ion-button>
+      }
 
-      <ng-container *ngIf="core.isLoggedIn">
-        <ion-button *ngIf="core.isLoggedIn" (click)="presentPopover($event)">
+      @if (core.isLoggedIn) {
+        <ion-button (click)="presentPopover($event)">
           <ion-icon name="person-circle-outline" size="large"></ion-icon>
         </ion-button>
 
@@ -33,7 +35,7 @@
             </ion-content>
           </ng-template>
         </ion-popover>
-      </ng-container>
+      }
 
     </ion-buttons>
   </ion-toolbar>

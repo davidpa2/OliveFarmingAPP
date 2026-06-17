@@ -1,8 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { RainLog, RainLogCreateDto } from 'src/app/services/api/models';
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { RainLog, SeasonLitersDto } from 'src/app/services/api/models';
 import { CoreProvider } from 'src/app/services/core';
 import { Chart, registerables } from 'chart.js';
 import { DatePipe } from '@angular/common';
+import { ApiConfiguration } from 'src/app/services/api/api-configuration';
+import { HttpClient } from '@angular/common/http';
 
 export interface RainSeasons {
   [season: string]: RainLog[];
@@ -15,6 +17,7 @@ export interface SeasonsTotalLiters {
   selector: 'app-rain',
   templateUrl: './rain.page.html',
   styleUrls: ['./rain.page.scss'],
+  standalone: false
 })
 export class RainPage implements OnInit {
   showNewRainLogForm = false;
@@ -32,6 +35,9 @@ export class RainPage implements OnInit {
   chart: any;
   ctx: any;
 
+  private http = inject(HttpClient);
+  private apiConfig = inject(ApiConfiguration);
+
   @ViewChild('RainChart') rainChart!: ElementRef;
 
   constructor(public core: CoreProvider, private datePipe: DatePipe) {
@@ -46,39 +52,35 @@ export class RainPage implements OnInit {
   }
 
   saveRainLog() {
-    this.core.api.rain.newRainLog$Json({ body: { date: this.rainDate, liters: this.liters!, seasonName: this.selectedTab } }).subscribe({
-      next: res => {
-        if (res) {
-          this.previousRainLogs = this.rainSeasons[this.selectedTab];
-          this.updateSeason(this.selectedTab, true);
-          this.liters = null;
-          this.rainDate = '';
-        }
-      },
-      error: (err: any) => {
-        console.log(err);
-      }
-    })
+    this.core.rain.saveRainLog({
+      date: this.rainDate, liters: this.liters!, seasonName: this.selectedTab
+    }, () => {
+      this.previousRainLogs = this.rainSeasons[this.selectedTab];
+      this.updateSeason(this.selectedTab, true);
+      this.liters = null;
+      this.rainDate = '';
+
+    }, (err: any) => {
+      console.log(err);
+    });
   }
 
   deleteRainLog(id: number) {
     this.newLogPosition = null;
-    this.core.api.rain.deleteRainLog$Json({ id }).subscribe({
-      next: res => {
-        if (res) {
-          this.previousRainLogs = this.rainSeasons[this.selectedTab];
-          this.updateSeason(this.selectedTab, false, true);
-        }
-      },
-      error: err => {
+
+    this.core.rain.deleteRainLog({ id },
+      () => {
+        this.previousRainLogs = this.rainSeasons[this.selectedTab];
+        this.updateSeason(this.selectedTab, false, true);
+      }, (err: any) => {
         console.log(err);
       }
-    })
+    );
   }
 
   updateSeason(season: string, animation: boolean, deleting: boolean = false) {
-    this.core.api.rain.findBySeason$Json({ seasonName: season }).subscribe({
-      next: res => {
+    this.core.rain.findBySeason({ seasonName: season },
+      (res: RainLog[]) => {
         if (res.length) {
           if (deleting) {
             document.getElementById(`${this.deleteLogPosition}`)?.classList.add('disappearTr');
@@ -95,13 +97,13 @@ export class RainPage implements OnInit {
         } else {
           delete this.rainSeasons[season];
         }
+
         this.updateSeasonLiters();
         console.log(this.rainSeasons);
-      },
-      error: err => {
+      }, (err: any) => {
         console.log(err);
       }
-    })
+    );
   }
 
   changeDate(event: any) {
@@ -110,8 +112,8 @@ export class RainPage implements OnInit {
   }
 
   updateSeasonLiters() {
-    this.core.api.rain.seasonLiters$Json({ seasonName: this.selectedTab }).subscribe({
-      next: res => {
+    this.core.rain.seasonLiters({ seasonName: this.selectedTab },
+      (res: SeasonLitersDto) => {
         if (res.liters) {
           this.seasonsTotalLiters[this.selectedTab] = res.liters;
           console.log(this.seasonsTotalLiters[this.selectedTab]);
@@ -119,11 +121,10 @@ export class RainPage implements OnInit {
         } else {
           this.destroyChart(true);
         }
-      },
-      error: err => {
-        console.log(err);
+      }, (err: any) => {
+        console.log(err)
       }
-    })
+    );
   }
 
   createChart() {
@@ -174,7 +175,7 @@ export class RainPage implements OnInit {
     var chartDiv = document.getElementById("RainChart")!;
     if (this.chart) {
       if (animation) chartDiv.classList.add('disappearTr')
-      
+
       if (hideChart) {
         setTimeout(() => {
           if (animation) chartDiv.classList.add('dNone')
