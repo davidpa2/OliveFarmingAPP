@@ -1,10 +1,8 @@
-import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RainLog, SeasonLitersDto } from 'src/app/services/api/models';
 import { CoreProvider } from 'src/app/services/core';
 import { Chart, registerables } from 'chart.js';
 import { DatePipe } from '@angular/common';
-import { ApiConfiguration } from 'src/app/services/api/api-configuration';
-import { HttpClient } from '@angular/common/http';
 
 export interface RainSeasons {
   [season: string]: RainLog[];
@@ -34,9 +32,6 @@ export class RainPage implements OnInit {
 
   chart: any;
   ctx: any;
-
-  private http = inject(HttpClient);
-  private apiConfig = inject(ApiConfiguration);
 
   @ViewChild('RainChart') rainChart!: ElementRef;
 
@@ -84,6 +79,7 @@ export class RainPage implements OnInit {
         if (res.length) {
           if (deleting) {
             document.getElementById(`${this.deleteLogPosition}`)?.classList.add('disappearTr');
+
             setTimeout(() => {
               this.rainSeasons[season] = res;
               this.deleteLogPosition = null;
@@ -135,8 +131,9 @@ export class RainPage implements OnInit {
 
     this.rainSeasons[this.selectedTab].forEach(element => {
       labels.push(this.datePipe.transform(element.date)!);
-      liters.push(element.liters || 0)
-    })
+      liters.push(element.liters || 0);
+    });
+
     if (liters.length) {
       this.destroyChart(false, false);
       console.log('Generating chart...');
@@ -163,9 +160,11 @@ export class RainPage implements OnInit {
           aspectRatio: 2.5
         }
       });
+
       var chartDiv = document.getElementById("RainChart")!;
       chartDiv.classList.remove('dNone', 'disappearTr');
       chartDiv.classList.add('dBlock', 'appearTr');
+
     } else {
       this.destroyChart(true);
     }
@@ -174,11 +173,11 @@ export class RainPage implements OnInit {
   destroyChart(animation: boolean, hideChart: boolean = true) {
     var chartDiv = document.getElementById("RainChart")!;
     if (this.chart) {
-      if (animation) chartDiv.classList.add('disappearTr')
+      if (animation) chartDiv.classList.add('disappearTr');
 
       if (hideChart) {
         setTimeout(() => {
-          if (animation) chartDiv.classList.add('dNone')
+          if (animation) chartDiv.classList.add('dNone');
           this.chart.destroy();
         }, 2000);
       } else {

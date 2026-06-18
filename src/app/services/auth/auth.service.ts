@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { CoreProvider } from '../core';
 import { environment } from 'src/environments/environment';
-import { UserLoginDto, LoginDto } from '../api/models';
+import { UserLoginDto } from '../api/models';
 import { login$Json } from '../api/fn/users/login-json';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration } from '../api/api-configuration';
