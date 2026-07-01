@@ -5,6 +5,10 @@ export type { FindBySeason$Plain$Params as FindBySeason$Plain$Params } from './f
 export { findBySeason$Plain as findBySeason$Plain } from './fn/rain/find-by-season-plain';
 export type { FindBySeason$Json$Params as FindBySeason$Json$Params } from './fn/rain/find-by-season-json';
 export { findBySeason$Json as findBySeason$Json } from './fn/rain/find-by-season-json';
+export type { EditRainLog$Plain$Params as EditRainLog$Plain$Params } from './fn/rain/edit-rain-log-plain';
+export { editRainLog$Plain as editRainLog$Plain } from './fn/rain/edit-rain-log-plain';
+export type { EditRainLog$Json$Params as EditRainLog$Json$Params } from './fn/rain/edit-rain-log-json';
+export { editRainLog$Json as editRainLog$Json } from './fn/rain/edit-rain-log-json';
 export type { NewRainLog$Plain$Params as NewRainLog$Plain$Params } from './fn/rain/new-rain-log-plain';
 export { newRainLog$Plain as newRainLog$Plain } from './fn/rain/new-rain-log-plain';
 export type { NewRainLog$Json$Params as NewRainLog$Json$Params } from './fn/rain/new-rain-log-json';
