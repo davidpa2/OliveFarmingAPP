@@ -3,6 +3,7 @@
 
 export interface EditRainLogDto {
   date?: string;
+  id?: number;
   liters?: number;
   seasonName: string | null;
 }

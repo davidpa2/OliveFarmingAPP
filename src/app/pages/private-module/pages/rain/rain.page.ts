@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { RainLog, SeasonLitersDto } from 'src/app/services/api/models';
+import { EditRainLogDto, RainLog, SeasonLitersDto } from 'src/app/services/api/models';
 import { CoreProvider } from 'src/app/services/core';
 import { Chart, registerables } from 'chart.js';
 import { DatePipe } from '@angular/common';
@@ -18,10 +18,11 @@ export interface SeasonsTotalLiters {
   standalone: false
 })
 export class RainPage implements OnInit {
-  showNewRainLogForm = false;
+  formMode: "hidden" | "insert" | "edit" = 'hidden';
   selectedTab = '';
   rainDate = '';
   liters!: number | null;
+  editingRainLog: RainLog;
   //Properties to manage the animation of a new rain log
   newLogPosition: number | null = null;
   deleteLogPosition: number | null = null;
@@ -46,6 +47,20 @@ export class RainPage implements OnInit {
     this.updateSeason(this.selectedTab, false);
   }
 
+  manageRainForm() {
+    switch (this.formMode) {
+      case 'insert':
+        this.saveRainLog();
+        break;
+      case 'edit':
+        this.editRainLog();
+        break;
+    
+      default:
+        break;
+    }
+  }
+
   saveRainLog() {
     this.core.rain.saveRainLog({
       date: this.rainDate, liters: this.liters!, seasonName: this.selectedTab
@@ -58,6 +73,36 @@ export class RainPage implements OnInit {
     }, (err: any) => {
       console.log(err);
     });
+  }
+
+  setEditForm(id: number) {
+    this.formMode = 'edit';
+    
+    var logToEdit: RainLog = this.rainSeasons[this.selectedTab].find(x => x.id === id);
+    if (!logToEdit) {
+      console.error('No se encontró el registro en el array local');
+      return;
+    }
+
+    this.liters = logToEdit.liters;
+    this.rainDate = logToEdit.date;
+    this.editingRainLog = logToEdit;
+  }
+
+  editRainLog() {
+    var rainLogDto: EditRainLogDto = { id: this.editingRainLog.id, seasonName: this.selectedTab, date: this.rainDate, liters: this.liters };
+
+    this.core.rain.editRainLog(rainLogDto,
+      () => {
+        this.updateSeason(this.selectedTab, false);
+
+        this.liters = null;
+        this.rainDate = '';
+        this.formMode = 'hidden';
+      }, (err: any) => {
+        console.log(err);
+      }
+    )
   }
 
   deleteRainLog(id: number) {
@@ -74,6 +119,8 @@ export class RainPage implements OnInit {
   }
 
   updateSeason(season: string, animation: boolean, deleting: boolean = false) {
+    this.destroyChart(false, false);
+
     this.core.rain.findBySeason({ seasonName: season },
       (res: RainLog[]) => {
         if (res.length) {

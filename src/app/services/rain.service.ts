@@ -2,8 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { CoreProvider } from './core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration } from './api/api-configuration';
-import { deleteRainLog$Json, DeleteRainLog$Json$Params, findBySeason$Json, FindBySeason$Json$Params, newRainLog$Json, seasonLiters$Json, SeasonLiters$Json$Params } from './api/functions';
-import { RainLog, RainLogCreateDto, SeasonLitersDto } from './api/models';
+import { deleteRainLog$Json, DeleteRainLog$Json$Params, editRainLog$Json, findBySeason$Json, FindBySeason$Json$Params, newRainLog$Json, seasonLiters$Json, SeasonLiters$Json$Params } from './api/functions';
+import { EditRainLogDto, RainLog, RainLogCreateDto, SeasonLitersDto } from './api/models';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +41,33 @@ export class RainService {
     };
 
     newRainLog$Json(this.http, this.apiConfig.rootUrl, { body: data }).subscribe({
+      next: res => {
+        if (res) {
+          if (cbSuccess) cbSuccess();
+        }
+      },
+      error: (err: any) => {
+        handleErr(err);
+      }
+    })
+  }
+
+    public editRainLog(
+    data: EditRainLogDto,
+    cbSuccess: Function,
+    cbErr: Function
+  ) {
+
+    const handleErr = (err: any) => {
+      if (cbErr) {
+        cbErr(err);
+      } else {
+        this.core.errorToast();
+        console.error('Error in login request', err);
+      }
+    };
+
+    editRainLog$Json(this.http, this.apiConfig.rootUrl, { body: data }).subscribe({
       next: res => {
         if (res) {
           if (cbSuccess) cbSuccess();
