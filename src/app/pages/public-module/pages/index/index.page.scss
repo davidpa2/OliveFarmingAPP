@@ -1,0 +1,171 @@
+// Contenedor principal alineado con rain-page
+.page-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
+
+// Cabecera Principal (Hero)
+.hero-section {
+    padding: 2rem 1rem 2.5rem;
+
+    .main-title {
+        font-weight: 800;
+        color: var(--ion-color-primary);
+        font-size: 2.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+        color: var(--ion-color-medium);
+        font-size: 1.1rem;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
+// Estructura de Tarjetas
+.feature-card {
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    margin-bottom: 24px;
+    overflow: hidden; // Para que la imagen respete el border-radius de la tarjeta
+
+    // Columna de la imagen para que llene todo el alto
+    .image-col {
+        display: flex;
+    }
+
+    .feature-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; // Evita que la imagen se achate
+        min-height: 250px;
+    }
+
+    // Si quieres que el lado de la imagen tenga un sutil borde divisor en desktop
+    .border-left {
+        border-left: 4px solid var(--ion-color-secondary);
+    }
+
+    // Columna del texto centrado verticalmente
+    .text-col {
+        display: flex;
+        align-items: center;
+    }
+
+    .text-content {
+        padding: 1rem;
+        width: 100%;
+    }
+
+    .section-title {
+        font-weight: 700;
+        color: var(--ion-color-dark);
+        margin-bottom: 0.5rem;
+        font-size: 1.6rem;
+    }
+
+    // Lista transparente (sin fondos blancos de Ionic que rompan el diseño)
+    .transparent-list {
+        background: transparent;
+        margin-top: 10px;
+
+        ion-item {
+            --background: transparent;
+            --padding-start: 0;
+            --inner-padding-end: 0;
+            font-size: 0.95rem;
+
+            ion-icon {
+                margin-right: 12px;
+            }
+        }
+    }
+}
+
+// Botón de acción al final
+.cta-section {
+    padding: 2rem 0 3rem;
+
+    .btn-shadow {
+        box-shadow: 0 8px 16px rgba(var(--ion-color-primary-rgb), 0.3);
+    }
+}
+
+// --- Animaciones compartidas (Mismo lenguaje que la Rain Page) ---
+.animation-slide-down {
+    animation: slideInDown 0.6s ease-out;
+}
+
+.animation-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+.animation-slide-up {
+    animation: slideInUp 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+.delay-1 {
+    animation-delay: 0.2s;
+}
+
+.delay-2 {
+    animation-delay: 0.4s;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+// --- Responsive: Comportamiento en Móviles ---
+@media screen and (max-width: 768px) {
+
+    // Asegura que en la segunda tarjeta, la foto salga ARRIBA y el texto DEBAJO
+    .reverse-row-mobile {
+        flex-direction: column-reverse;
+    }
+
+    .feature-card {
+        .feature-image {
+            min-height: 200px;
+        }
+
+        .border-left {
+            border-left: none;
+            border-bottom: 4px solid var(--ion-color-secondary);
+        }
+    }
+}
