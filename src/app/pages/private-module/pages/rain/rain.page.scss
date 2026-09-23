@@ -1,160 +1,175 @@
-.seasonLabelTitle {
-    padding: 0;
-    display: inline-block;
-    background-color: var(--ion-color-primary);
-    border-radius: 6px 0px 0px 0px;
-    text-align: center;
-    position: relative;
-    width: 180px;
-    margin-bottom: -1px;
+.page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
 
-    p {
-        padding: 3px 8px 4px;
-        margin: 0;
-        // font-size: 9px;
+.season-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+ion-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 16px;
+}
+
+// Form
+.form-card {
+    border-top: 4px solid var(--ion-color-primary);
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: flex-start;
     }
 }
 
-.seasonLabel {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    background-color: white;
-    color: black;
-    border-radius: 6px 6px 0px 0px;
-    text-align: center;
-    position: relative;
-    min-width: 120px;
-    margin-left: 1px;
-    margin-bottom: -1px;
-    cursor: pointer;
-    user-select: none;
+// Table settings
+.table-card {
+    border-radius: 12px;
+    overflow: hidden;
 
-    p {
-        padding: 3px 8px 4px;
-        margin: 0;
+    .list-header {
+        font-size: 0.95rem;
+        font-weight: bold;
+        min-height: 40px;
+        padding: 0 16px;
     }
-}
 
+    .liters-badge {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+    }
 
-.selectedTab {
-    background-color: var(--ion-color-secondary);
-}
+    .row-actions {
+        display: flex;
+        gap: 4px;
 
-.tabs {
-    display: flex;
-}
-
-ion-input {
-    color: black;
-    background-color: white;
-    border-radius: 5px;
-
-    ::ng-deep {
-        div {
-            padding-left: 15px;
-        }
-
-        .native-wrapper {
-            padding-left: 25px;
+        ion-button {
+            margin: 0;
+            --padding-start: 8px;
+            --padding-end: 8px;
         }
     }
+
+    .total-row {
+        --min-height: 50px;
+        font-size: 1.1rem;
+
+        .spacer {
+            width: 80px;
+        }
+    }
 }
 
+// Empty State
+.empty-state {
+    margin-top: 40px;
 
-#rainTable {
-    font-family: Arial, Helvetica, sans-serif;
-    width: 100%;
-    color: #000;
-    border-radius: 10px;
+    ion-icon {
+        font-size: 4rem;
+        opacity: 0.5;
+        margin-bottom: 10px;
+    }
+
+    h3 {
+        color: var(--ion-color-dark);
+        font-weight: 600;
+    }
+
+    p {
+        color: var(--ion-color-medium);
+    }
 }
 
-#rainTable td,
-#rainTable th {
-    border: 1px solid #ddd;
-    padding: 8px;
-    width: 200px;
-}
-
-#rainTable tr {
+// Graphic
+.chart-card {
+    border-radius: 16px;
     background-color: white;
+
+    &.dNone {
+        display: none;
+    }
+
+    &.dBlock {
+        display: block;
+    }
 }
 
-#rainTable tr:nth-child(even) {
-    background-color: #eeeeee;
-}
-
-#rainTable tr:hover {
-    background-color: #ddd;
-}
-
-#rainTable th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: var(--ion-color-primary);
-    color: white;
-}
-
-#totalLitersRow {
-    background-color: var(--ion-color-primary) !important;
-    color: white;
-}
-
+// Improved animations
 .appearTr {
-    animation: appearTr 2s;
-}
-
-@keyframes appearTr {
-    from {
-        opacity: 0;
-        transform: translateX(-550px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    animation: slideInUp 0.5s ease-out forwards;
 }
 
 .disappearTr {
-    animation: disappearTr 2s;
+    animation: slideOutDown 0.5s ease-in forwards;
 }
 
-@keyframes disappearTr {
+.animation-fade-in {
+    animation: fadeIn 0.4s ease-out;
+}
+
+.animation-slide-down {
+    animation: slideInDown 0.4s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOutDown {
     from {
         opacity: 1;
-        transform: translateX(0);
+        transform: translateY(0);
     }
 
     to {
         opacity: 0;
-        transform: translateX(-550px);
+        transform: translateY(20px);
     }
 }
 
-#RainChart {
-    max-width: 60%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-    padding: 10px;
-    border-radius: 15px;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 
 @media screen and (max-width: 600px) {
-    .seasonLabel {
-        min-width: 60px;
-    }
+    .form-card .action-buttons {
+        flex-direction: column;
 
-    .tabs {
-        overflow-x: scroll;
-        overflow-y: hidden;
-        overscroll-behavior-x: contain;
-    }
-
-    #RainChart {
-        max-width: 100%;
+        ion-button {
+            width: 100%;
+        }
     }
 }
