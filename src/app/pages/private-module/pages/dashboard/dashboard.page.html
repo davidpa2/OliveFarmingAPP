@@ -1,20 +1,53 @@
 <app-navbar></app-navbar>
 
-<ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col size="12" sizeMd="8" class="ion-margin-top">
-        <div id="rainyCard" class="card">
-          <h1>Temporada de lluvias</h1>
-          <p>La temporada de lluvias se cuenta entre septiembre hasta agosto del año siguiente.</p>
-          <p>Actualmente, en la temporada 2022-2023, han caído un total de
-            {{core.season.currentSeasonLiters}} litros.
-          </p>
-          <div class="ion-justify-content-center">
-            <ion-button (click)="core.navigate('/private/rain')">Ver detalles</ion-button>
-          </div>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+<ion-content color="light">
+  <div class="pageContainer ion-padding">
+    <div class="dashboardHeader animationSlideDown ion-margin-bottom">
+      <h1 class="mainTitle">Puesto de mandos</h1>
+      <p class="subtitle">Seleccione un módulo para gestionar su olivar.</p>
+    </div>
+
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size="12" size-md="6" size-lg="4">
+          <ion-card class="moduleCard rainyCard animationFadeIn">
+            <!-- Overlay -->
+            <div class="cardOverlay"></div>
+            
+            <div class="cardContentWrapper">
+              <ion-card-header>
+                <div class="headerFlex">
+                  <ion-icon name="cloud-download-outline" class="cardIcon"></ion-icon>
+                  <ion-card-title>Lluvias</ion-card-title>
+                </div>
+              </ion-card-header>
+
+              <ion-card-content>
+                <p class="description">
+                  La temporada se contabiliza desde septiembre hasta agosto del año siguiente.
+                </p>
+
+                <div class="statsGlassbox ion-margin-vertical ion-text-center">
+                  <p class="statsLabel">Temporada {{core.season.currentSeason}}</p>
+                  <div class="litersHighlight">
+                    <span class="number">{{core.season.currentSeasonLiters}}</span>
+                    <span class="unit">L/m²</span>
+                  </div>
+                </div>
+
+                <ion-button expand="block" shape="round" color="light" class="actionBtn" (click)="core.navigate('/private/rain')">
+                  Ver detalles
+                  <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+                </ion-button>
+              </ion-card-content>
+            </div>
+          </ion-card>
+        </ion-col>
+
+
+
+      </ion-row>
+    </ion-grid>
+
+  </div>
 </ion-content>

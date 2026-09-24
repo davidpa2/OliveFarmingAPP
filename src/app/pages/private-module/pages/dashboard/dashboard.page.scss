@@ -1,14 +1,153 @@
-.card {
+.pageContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
+
+.dashboardHeader {
+    padding: 1rem 0.5rem;
+
+    .mainTitle {
+        font-weight: 800;
+        color: var(--ion-color-primary);
+        font-size: 2rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .subtitle {
+        color: var(--ion-color-medium);
+        font-size: 1.1rem;
+        margin-top: 0;
+    }
+}
+
+.moduleCard {
     border-radius: 20px;
-    background-color: steelblue;
-    padding: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
 }
 
-ion-button {
-    --background: lightskyblue;
-}
-
-#rainyCard {
+.rainyCard {
     background-image: url("/assets/RainGif.gif");
-    background-size: 100%;
+    background-size: cover;
+    background-position: center;
+    color: white;
+
+    // Dark overlay
+    .cardOverlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom, rgba(40, 70, 100, 0.5), rgba(15, 30, 50, 0.95));
+        z-index: 1;
+    }
+
+    .cardContentWrapper {
+        position: relative;
+        z-index: 2;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    ion-card-title {
+        color: white;
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+
+    .headerFlex {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .cardIcon {
+            font-size: 2rem;
+            color: #90caf9;
+        }
+    }
+
+    .description {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        line-height: 1.4;
+    }
+
+    .statsGlassbox {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        padding: 15px;
+
+        .statsLabel {
+            margin: 0 0 5px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .litersHighlight {
+            .number {
+                font-size: 2.8rem;
+                font-weight: 800;
+                color: #fff;
+            }
+
+            .unit {
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #90caf9;
+                margin-left: 4px;
+            }
+        }
+    }
+
+    .actionBtn {
+        margin-top: auto;
+        font-weight: 700;
+        --color: rgba(15, 30, 50, 0.9);
+    }
+}
+
+.animationSlideDown {
+    animation: slideInDown 0.5s ease-out;
+}
+
+.animationFadeIn {
+    animation: fadeIn 0.6s ease-out forwards;
+    opacity: 0;
+    animation-delay: 0.1s;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
