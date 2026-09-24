@@ -1,17 +1,63 @@
-ion-toolbar {
-    --background: linear-gradient(to right, #00c210, #808000);
+.custom-toolbar {
+    --background: linear-gradient(135deg, #00c210, #808000);
+    --color: white;
 }
 
-hr {
-    border-top: 2px solid var(--ion-color-primary);
-}
-
-.logoutDiv {
+.brand-container {
     display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
+    align-items: center;
+    cursor: pointer;
+    padding-left: 10px;
+    transition: opacity 0.2s ease;
 
-    ion-button {
-        color: white;
+    &:hover {
+        opacity: 0.85;
+    }
+
+    .brand-logo {
+        --size: 40px; // Favicon size
+        margin-right: 12px;
+    }
+
+    .brand-title {
+        padding: 0;
+        font-weight: 700;
+        font-size: 1.2rem;
+        letter-spacing: 0.3px;
+    }
+}
+
+
+.login-btn {
+    font-weight: 600;
+    text-transform: none;
+    --padding-end: 15px;
+}
+
+
+ion-popover {
+    --width: 240px;
+
+    .popover-header {
+        margin-bottom: 5px;
+
+        h2 {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--ion-color-dark);
+        }
+
+        p {
+            margin-top: 2px;
+            font-size: 0.9rem;
+            color: var(--ion-color-medium);
+        }
+    }
+
+    .logout-item {
+        margin: 5px 12px 12px;
+        border-radius: 8px;
+        font-weight: 600;
+        --min-height: 45px;
     }
 }

@@ -1,42 +1,51 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-row (click)="core.navigate('/')">
-      <ion-thumbnail class="ion-margin-start">
-        <img src="assets/icon/favicon.png" alt="">
+<ion-header class="ion-no-border">
+  <ion-toolbar class="custom-toolbar">
+    
+    <div slot="start" class="brand-container" (click)="core.navigate('/')">
+      <ion-thumbnail class="brand-logo">
+        <img src="assets/icon/favicon.png" alt="Olive Farming Logo">
       </ion-thumbnail>
-      <ion-title>
-        Olive Farming
-      </ion-title>
-    </ion-row>
+      <ion-title class="brand-title">Olive Farming</ion-title>
+    </div>
 
     <ion-buttons slot="end">
       @if (!core.isLoggedIn) {
-        <ion-button (click)="core.navigate('/auth/login')">
-          Log in <ion-icon name="log-in-outline"></ion-icon>
+        <ion-button class="login-btn" (click)="core.navigate('/auth/login')">
+          Iniciar sesión 
+          <ion-icon slot="end" name="log-in-outline"></ion-icon>
         </ion-button>
       }
 
       @if (core.isLoggedIn) {
-        <ion-button (click)="presentPopover($event)">
+        <ion-button (click)="presentPopover($event)" shape="round">
           <ion-icon name="person-circle-outline" size="large"></ion-icon>
         </ion-button>
 
-        <ion-popover #popover [isOpen]="isPopoverOpen" [event]="popoverEvent" (didDismiss)="isPopoverOpen = false" side="bottom" alignment="center">
+        <!-- Popover menu -->
+        <ion-popover #popover [isOpen]="isPopoverOpen" [event]="popoverEvent" 
+                      (didDismiss)="isPopoverOpen = false" side="bottom" alignment="end">
           <ng-template>
-            <ion-content class="ion-padding-horizontal">
-              <h4>¡Hola, {{core.user.name}} {{core.user.surname}}!</h4>
-              <hr>
-              <div class="logoutDiv">
-                <ion-button (click)="logout()" fill="clear">
-                  <ion-icon name="power-outline" size="medium"></ion-icon>
-                  <span>&nbsp;Cerrar sesión</span>
-                </ion-button>
-              </div>
+            <ion-content>
+              <ion-list lines="none">
+                <!-- User header -->
+                <ion-list-header class="popover-header">
+                  <ion-label>
+                    <h2>Hola, {{core.user.name}} {{core.user.surname}}</h2>
+                    <!-- <p>{{core.user.surname}}</p> -->
+                  </ion-label>
+                </ion-list-header>
+                
+                <!-- Logout button -->
+                <ion-item button (click)="logout()" color="danger" detail="false" class="logout-item">
+                  <ion-icon slot="start" name="power-outline"></ion-icon>
+                  <ion-label>Cerrar sesión</ion-label>
+                </ion-item>
+              </ion-list>
             </ion-content>
           </ng-template>
         </ion-popover>
       }
-
     </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
