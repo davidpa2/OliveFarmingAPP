@@ -66,6 +66,27 @@ ion-card {
     }
 }
 
+.grid-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+}
+
+.grid-item ion-button {
+    margin: 0;
+    --padding-start: 8px;
+    --padding-end: 8px;
+}
+
+.list-header ion-label {
+    margin: 0;
+    font-weight: bold;
+    font-size: 0.95rem;
+}
+
+.tableButton {
+    font-size: 22px;
+}
+
 // Empty State
 .empty-state {
     margin-top: 40px;

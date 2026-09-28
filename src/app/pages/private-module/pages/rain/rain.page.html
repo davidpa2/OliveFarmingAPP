@@ -79,40 +79,63 @@
     @if (rainSeasons[selectedTab]) {
       <ion-card class="table-card">
         <ion-list lines="full">
-          <ion-list-header color="primary" class="list-header">
-            <ion-label>Fecha</ion-label>
-            <ion-label class="ion-text-center">Litros</ion-label>
-            <ion-label class="ion-text-end">Acciones</ion-label>
+
+          <ion-list-header color="primary" class="ion-no-padding list-header">
+            <ion-grid>
+              <ion-row class="ion-align-items-center">
+                <ion-col size="4">
+                  <ion-label>Fecha</ion-label>
+                </ion-col>
+                <ion-col size="4" class="ion-text-center">
+                  <ion-label>Litros</ion-label>
+                </ion-col>
+                <ion-col size="4" class="ion-text-end">
+                  <ion-label>Acciones</ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
           </ion-list-header>
 
           @for (rainLog of rainSeasons[selectedTab]; track rainLog; let i = $index) {
-            <ion-item [id]="i" [class.appearTr]="newLogPosition === i">
-              <ion-label><strong>{{rainLog.date | date}}</strong></ion-label>
-              
-              <ion-label class="ion-text-center">
-                <ion-badge color="secondary" mode="ios" class="liters-badge">
-                  {{rainLog.liters}} L
-                </ion-badge>
-              </ion-label>
+            <ion-item [id]="i" [class.appearTr]="newLogPosition === i" class="grid-item">
+              <ion-grid>
+                <ion-row class="ion-align-items-center">
+                  <ion-col size="4">
+                    <strong>{{rainLog.date | date}}</strong>
+                  </ion-col>
 
-              <div slot="end" class="row-actions">
-                <ion-button fill="clear" color="medium" (click)="setEditForm(rainLog.id!)">
-                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
-                </ion-button>
-                <ion-button fill="clear" color="danger" (click)="deleteRainLog(rainLog.id!); deleteLogPosition = i">
-                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-                </ion-button>
-              </div>
+                  <ion-col size="4" class="ion-text-center">
+                    <ion-badge color="secondary" mode="ios" class="liters-badge">
+                      {{rainLog.liters}} L
+                    </ion-badge>
+                  </ion-col>
+
+                  <ion-col size="4" class="ion-text-end">
+                    <ion-button fill="clear" color="medium" (click)="setEditForm(rainLog.id!)">
+                      <ion-icon slot="icon-only" name="create-outline" class="tableButton"></ion-icon>
+                    </ion-button>
+                    <ion-button fill="clear" color="danger" (click)="deleteRainLog(rainLog.id!); deleteLogPosition = i">
+                      <ion-icon slot="icon-only" name="trash-outline" class="tableButton"></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-item>
           }
           
-          <!-- Totals -->
-          <ion-item color="secondary" class="total-row">
-            <ion-label><strong>Total Temporada:</strong></ion-label>
-            <ion-label class="ion-text-center">
-              <strong>{{seasonsTotalLiters[selectedTab]}} L</strong>
-            </ion-label>
-            <div slot="end" class="spacer"></div>
+          <!-- TOTALES -->
+          <ion-item color="secondary" class="grid-item total-row">
+            <ion-grid>
+              <ion-row class="ion-align-items-center">
+                <ion-col size="4">
+                  <strong>Total Temporada:</strong>
+                </ion-col>
+                <ion-col size="4" class="ion-text-center">
+                  <strong>{{seasonsTotalLiters[selectedTab]}} L</strong>
+                </ion-col>
+                <ion-col size="4"></ion-col>
+              </ion-row>
+            </ion-grid>
           </ion-item>
         </ion-list>
       </ion-card>
