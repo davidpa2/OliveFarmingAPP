@@ -63,12 +63,13 @@ export class RainPage implements OnInit {
 
   changeSeason(season: string) {
     this.selectedTab = season;
-    this.formMode = 'hidden';
 
     if (this.rainSeasons[season]) {
-      this.createChart()
+      this.createChart();
+      this.formMode = 'hidden';
     } else {
       this.updateSeason(season, false);
+      this.formMode = 'insert';
     }
   }
 
