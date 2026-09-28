@@ -148,7 +148,7 @@
       </div>
     }
 
-    <ion-card id="RainChart" class="chart-card ion-margin-top ion-padding dNone">
+    <ion-card id="RainChart" class="chart-card ion-margin-top ion-padding" [class.ion-hide]="!rainSeasons[selectedTab]">
       <canvas #RainChart>{{ chart }}</canvas>
     </ion-card>
 
