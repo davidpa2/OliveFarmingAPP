@@ -14,6 +14,8 @@ export class LoginPage implements OnInit {
   isSubmitted: boolean = false;
   errorMessage: string = "";
 
+  passwordType: 'password' | 'text' = 'password';
+
   constructor(public core: CoreProvider) { }
 
   ngOnInit() {
@@ -23,14 +25,20 @@ export class LoginPage implements OnInit {
     })
   }
 
+  togglePassword() {
+    this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
+  }
+
   async login() {
     this.isSubmitted = true;
+    this.errorMessage = ""; //Clear previous errors
 
     if (this.loginForm.valid) {
       this.core.auth.login({
         email: this.loginForm.controls['email'].value,
         password: this.loginForm.controls['password'].value
       }, () => {
+        this.loginForm.reset();
         this.errorMessage = "";
         this.core.router.navigate(["/private/dashboard"]);
         
@@ -54,7 +62,6 @@ export class LoginPage implements OnInit {
   }
 
   get myForm() {
-    // this.loginForm.
     return this.loginForm.controls;
   }
 }
