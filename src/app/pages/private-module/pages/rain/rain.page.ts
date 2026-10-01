@@ -63,12 +63,13 @@ export class RainPage implements OnInit {
 
   changeSeason(season: string) {
     this.selectedTab = season;
-    this.formMode = 'hidden';
 
     if (this.rainSeasons[season]) {
-      this.createChart()
+      this.createChart();
+      this.formMode = 'hidden';
     } else {
       this.updateSeason(season, false);
+      this.formMode = 'insert';
     }
   }
 
@@ -219,10 +220,6 @@ export class RainPage implements OnInit {
         }
       });
 
-      var chartDiv = document.getElementById("RainChart")!;
-      chartDiv.classList.remove('dNone', 'disappearTr');
-      chartDiv.classList.add('dBlock', 'appearTr');
-
     } else {
       this.destroyChart(true);
     }
@@ -231,11 +228,8 @@ export class RainPage implements OnInit {
   destroyChart(animation: boolean, hideChart: boolean = true) {
     var chartDiv = document.getElementById("RainChart")!;
     if (this.chart) {
-      if (animation) chartDiv.classList.add('disappearTr');
-
       if (hideChart) {
         setTimeout(() => {
-          if (animation) chartDiv.classList.add('dNone');
           this.chart.destroy();
         }, 2000);
       } else {

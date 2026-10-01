@@ -1,63 +1,103 @@
 <app-navbar></app-navbar>
 
-<ion-content>
-    <h1>¡Bienvenido a Olive Farming!</h1>
+<ion-content color="light">
+    <div class="page-container ion-padding">
 
-    <ion-item>
-        <ion-grid>
-            <ion-row>
-                <ion-col size="12" sizeMd="6">
-                    <img src="assets/OliveGrove.jpg" alt="Olive grove photograph">
-                </ion-col>
-                <ion-col size="12" sizeMd="6" style="display: grid;">
-                    <div class="textBox">
-                        <div class="vertical"></div>
-                        <div>
-                            <h2>¿Qué es Olive Farming?</h2>
-                            <p>Olive Farming es una aplicación dedicada a la gestión de su olivar:</p>
-                            <ul>
-                                <li>Registro de la temporada de lluvias</li>
-                                <li>Registro de la campaña de aceitunas</li>
-                                <li>Creación del Libro de Campo</li>
-                            </ul>
+        <!-- HERO SECTION -->
+        <div class="hero-section ion-text-center animation-slide-down">
+            <h1 class="main-title">¡Bienvenido a Olive Farming!</h1>
+            <p class="subtitle">La herramienta definitiva para la gestión inteligente de su olivar.</p>
+        </div>
+
+        <!-- SECCIÓN 1: ¿QUÉ ES OLIVE FARMING? -->
+        <ion-card class="feature-card animation-fade-in">
+            <ion-grid class="ion-no-padding">
+                <ion-row class="ion-align-items-stretch">
+
+                    <ion-col size="12" size-md="6" class="image-col">
+                        <img src="assets/OliveGrove.jpg" alt="Fotografía de olivar" class="feature-image">
+                    </ion-col>
+
+                    <ion-col size="12" size-md="6" class="ion-padding text-col">
+                        <div class="text-content">
+                            <h2 class="section-title">¿Qué es Olive Farming?</h2>
+                            <p>Una aplicación dedicada a simplificar y digitalizar las tareas de su olivar:</p>
+
+                            <ion-list lines="none" class="transparent-list">
+                                <ion-item>
+                                    <ion-icon name="water-outline" color="primary" slot="start"></ion-icon>
+                                    <ion-label class="ion-text-wrap">Registro de la temporada de lluvias</ion-label>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-icon name="leaf-outline" color="primary" slot="start"></ion-icon>
+                                    <ion-label class="ion-text-wrap">Registro de la campaña de aceitunas</ion-label>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-icon name="book-outline" color="primary" slot="start"></ion-icon>
+                                    <ion-label class="ion-text-wrap">Creación del Libro de Campo</ion-label>
+                                </ion-item>
+                            </ion-list>
                         </div>
-                    </div>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-    </ion-item>
+                    </ion-col>
 
-    <h1>Funcionalidades</h1>
+                </ion-row>
+            </ion-grid>
+        </ion-card>
 
-    <ion-item>
-        <ion-grid>
-            <h2 class="ion-text-center">Temporada de lluvias</h2>
-            <ion-row>
+        <!-- SECCIÓN 2: FUNCIONALIDAD LLUVIAS -->
+        <ion-card class="feature-card animation-fade-in delay-1">
+            <ion-grid class="ion-no-padding">
+                <!-- class "reverse-row-mobile" para asegurar que la imagen quede arriba en móviles -->
+                <ion-row class="ion-align-items-stretch reverse-row-mobile">
 
-                <ion-col>
-                    <ul>
-                        <li>Consulta las lluvias de la temporada agrícola</li>
-                        <li>Compara los litros entre diferentes años</li>
-                        <li>Anota nuevos registros cada vez que caigan unas gotas</li>
-                    </ul>
+                    <ion-col size="12" size-md="6" class="ion-padding text-col">
+                        <div class="text-content">
+                            <h2 class="section-title">Temporada de lluvias</h2>
+                            <p>Lleve un control exacto de la pluviometría de sus fincas:</p>
 
-                </ion-col>
-                <ion-col>
-                    <img src="assets/Rainbow.jpg" alt="Rain photograph">
-                </ion-col>
-            </ion-row>
-            
-            <ion-row class="ion-margin-vertical ion-justify-content-center">
-                @if (core.isLoggedIn) {
-                    <ion-button (click)="core.navigate('/private/dashboard')">
-                        Ir al puesto de mandos
-                    </ion-button>
-                } @else {
-                    <ion-button (click)="core.navigate('/auth/login')">
-                        Iniciar sesión
-                    </ion-button>
-                }
-            </ion-row>
-        </ion-grid>
-    </ion-item>
+                            <ion-list lines="none" class="transparent-list">
+                                <ion-item>
+                                    <ion-icon name="analytics-outline" color="secondary" slot="start"></ion-icon>
+                                    <ion-label class="ion-text-wrap">Consulta las lluvias de la temporada
+                                        agrícola</ion-label>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-icon name="bar-chart-outline" color="secondary" slot="start"></ion-icon>
+                                    <ion-label class="ion-text-wrap">Compara los litros entre diferentes
+                                        años</ion-label>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-icon name="add-circle-outline" color="secondary" slot="start"></ion-icon>
+                                    <ion-label class="ion-text-wrap">Anota nuevos registros cada vez que caiga
+                                        agua</ion-label>
+                                </ion-item>
+                            </ion-list>
+                        </div>
+                    </ion-col>
+
+                    <ion-col size="12" size-md="6" class="image-col">
+                        <img src="assets/Rainbow.jpg" alt="Fotografía de lluvia y arcoíris"
+                            class="feature-image border-left">
+                    </ion-col>
+
+                </ion-row>
+            </ion-grid>
+        </ion-card>
+
+        <!-- CALL TO ACTION (CTA) -->
+        <div class="cta-section ion-text-center ion-margin-top animation-slide-up delay-2">
+            @if (core.isLoggedIn) {
+            <ion-button shape="round" size="large" class="btn-shadow" (click)="core.navigate('/private/dashboard')">
+                <ion-icon slot="start" name="apps-outline"></ion-icon>
+                Ir al puesto de mandos
+            </ion-button>
+            } @else {
+            <ion-button shape="round" size="large" class="btn-shadow" (click)="core.navigate('/auth/login')">
+                <ion-icon slot="start" name="log-in-outline"></ion-icon>
+                Iniciar sesión
+            </ion-button>
+            }
+        </div>
+
+    </div>
 </ion-content>

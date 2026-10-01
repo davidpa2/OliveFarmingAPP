@@ -1,81 +1,87 @@
 <app-navbar></app-navbar>
 
 <ion-content>
-    <ion-row id="loginContainer">
-        <ion-col id="colImg" sizeMd="6">
-            <ion-img src="assets/olives.png" alt="Login image"></ion-img>
-        </ion-col>
+    <div class="split-layout">
+        <div class="image-panel">
+            <img src="assets/olives.png" alt="Finca de olivos" class="cover-img">
+            <div class="image-overlay">
+                <h2>Gestión inteligente</h2>
+                <p>Accede a tu Libro de Campo</p>
+            </div>
+        </div>
 
-        <ion-col id="colForm" size="12" sizeMd="6">
-            <h2>Iniciar sesión</h2>
+        <div class="form-panel">
+            <div class="form-wrapper animation-fade-in">
 
-            <form [formGroup]="loginForm">
-                <ion-item lines="none">
-                    <ion-grid>
-                        <ion-row>
-                            <ion-input formControlName="email" label="Email" labelPlacement="floating"
-                                placeholder="Email"></ion-input>
-                        </ion-row>
+                <div class="ion-text-center ion-margin-bottom">
+                    <img src="assets/icon/favicon.png" class="logo-icon">
+                    <h2 class="title">Iniciar sesión</h2>
+                    <p class="subtitle">Bienvenido de nuevo a Olive Farming</p>
+                </div>
 
-                        <ion-row>
-                            @if (myForm['email'].invalid && isSubmitted) {
-                                <div class="ion-padding-start">
-                                    @if (myForm['email'].hasError('required')) {
-                                        <ion-text class="noMarginText" color="danger">
-                                            Debe escribir un email
-                                        </ion-text>
-                                    }
-                                    @if (myForm['email'].hasError('pattern') && !myForm['email'].hasError('required')) {
-                                        <ion-text class="noMarginText" color="danger">
-                                            Debe escribir un email válido
-                                        </ion-text>
-                                    }
-                                </div>
+                <form [formGroup]="loginForm" (ngSubmit)="login()">
+                    <div class="input-group">
+                        <ion-input formControlName="email" type="email" label="Correo electrónico"
+                            labelPlacement="floating" fill="outline" shape="round" placeholder="ejemplo@correo.com">
+                            <ion-icon slot="start" name="mail-outline" color="medium"></ion-icon>
+                        </ion-input>
+
+                        @if (myForm['email'].invalid && isSubmitted) {
+                        <div class="error-container">
+                            @if (myForm['email'].hasError('required')) {
+                            <ion-text color="danger" class="error-text">El correo es obligatorio</ion-text>
                             }
-                        </ion-row>
-                    </ion-grid>
-                </ion-item>
-
-                <ion-item lines="none">
-                    <ion-grid>
-                        <ion-row>
-                            <ion-input type="password" formControlName="password" label="Password"
-                                labelPlacement="floating" placeholder="Password"></ion-input>
-                        </ion-row>
-                        <ion-row>
-                            @if (myForm['password'].invalid && isSubmitted) {
-                                <div class="ion-padding-start">
-                                    @if (myForm['password'].hasError('required')) {
-                                        <ion-text class="noMarginText" color="danger">
-                                            Debe escribir una contraseña
-                                        </ion-text>
-                                    }
-                                </div>
+                            @if (myForm['email'].hasError('pattern') && !myForm['email'].hasError('required')) {
+                            <ion-text color="danger" class="error-text">Formato de correo inválido</ion-text>
                             }
-                        </ion-row>
-                        @if (errorMessage) {
-                            <ion-text class="noMarginText" color="danger">
-                                {{errorMessage}}
-                            </ion-text>
+                        </div>
                         }
-                    </ion-grid>
-                </ion-item>
+                    </div>
 
-                <ion-item lines="none">
-                    <ion-grid>
-                        <ion-row class="ion-align-items-center">
-                            <ion-col size="12" sizeMd="4">
-                                <ion-button expand="block" (click)="login()">Acceder</ion-button>
-                            </ion-col>
-                            <ion-col size="12" sizeMd="8">
-                                <p class="ion-text-center ion-text-md-end">¿No tienes cuenta?
-                                    <a (click)="core.navigate('/auth/register')" style="cursor: pointer;">Regístrate</a>
-                                </p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-item>
-            </form>
-        </ion-col>
-    </ion-row>
+                    <div class="input-group">
+                        <ion-input formControlName="password" [type]="passwordType" label="Contraseña"
+                            labelPlacement="floating" fill="outline" shape="round" placeholder="Tu contraseña">
+                            <ion-icon slot="start" name="lock-closed-outline" color="medium"></ion-icon>
+                            
+                            <!-- Reveal password button -->
+                            <ion-button slot="end" fill="clear" color="medium" (click)="togglePassword()">
+                                <ion-icon slot="icon-only"
+                                    [name]="passwordType === 'password' ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
+                            </ion-button>
+                        </ion-input>
+
+                        @if (myForm['password'].invalid && isSubmitted) {
+                        <div class="error-container">
+                            @if (myForm['password'].hasError('required')) {
+                            <ion-text color="danger" class="error-text">La contraseña es obligatoria</ion-text>
+                            }
+                        </div>
+                        }
+
+                        @if (errorMessage) {
+                        <div class="error-container">
+                            <ion-text color="danger" class="error-text">
+                                <ion-icon name="alert-circle-outline"></ion-icon> {{errorMessage}}
+                            </ion-text>
+                        </div>
+                        }
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="ion-margin-top action-group">
+                        <ion-button type="submit" expand="block" shape="round" class="btn-shadow login-btn">
+                            Acceder
+                        </ion-button>
+
+                        <p class="register-text ion-text-center">
+                            ¿No tienes cuenta?
+                            <a (click)="core.navigate('/auth/register')">Regístrate aquí</a>
+                        </p>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
 </ion-content>
