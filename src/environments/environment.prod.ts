@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   authToken: 'RUNTIME',
-  endpoint: 'http://[::1]:7030',
+  endpoint: 'https://olivefarming-api-cjd7eaduevbageft.francecentral-01.azurewebsites.net',
 };
