@@ -3,10 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CoreProvider } from 'src/app/services/core';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.page.html',
-    styleUrls: ['./login.page.scss'],
-    standalone: false
+  selector: 'app-login',
+  templateUrl: './login.page.html',
+  styleUrls: ['./login.page.scss'],
+  standalone: false
 })
 export class LoginPage implements OnInit {
 
@@ -31,7 +31,7 @@ export class LoginPage implements OnInit {
 
   async login() {
     this.isSubmitted = true;
-    this.errorMessage = ""; //Clear previous errors
+    this.errorMessage = ""; // Clear previous errors
 
     if (this.loginForm.valid) {
       this.core.auth.login({
@@ -41,17 +41,36 @@ export class LoginPage implements OnInit {
         this.loginForm.reset();
         this.errorMessage = "";
         this.core.router.navigate(["/private/dashboard"]);
-        
+
       }, (err: any) => {
-        console.log(err);
-        console.log(err.error.errors[0]);
-        this.errorMessage = err.error.errors[0];
-      })
+        console.error("Error de backend:", err);
+
+        // Network error
+        if (err.status === 0) {
+          this.errorMessage = "No se pudo conectar con el servidor. Revisa tu conexión.";
+          return;
+        }
+
+        // Credentials error
+        if (err.status === 401 || err.status === 400) {
+          this.errorMessage = err.error?.errors?.[0] || err.error?.message || "Email o contraseña incorrectos.";
+          return;
+        }
+
+        // Internal server error
+        if (err.status >= 500) {
+          this.errorMessage = "Error interno del servidor. Inténtalo de nuevo más tarde.";
+          return;
+        }
+
+        // Generic fallback
+        this.errorMessage = "Ha ocurrido un error inesperado al iniciar sesión.";
+      });
     } else {
       this.loginForm.markAllAsTouched();
-      
+
       let toast = await this.core.toastCtrl.create({
-        message: "Datos incorrectos",
+        message: "Datos incorrectos. Revisa el formulario.",
         duration: 5000,
         color: 'danger',
         buttons: [{ text: 'OK', role: 'cancel' }]
