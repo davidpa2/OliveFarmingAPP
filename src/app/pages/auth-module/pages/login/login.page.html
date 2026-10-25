@@ -59,7 +59,7 @@
                         }
 
                         @if (errorMessage) {
-                        <div class="error-container">
+                        <div class="error-container ion-margin-top">
                             <ion-text color="danger" class="error-text">
                                 <ion-icon name="alert-circle-outline"></ion-icon> {{errorMessage}}
                             </ion-text>
@@ -69,8 +69,12 @@
 
                     <!-- Buttons -->
                     <div class="ion-margin-top action-group">
-                        <ion-button type="submit" expand="block" shape="round" class="btn-shadow login-btn">
-                            Acceder
+                        <ion-button type="submit" expand="block" shape="round" [disabled]="isLoggingIn" class="btn-shadow login-btn">
+                            @if (isLoggingIn) {
+                                <ion-spinner name="bubbles"></ion-spinner>
+                            } @else {
+                                Acceder
+                            }
                         </ion-button>
 
                         <p class="register-text ion-text-center">

@@ -11,6 +11,7 @@ import { CoreProvider } from 'src/app/services/core';
 export class LoginPage implements OnInit {
 
   loginForm!: FormGroup;
+  isLoggingIn: boolean = false;
   isSubmitted: boolean = false;
   errorMessage: string = "";
 
@@ -30,6 +31,7 @@ export class LoginPage implements OnInit {
   }
 
   async login() {
+    this.isLoggingIn = true;
     this.isSubmitted = true;
     this.errorMessage = ""; // Clear previous errors
 
@@ -42,8 +44,10 @@ export class LoginPage implements OnInit {
         this.errorMessage = "";
         this.core.router.navigate(["/private/dashboard"]);
 
+        this.isLoggingIn = false;
       }, (err: any) => {
         console.error("Error de backend:", err);
+        this.isLoggingIn = false;
 
         // Network error
         if (err.status === 0) {
@@ -77,6 +81,7 @@ export class LoginPage implements OnInit {
       });
 
       toast.present();
+      this.isLoggingIn = false;
     }
   }
 
