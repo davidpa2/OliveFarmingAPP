@@ -27,6 +27,8 @@ export class RainPage implements OnInit {
   newLogPosition: number | null = null;
   deleteLogPosition: number | null = null;
 
+  isLoading: boolean = false;
+
   rainSeasons: RainSeasons = {};
   previousRainLogs: RainLog[] = [];
   seasonsTotalLiters: SeasonsTotalLiters = {};
@@ -131,6 +133,7 @@ export class RainPage implements OnInit {
   }
 
   updateSeason(season: string, animation: boolean, deleting: boolean = false) {
+    this.isLoading = true;
     this.destroyChart(false, false);
 
     this.core.rain.findBySeason({ seasonName: season },
@@ -155,6 +158,8 @@ export class RainPage implements OnInit {
 
         this.updateSeasonLiters();
         console.log(this.rainSeasons);
+        this.isLoading = false;
+
       }, (err: any) => {
         if (err.status === 404) {
           // There are no logs
@@ -165,6 +170,8 @@ export class RainPage implements OnInit {
           console.log(err);
           this.core.errorToast(null, "Ha habido un problema al obtener los registros de lluvia en la temporada " + season, 5000);
         }
+
+        this.isLoading = false;
       }
     );
   }
