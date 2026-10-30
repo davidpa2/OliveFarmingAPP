@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { IonContent, ViewWillEnter } from '@ionic/angular';
 import { CoreProvider } from 'src/app/services/core';
 
 @Component({
@@ -7,10 +8,16 @@ import { CoreProvider } from 'src/app/services/core';
     styleUrls: ['./index.page.scss'],
     standalone: false
 })
-export class IndexPage  implements OnInit {
+export class IndexPage  implements ViewWillEnter {
+
+  @ViewChild(IonContent, { static: false }) content!: IonContent;
 
   constructor(public core: CoreProvider) { }
 
-  ngOnInit() {}
+  ionViewWillEnter() {
+    if (this.content) {
+      this.content.scrollToTop(0); 
+    }
+  }
 
 }
