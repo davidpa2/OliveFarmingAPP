@@ -27,6 +27,8 @@ export class RainPage implements OnInit {
   newLogPosition: number | null = null;
   deleteLogPosition: number | null = null;
 
+  isLoading: boolean = false;
+
   rainSeasons: RainSeasons = {};
   previousRainLogs: RainLog[] = [];
   seasonsTotalLiters: SeasonsTotalLiters = {};
@@ -38,12 +40,12 @@ export class RainPage implements OnInit {
 
   constructor(public core: CoreProvider, private datePipe: DatePipe) {
     Chart.register(...registerables)
-
+  }
+  
+  ngOnInit() {
     if (!this.core.season.currentSeason) this.core.season.setCurrentSeason();
     this.selectedTab = this.core.season.currentSeason;
-  }
-
-  ngOnInit() {
+    
     this.updateSeason(this.selectedTab, false);
   }
 
@@ -131,6 +133,7 @@ export class RainPage implements OnInit {
   }
 
   updateSeason(season: string, animation: boolean, deleting: boolean = false) {
+    this.isLoading = true;
     this.destroyChart(false, false);
 
     this.core.rain.findBySeason({ seasonName: season },
@@ -155,8 +158,20 @@ export class RainPage implements OnInit {
 
         this.updateSeasonLiters();
         console.log(this.rainSeasons);
+        this.isLoading = false;
+
       }, (err: any) => {
-        console.log(err);
+        if (err.status === 404) {
+          // There are no logs
+          this.rainSeasons[season] = [];
+          this.updateSeasonLiters();
+          this.destroyChart(true);
+        } else {
+          console.log(err);
+          this.core.errorToast(null, "Ha habido un problema al obtener los registros de lluvia en la temporada " + season, 5000);
+        }
+
+        this.isLoading = false;
       }
     );
   }

@@ -135,6 +135,11 @@
     }
 }
 
+.login-btn ion-spinner {
+    width: 20px;
+    height: 20px;
+}
+
 .animation-fade-in {
     animation: fadeIn 0.6s ease-out forwards;
 }
