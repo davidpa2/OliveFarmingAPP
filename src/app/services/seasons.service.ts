@@ -11,7 +11,7 @@ export class SeasonsService {
   private core!: CoreProvider;
   seasons: string[] = [];
   currentSeason: string = '';
-  currentSeasonLiters: number = 0;
+  currentSeasonLiters: number = null;
 
   private http = inject(HttpClient);
   private apiConfig = inject(ApiConfiguration);
