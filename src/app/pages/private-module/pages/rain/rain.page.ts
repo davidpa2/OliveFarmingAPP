@@ -186,7 +186,11 @@ export class RainPage implements OnInit {
       (res: SeasonLitersDto) => {
         if (res.liters) {
           this.seasonsTotalLiters[this.selectedTab] = res.liters;
-          console.log(this.seasonsTotalLiters[this.selectedTab]);
+
+          if (this.selectedTab === this.core.season.currentSeason) {
+            this.core.season.currentSeasonLiters = res.liters;
+          }
+
           this.createChart();
         } else {
           this.destroyChart(true);
