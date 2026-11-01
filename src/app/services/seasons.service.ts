@@ -70,4 +70,8 @@ export class SeasonsService {
       this.currentSeason = `${parseInt(currentYear) - 1}/${currentYear}`
     }
   }
+
+  public isOlderSeason(season: string): boolean {
+    return this.seasons.indexOf(season) < this.seasons.length - 2;
+  }
 }

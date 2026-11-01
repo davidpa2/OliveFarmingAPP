@@ -33,6 +33,8 @@ export class RainPage implements OnInit {
   previousRainLogs: RainLog[] = [];
   seasonsTotalLiters: SeasonsTotalLiters = {};
 
+  isOlderSeason: boolean = false;
+
   chart: any;
   ctx: any;
 
@@ -41,11 +43,11 @@ export class RainPage implements OnInit {
   constructor(public core: CoreProvider, private datePipe: DatePipe) {
     Chart.register(...registerables)
   }
-  
+
   ngOnInit() {
     if (!this.core.season.currentSeason) this.core.season.setCurrentSeason();
     this.selectedTab = this.core.season.currentSeason;
-    
+
     this.updateSeason(this.selectedTab, false);
   }
 
@@ -57,7 +59,7 @@ export class RainPage implements OnInit {
       case 'edit':
         this.editRainLog();
         break;
-    
+
       default:
         break;
     }
@@ -65,14 +67,15 @@ export class RainPage implements OnInit {
 
   changeSeason(season: string) {
     this.selectedTab = season;
+    this.isOlderSeason = this.core.season.isOlderSeason(this.selectedTab);
 
     if (this.rainSeasons[season]) {
       this.createChart();
-      this.formMode = 'hidden';
     } else {
       this.updateSeason(season, false);
-      this.formMode = 'insert';
     }
+
+    this.formMode = 'hidden';
   }
 
   saveRainLog() {
@@ -91,7 +94,7 @@ export class RainPage implements OnInit {
 
   setEditForm(id: number) {
     this.formMode = 'edit';
-    
+
     var logToEdit: RainLog = this.rainSeasons[this.selectedTab].find(x => x.id === id);
     if (!logToEdit) {
       console.error('No se encontró el registro en el array local');
@@ -119,17 +122,35 @@ export class RainPage implements OnInit {
     )
   }
 
-  deleteRainLog(id: number) {
+  async deleteRainLog(id: number) {
     this.newLogPosition = null;
 
-    this.core.rain.deleteRainLog({ id },
-      () => {
-        this.previousRainLogs = this.rainSeasons[this.selectedTab];
-        this.updateSeason(this.selectedTab, false, true);
-      }, (err: any) => {
-        console.log(err);
-      }
-    );
+    let alert = this.core.alertCtrl.create({
+      header: "Confirmación",
+      message: "¿Está seguro de que desea eliminar el registro?",
+      buttons: [
+        {
+          text: "Eliminar",
+          role: "confirm",
+          handler: () => {
+            this.core.rain.deleteRainLog({ id },
+              () => {
+                this.previousRainLogs = this.rainSeasons[this.selectedTab];
+                this.updateSeason(this.selectedTab, false, true);
+              }, (err: any) => {
+                console.log(err);
+              }
+            );
+          }
+        },
+        {
+          text: "Cancelar",
+          role: "cancel"
+        }
+      ]
+    });
+
+    (await alert).present();
   }
 
   updateSeason(season: string, animation: boolean, deleting: boolean = false) {

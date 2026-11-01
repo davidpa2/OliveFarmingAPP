@@ -30,12 +30,12 @@
                 <ion-col size="4">
                   <ion-skeleton-text [animated]="true" style="width: 80%; height: 18px; border-radius: 4px;"></ion-skeleton-text>
                 </ion-col>
-                
+
                 <!-- Litros (Forma de Badge) -->
                 <ion-col size="4" class="ion-text-center">
                   <ion-skeleton-text [animated]="true" style="width: 55px; height: 22px; border-radius: 12px; margin: 0 auto;"></ion-skeleton-text>
                 </ion-col>
-                
+
                 <!-- Acciones (Dos círculos para los botones de editar/borrar) -->
                 <ion-col size="4" style="display: flex; justify-content: flex-end; gap: 10px;">
                   <ion-skeleton-text [animated]="true" style="width: 30px; height: 30px; border-radius: 50%; margin: 0;"></ion-skeleton-text>
@@ -68,17 +68,17 @@
 
   } @else {
     <div class="page-container">
-      
+
       <!-- Season selector -->
       <div class="season-selector ion-padding-horizontal ion-margin-top">
         <ion-text color="medium">
           <h4 class="season-title">Temporada agrícola</h4>
         </ion-text>
-        
+
         @if (core.season.seasons.length > 0) {
           <ion-segment [value]="selectedTab" mode="ios" scrollable="true" class="ion-margin-bottom">
             @for (season of core.season.seasons; track season) {
-              <ion-segment-button [value]="season" 
+              <ion-segment-button [value]="season"
                 (click)="changeSeason(season)">
                 <ion-label>{{season}}</ion-label>
               </ion-segment-button>
@@ -88,7 +88,7 @@
       </div>
 
       <!-- Form button -->
-      @if (formMode === 'hidden' && rainSeasons[selectedTab] !== undefined) {
+      @if (!isOlderSeason && formMode === 'hidden' && rainSeasons[selectedTab] !== undefined) {
         <div class="ion-text-center ion-margin-bottom animation-fade-in">
           <ion-button shape="round" class="btn-shadow" (click)="formMode = 'insert'">
             <ion-icon slot="start" name="add-circle-outline"></ion-icon>
@@ -109,13 +109,13 @@
           <ion-card-content>
             <ion-row>
               <ion-col size="12" size-md="6">
-                <ion-input type="number" [(ngModel)]="liters" label="Cantidad de litros" 
+                <ion-input type="number" [(ngModel)]="liters" label="Cantidad de litros"
                   labelPlacement="floating" placeholder="00" fill="outline" shape="round">
                   <ion-icon slot="end" name="water-outline" color="primary"></ion-icon>
                 </ion-input>
               </ion-col>
               <ion-col size="12" size-md="6">
-                <ion-input id="datePopover" [value]="rainDate | date" type="text" label="Fecha" 
+                <ion-input id="datePopover" [value]="rainDate | date" type="text" label="Fecha"
                   labelPlacement="floating" readonly fill="outline" shape="round">
                   <ion-icon slot="end" name="calendar-outline" color="primary"></ion-icon>
                 </ion-input>
@@ -132,7 +132,7 @@
                 <ion-icon slot="start" name="save-outline"></ion-icon>
                 Guardar
               </ion-button>
-              
+
               @if (rainSeasons[selectedTab]) {
                 <ion-button shape="round" color="medium" fill="clear" (click)="formMode = 'hidden'">
                   Cancelar
@@ -151,15 +151,18 @@
             <ion-list-header color="primary" class="ion-no-padding list-header">
               <ion-grid>
                 <ion-row class="ion-align-items-center">
-                  <ion-col size="4">
+                  <ion-col [size]="!isOlderSeason ? 4 : 6">
                     <ion-label>Fecha</ion-label>
                   </ion-col>
-                  <ion-col size="4" class="ion-text-center">
+                  <ion-col [size]="!isOlderSeason ? 4 : 6" class="ion-text-center">
                     <ion-label>Litros</ion-label>
                   </ion-col>
-                  <ion-col size="4" class="ion-text-end">
-                    <ion-label>Acciones</ion-label>
-                  </ion-col>
+
+                  @if (!isOlderSeason) {
+                    <ion-col size="4" class="ion-text-end">
+                      <ion-label>Acciones</ion-label>
+                    </ion-col>
+                  }
                 </ion-row>
               </ion-grid>
             </ion-list-header>
@@ -168,40 +171,45 @@
               <ion-item [id]="i" [class.appearTr]="newLogPosition === i" class="grid-item">
                 <ion-grid>
                   <ion-row class="ion-align-items-center">
-                    <ion-col size="4">
+                    <ion-col [size]="!isOlderSeason ? 4 : 6">
                       <strong>{{rainLog.date | date}}</strong>
                     </ion-col>
 
-                    <ion-col size="4" class="ion-text-center">
+                    <ion-col [size]="!isOlderSeason ? 4 : 6" class="ion-text-center">
                       <ion-badge color="secondary" mode="ios" class="liters-badge">
                         {{rainLog.liters}} L
                       </ion-badge>
                     </ion-col>
 
-                    <ion-col size="4" class="ion-text-end">
-                      <ion-button fill="clear" color="medium" (click)="setEditForm(rainLog.id!)">
-                        <ion-icon slot="icon-only" name="create-outline" class="tableButton"></ion-icon>
-                      </ion-button>
-                      <ion-button fill="clear" color="danger" (click)="deleteRainLog(rainLog.id!); deleteLogPosition = i">
-                        <ion-icon slot="icon-only" name="trash-outline" class="tableButton"></ion-icon>
-                      </ion-button>
-                    </ion-col>
+                    @if (!isOlderSeason) {
+                      <ion-col size="4" class="ion-text-end">
+                        <ion-button fill="clear" color="medium" (click)="setEditForm(rainLog.id!)">
+                          <ion-icon slot="icon-only" name="create-outline" class="tableButton"></ion-icon>
+                        </ion-button>
+                        <ion-button fill="clear" color="danger" (click)="deleteRainLog(rainLog.id!); deleteLogPosition = i">
+                          <ion-icon slot="icon-only" name="trash-outline" class="tableButton"></ion-icon>
+                        </ion-button>
+                      </ion-col>
+                    }
                   </ion-row>
                 </ion-grid>
               </ion-item>
             }
-            
+
             <!-- TOTALES -->
             <ion-item color="secondary" class="grid-item total-row">
               <ion-grid>
                 <ion-row class="ion-align-items-center">
-                  <ion-col size="4">
+                  <ion-col [size]="!isOlderSeason ? 4 : 6">
                     <strong>Total Temporada:</strong>
                   </ion-col>
-                  <ion-col size="4" class="ion-text-center">
+                  <ion-col [size]="!isOlderSeason ? 4 : 6" class="ion-text-center">
                     <strong>{{seasonsTotalLiters[selectedTab]}} L</strong>
                   </ion-col>
-                  <ion-col size="4"></ion-col>
+
+                  @if (!isOlderSeason) {
+                    <ion-col size="4"></ion-col>
+                  }
                 </ion-row>
               </ion-grid>
             </ion-item>
