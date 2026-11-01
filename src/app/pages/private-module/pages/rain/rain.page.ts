@@ -33,6 +33,8 @@ export class RainPage implements OnInit {
   previousRainLogs: RainLog[] = [];
   seasonsTotalLiters: SeasonsTotalLiters = {};
 
+  isOlderSeason: boolean = false;
+
   chart: any;
   ctx: any;
 
@@ -65,6 +67,7 @@ export class RainPage implements OnInit {
 
   changeSeason(season: string) {
     this.selectedTab = season;
+    this.isOlderSeason = this.core.season.isOlderSeason(this.selectedTab);
 
     if (this.rainSeasons[season]) {
       this.createChart();
