@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth/auth.service';
-import { IonLoading, NavController, PopoverController, ToastController } from '@ionic/angular';
+import { AlertController, IonLoading, NavController, PopoverController, ToastController } from '@ionic/angular';
 import { SeasonsService } from './seasons.service';
 import { RainLog, RainLogCreateDto } from './api/models';
 import { DatePipe } from '@angular/common';
@@ -17,6 +17,7 @@ export class CoreProvider {
     public navCtrl: NavController,
     public toastCtrl: ToastController,
     public popoverCtrl: PopoverController,
+    public alertCtrl: AlertController,
     public datePipe: DatePipe,
     public router: Router
   ) {
@@ -39,7 +40,7 @@ export class CoreProvider {
           return i;
         }
       }
-    }  
+    }
     return null;
   }
 
