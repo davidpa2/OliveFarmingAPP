@@ -5,6 +5,87 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/Cue/plots": {
+      "get": {
+        "tags": [
+          "Cue"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlotDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlotDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlotDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Cue/treatments": {
+      "post": {
+        "tags": [
+          "Cue"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TreatmentCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TreatmentCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TreatmentCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Ping": {
+      "get": {
+        "tags": [
+          "Ping"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Rain/season": {
       "get": {
         "tags": [
@@ -480,6 +561,44 @@
         },
         "additionalProperties": false
       },
+      "PlotDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "provinceCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "municipalityCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "polygon": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parcel": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "enclosure": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cultivatedAreaHa": {
+            "type": "number",
+            "format": "double"
+          },
+          "species": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RainLog": {
         "type": "object",
         "properties": {
@@ -561,6 +680,48 @@
         },
         "additionalProperties": false
       },
+      "TreatmentCreateDto": {
+        "type": "object",
+        "properties": {
+          "plotId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "treatedAreaHa": {
+            "type": "number",
+            "format": "double"
+          },
+          "phytosanitaryProblem": {
+            "type": "string",
+            "nullable": true
+          },
+          "productName": {
+            "type": "string",
+            "nullable": true
+          },
+          "registrationNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "dose": {
+            "type": "number",
+            "format": "double"
+          },
+          "doseUnit": {
+            "type": "string",
+            "nullable": true
+          },
+          "efficacy": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "UserLoginDTO": {
         "type": "object",
         "properties": {
@@ -623,6 +784,12 @@
     }
   },
   "tags": [
+    {
+      "name": "Cue"
+    },
+    {
+      "name": "Ping"
+    },
     {
       "name": "Rain"
     },

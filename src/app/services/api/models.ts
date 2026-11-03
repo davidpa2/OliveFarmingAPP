@@ -3,11 +3,13 @@
 
 export type { EditRainLogDto } from './models/edit-rain-log-dto';
 export type { LoginDto } from './models/login-dto';
+export type { PlotDto } from './models/plot-dto';
 export type { RainLog } from './models/rain-log';
 export type { RainLogCreateDto } from './models/rain-log-create-dto';
 export type { SeasonCountDto } from './models/season-count-dto';
 export type { SeasonLitersDto } from './models/season-liters-dto';
 export type { SeasonsCreateDto } from './models/seasons-create-dto';
+export type { TreatmentCreateDto } from './models/treatment-create-dto';
 export type { UserLoginDto } from './models/user-login-dto';
 export type { UserMeDto } from './models/user-me-dto';
 export type { UserRegisterDto } from './models/user-register-dto';
