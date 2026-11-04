@@ -45,6 +45,43 @@
       }
     },
     "/api/Cue/treatments": {
+      "get": {
+        "tags": [
+          "Cue"
+        ],
+        "operationId": "GetTreatments",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TreatmentDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TreatmentDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TreatmentDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "Cue"
@@ -685,6 +722,52 @@
       "TreatmentCreateDto": {
         "type": "object",
         "properties": {
+          "plotId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "treatedAreaHa": {
+            "type": "number",
+            "format": "double"
+          },
+          "phytosanitaryProblem": {
+            "type": "string",
+            "nullable": true
+          },
+          "productName": {
+            "type": "string",
+            "nullable": true
+          },
+          "registrationNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "dose": {
+            "type": "number",
+            "format": "double"
+          },
+          "doseUnit": {
+            "type": "string",
+            "nullable": true
+          },
+          "efficacy": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TreatmentDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "plotId": {
             "type": "integer",
             "format": "int32"
