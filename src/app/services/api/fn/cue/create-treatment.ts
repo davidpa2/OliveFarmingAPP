@@ -9,12 +9,12 @@ import { RequestBuilder } from '../../request-builder';
 
 import { TreatmentCreateDto } from '../../models/treatment-create-dto';
 
-export interface ApiCueTreatmentsPost$Params {
+export interface CreateTreatment$Params {
       body?: TreatmentCreateDto
 }
 
-export function apiCueTreatmentsPost(http: HttpClient, rootUrl: string, params?: ApiCueTreatmentsPost$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, apiCueTreatmentsPost.PATH, 'post');
+export function createTreatment(http: HttpClient, rootUrl: string, params?: CreateTreatment$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  const rb = new RequestBuilder(rootUrl, createTreatment.PATH, 'post');
   if (params) {
     rb.body(params.body, 'application/*+json');
   }
@@ -29,4 +29,4 @@ export function apiCueTreatmentsPost(http: HttpClient, rootUrl: string, params?:
   );
 }
 
-apiCueTreatmentsPost.PATH = '/api/Cue/treatments';
+createTreatment.PATH = '/api/Cue/treatments';

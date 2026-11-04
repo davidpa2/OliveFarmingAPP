@@ -9,11 +9,11 @@ import { RequestBuilder } from '../../request-builder';
 
 import { PlotDto } from '../../models/plot-dto';
 
-export interface ApiCuePlotsGet$Json$Params {
+export interface GetPlots$Json$Params {
 }
 
-export function apiCuePlotsGet$Json(http: HttpClient, rootUrl: string, params?: ApiCuePlotsGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<PlotDto>>> {
-  const rb = new RequestBuilder(rootUrl, apiCuePlotsGet$Json.PATH, 'get');
+export function getPlots$Json(http: HttpClient, rootUrl: string, params?: GetPlots$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<PlotDto>>> {
+  const rb = new RequestBuilder(rootUrl, getPlots$Json.PATH, 'get');
   if (params) {
   }
 
@@ -27,4 +27,4 @@ export function apiCuePlotsGet$Json(http: HttpClient, rootUrl: string, params?: 
   );
 }
 
-apiCuePlotsGet$Json.PATH = '/api/Cue/plots';
+getPlots$Json.PATH = '/api/Cue/plots';

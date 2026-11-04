@@ -10,6 +10,7 @@
         "tags": [
           "Cue"
         ],
+        "operationId": "GetPlots",
         "responses": {
           "200": {
             "description": "OK",
@@ -48,6 +49,7 @@
         "tags": [
           "Cue"
         ],
+        "operationId": "CreateTreatment",
         "requestBody": {
           "content": {
             "application/json": {
