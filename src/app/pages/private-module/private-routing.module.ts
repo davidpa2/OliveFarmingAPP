@@ -8,7 +8,12 @@ const routes: Routes = [
   },
   {
     path: 'rain', loadChildren: () => import('./pages/rain/rain.module').then(m => m.RainModule), canActivate: [AuthServiceGuard]
+  },
+  {
+    path: 'treatment',
+    loadChildren: () => import('./pages/treatment/treatment.module').then( m => m.TreatmentPagePageModule)
   }
+
 ]
 @NgModule({
   imports: [RouterModule.forChild(routes)]

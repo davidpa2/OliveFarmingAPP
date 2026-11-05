@@ -1,0 +1,191 @@
+<app-navbar></app-navbar>
+
+<ion-content color="light">
+  @if (isLoading()) {
+    <!-- Skeleton Form Button -->
+    <div class="ion-text-center ion-margin-bottom ion-margin-top animation-fade-in">
+      <ion-skeleton-text [animated]="true" style="width: 220px; height: 44px; border-radius: 22px; margin: 0 auto;"></ion-skeleton-text>
+    </div>
+
+    <!-- Skeleton Table -->
+    <ion-card class="table-card animation-fade-in">
+      <ion-list lines="full">
+        <ion-list-header color="primary" class="ion-no-padding list-header">
+          <ion-grid>
+            <ion-row class="ion-align-items-center">
+              <ion-col size="4"><ion-label>Fecha</ion-label></ion-col>
+              <ion-col size="4" class="ion-text-center"><ion-label>Producto</ion-label></ion-col>
+              <ion-col size="4" class="ion-text-end"><ion-label>Acciones</ion-label></ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-list-header>
+
+        @for (i of [1, 2, 3]; track i) {
+          <ion-item class="grid-item">
+            <ion-grid>
+              <ion-row class="ion-align-items-center">
+                <ion-col size="4">
+                  <ion-skeleton-text [animated]="true" style="width: 80%; height: 18px; border-radius: 4px;"></ion-skeleton-text>
+                </ion-col>
+                <ion-col size="4" class="ion-text-center">
+                  <ion-skeleton-text [animated]="true" style="width: 70px; height: 22px; border-radius: 12px; margin: 0 auto;"></ion-skeleton-text>
+                </ion-col>
+                <ion-col size="4" style="display: flex; justify-content: flex-end; gap: 10px;">
+                  <ion-skeleton-text [animated]="true" style="width: 30px; height: 30px; border-radius: 50%; margin: 0;"></ion-skeleton-text>
+                  <ion-skeleton-text [animated]="true" style="width: 30px; height: 30px; border-radius: 50%; margin: 0;"></ion-skeleton-text>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        }
+      </ion-list>
+    </ion-card>
+
+  } @else {
+    <div class="page-container">
+      
+      <!-- Form button -->
+      @if (formMode() === 'hidden') {
+        <div class="ion-text-center ion-margin-bottom ion-margin-top animation-fade-in">
+          <ion-button shape="round" class="btn-shadow" (click)="formMode.set('insert')">
+            <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+            Añadir tratamiento
+          </ion-button>
+        </div>
+      }
+
+      <!-- Insert/Edit form -->
+      @if (formMode() !== 'hidden') {
+        <ion-card class="form-card animation-slide-down ion-margin-top">
+          <ion-card-header>
+            <ion-card-title color="primary">
+              {{ formMode() === 'insert' ? 'Nuevo tratamiento fitosanitario' : 'Editar tratamiento' }}
+            </ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <form [formGroup]="treatmentForm">
+              <ion-row>
+                <ion-col size="12">
+                  <ion-select formControlName="plotId" label="Recinto SIGPAC" labelPlacement="floating" fill="outline" shape="round">
+                    @for (plot of plots(); track plot.id) {
+                      <ion-select-option [value]="plot.id">
+                        Pol {{plot.polygon}} - Parc {{plot.parcel}} ({{plot.cultivatedAreaHa}} ha)
+                      </ion-select-option>
+                    }
+                  </ion-select>
+                </ion-col>
+              </ion-row>
+
+              <ion-row class="ion-margin-top">
+                <ion-col size="12" size-md="6">
+                  <ion-input id="datePopover" [value]="treatmentForm.get('startDate')?.value | date" type="text" label="Fecha"
+                    labelPlacement="floating" readonly fill="outline" shape="round">
+                    <ion-icon slot="end" name="calendar-outline" color="primary"></ion-icon>
+                  </ion-input>
+                  <ion-popover trigger="datePopover" alignment="center">
+                    <ng-template>
+                      <ion-datetime formControlName="startDate" presentation="date"></ion-datetime>
+                    </ng-template>
+                  </ion-popover>
+                </ion-col>
+
+                <ion-col size="12" size-md="6">
+                  <ion-input type="text" formControlName="phytosanitaryProblem" label="Plaga o Enfermedad"
+                    labelPlacement="floating" fill="outline" shape="round">
+                    <ion-icon slot="end" name="bug-outline" color="primary"></ion-icon>
+                  </ion-input>
+                </ion-col>
+              </ion-row>
+
+              <ion-row class="ion-margin-top">
+                <ion-col size="12" size-md="6">
+                  <ion-input type="text" formControlName="productName" label="Producto comercial"
+                    labelPlacement="floating" fill="outline" shape="round">
+                    <ion-icon slot="end" name="flask-outline" color="primary"></ion-icon>
+                  </ion-input>
+                </ion-col>
+                <ion-col size="12" size-md="6">
+                  <ion-input type="text" formControlName="registrationNumber" label="Nº Registro MITECO"
+                    labelPlacement="floating" fill="outline" shape="round"></ion-input>
+                </ion-col>
+              </ion-row>
+
+              <ion-row class="ion-margin-top">
+                <ion-col size="6">
+                  <ion-input type="number" formControlName="dose" label="Dosis"
+                    labelPlacement="floating" fill="outline" shape="round"></ion-input>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-select formControlName="doseUnit" label="Unidad" labelPlacement="floating" fill="outline" shape="round">
+                    <ion-select-option value="l/ha">l/ha</ion-select-option>
+                    <ion-select-option value="kg/ha">kg/ha</ion-select-option>
+                  </ion-select>
+                </ion-col>
+              </ion-row>
+
+              <div class="action-buttons ion-margin-top">
+                <ion-button shape="round" [disabled]="treatmentForm.invalid" (click)="manageTreatmentForm()">
+                  <ion-icon slot="start" name="save-outline"></ion-icon>
+                  Guardar en CUE
+                </ion-button>
+                <ion-button shape="round" color="medium" fill="clear" (click)="formMode.set('hidden')">
+                  Cancelar
+                </ion-button>
+              </div>
+            </form>
+          </ion-card-content>
+        </ion-card>
+      }
+
+      <!-- Treatments list -->
+      @if (treatments().length) {
+        <ion-card class="table-card ion-margin-top">
+          <ion-list lines="full">
+            <ion-list-header color="primary" class="ion-no-padding list-header">
+              <ion-grid>
+                <ion-row class="ion-align-items-center">
+                  <ion-col size="4"><ion-label>Fecha</ion-label></ion-col>
+                  <ion-col size="4" class="ion-text-center"><ion-label>Producto</ion-label></ion-col>
+                  <ion-col size="4" class="ion-text-end"><ion-label>Acciones</ion-label></ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-list-header>
+
+            @for (treatment of treatments(); track treatment.id; let i = $index) {
+              <ion-item class="grid-item">
+                <ion-grid>
+                  <ion-row class="ion-align-items-center">
+                    <ion-col size="4">
+                      <strong>{{treatment.startDate | date}}</strong>
+                    </ion-col>
+                    <ion-col size="4" class="ion-text-center">
+                      <ion-badge color="secondary" mode="ios" class="liters-badge">
+                        {{treatment.productName}}
+                      </ion-badge>
+                    </ion-col>
+                    <ion-col size="4" class="ion-text-end">
+                      <ion-button fill="clear" color="medium">
+                        <ion-icon slot="icon-only" name="create-outline" class="tableButton"></ion-icon>
+                      </ion-button>
+                      <ion-button fill="clear" color="danger">
+                        <ion-icon slot="icon-only" name="trash-outline" class="tableButton"></ion-icon>
+                      </ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
+            }
+          </ion-list>
+        </ion-card>
+      } @else if (formMode() === 'hidden') {
+        <!-- Empty State -->
+        <div class="empty-state ion-text-center ion-padding animation-fade-in">
+          <ion-icon name="leaf-outline" color="medium"></ion-icon>
+          <h3>Sin tratamientos</h3>
+          <p>Añade el primer tratamiento fitosanitario de la campaña para registrarlo en tu CUE.</p>
+        </div>
+      }
+    </div>
+  }
+</ion-content>
