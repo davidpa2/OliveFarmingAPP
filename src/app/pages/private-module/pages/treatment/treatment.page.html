@@ -124,6 +124,22 @@
                 </ion-col>
               </ion-row>
 
+              <ion-row class="ion-margin-top">
+                <ion-col size="12" size-md="6">
+                  <ion-input type="number" formControlName="treatedAreaHa" label="Área tratada (ha)"
+                    labelPlacement="floating" fill="outline" shape="round">
+                    <ion-icon slot="end" name="map-outline" color="primary"></ion-icon>
+                  </ion-input>
+                </ion-col>
+                <ion-col size="12" size-md="6">
+                  <ion-select formControlName="efficacy" label="Eficacia" labelPlacement="floating" fill="outline" shape="round">
+                    <ion-select-option value="Buena">Buena</ion-select-option>
+                    <ion-select-option value="Regular">Regular</ion-select-option>
+                    <ion-select-option value="Mala">Mala</ion-select-option>
+                  </ion-select>
+                </ion-col>
+              </ion-row>
+
               <div class="action-buttons ion-margin-top">
                 <ion-button shape="round" [disabled]="treatmentForm.invalid" (click)="manageTreatmentForm()">
                   <ion-icon slot="start" name="save-outline"></ion-icon>
@@ -181,7 +197,7 @@
       } @else if (formMode() === 'hidden') {
         <!-- Empty State -->
         <div class="empty-state ion-text-center ion-padding animation-fade-in">
-          <ion-icon name="leaf-outline" color="medium"></ion-icon>
+          <ion-icon name="leaf-outline" size="large" color="medium"></ion-icon>
           <h3>Sin tratamientos</h3>
           <p>Añade el primer tratamiento fitosanitario de la campaña para registrarlo en tu CUE.</p>
         </div>
