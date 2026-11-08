@@ -6,9 +6,8 @@ export interface TreatmentCreateDto {
   doseUnit?: string | null;
   efficacy?: string | null;
   phytosanitaryProblem?: string | null;
-  plotId?: number;
+  plotIds?: Array<number> | null;
   productName?: string | null;
   registrationNumber?: string | null;
   startDate?: string;
-  treatedAreaHa?: number;
 }

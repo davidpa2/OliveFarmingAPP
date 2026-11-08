@@ -5,6 +5,10 @@ export type { GetPlots$Plain$Params as GetPlots$Plain$Params } from './fn/cue/ge
 export { getPlots$Plain as getPlots$Plain } from './fn/cue/get-plots-plain';
 export type { GetPlots$Json$Params as GetPlots$Json$Params } from './fn/cue/get-plots-json';
 export { getPlots$Json as getPlots$Json } from './fn/cue/get-plots-json';
+export type { CreatePlot$Plain$Params as CreatePlot$Plain$Params } from './fn/cue/create-plot-plain';
+export { createPlot$Plain as createPlot$Plain } from './fn/cue/create-plot-plain';
+export type { CreatePlot$Json$Params as CreatePlot$Json$Params } from './fn/cue/create-plot-json';
+export { createPlot$Json as createPlot$Json } from './fn/cue/create-plot-json';
 export type { GetTreatments$Plain$Params as GetTreatments$Plain$Params } from './fn/cue/get-treatments-plain';
 export { getTreatments$Plain as getTreatments$Plain } from './fn/cue/get-treatments-plain';
 export type { GetTreatments$Json$Params as GetTreatments$Json$Params } from './fn/cue/get-treatments-json';

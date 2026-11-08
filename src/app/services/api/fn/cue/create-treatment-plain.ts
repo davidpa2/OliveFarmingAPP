@@ -14,7 +14,7 @@ export interface CreateTreatment$Plain$Params {
       body?: TreatmentCreateDto
 }
 
-export function createTreatment$Plain(http: HttpClient, rootUrl: string, params?: CreateTreatment$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<TreatmentDto>> {
+export function createTreatment$Plain(http: HttpClient, rootUrl: string, params?: CreateTreatment$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<TreatmentDto>>> {
   const rb = new RequestBuilder(rootUrl, createTreatment$Plain.PATH, 'post');
   if (params) {
     rb.body(params.body, 'application/*+json');
@@ -25,7 +25,7 @@ export function createTreatment$Plain(http: HttpClient, rootUrl: string, params?
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<TreatmentDto>;
+      return r as StrictHttpResponse<Array<TreatmentDto>>;
     })
   );
 }

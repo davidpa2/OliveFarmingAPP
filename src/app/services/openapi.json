@@ -42,6 +42,53 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Cue"
+        ],
+        "operationId": "CreatePlot",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlotCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlotCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlotCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlotDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlotDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlotDto"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/Cue/treatments": {
@@ -112,17 +159,26 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/TreatmentDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TreatmentDto"
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TreatmentDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TreatmentDto"
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TreatmentDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TreatmentDto"
+                  }
                 }
               }
             }
@@ -617,6 +673,55 @@
         },
         "additionalProperties": false
       },
+      "PlotCreateDto": {
+        "type": "object",
+        "properties": {
+          "provinceCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "municipalityCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "polygon": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parcel": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "enclosure": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sigpacAreaHa": {
+            "type": "number",
+            "format": "double"
+          },
+          "cultivatedAreaHa": {
+            "type": "number",
+            "format": "double"
+          },
+          "sigpacUse": {
+            "type": "string",
+            "nullable": true
+          },
+          "species": {
+            "type": "string",
+            "nullable": true
+          },
+          "variety": {
+            "type": "string",
+            "nullable": true
+          },
+          "isIrrigated": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "PlotDto": {
         "type": "object",
         "properties": {
@@ -739,17 +844,17 @@
       "TreatmentCreateDto": {
         "type": "object",
         "properties": {
-          "plotId": {
-            "type": "integer",
-            "format": "int32"
+          "plotIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
           },
           "startDate": {
             "type": "string",
             "format": "date-time"
-          },
-          "treatedAreaHa": {
-            "type": "number",
-            "format": "double"
           },
           "phytosanitaryProblem": {
             "type": "string",

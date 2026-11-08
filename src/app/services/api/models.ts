@@ -3,6 +3,7 @@
 
 export type { EditRainLogDto } from './models/edit-rain-log-dto';
 export type { LoginDto } from './models/login-dto';
+export type { PlotCreateDto } from './models/plot-create-dto';
 export type { PlotDto } from './models/plot-dto';
 export type { RainLog } from './models/rain-log';
 export type { RainLogCreateDto } from './models/rain-log-create-dto';

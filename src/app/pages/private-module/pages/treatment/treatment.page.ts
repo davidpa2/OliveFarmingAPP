@@ -16,11 +16,10 @@ export class TreatmentPage implements OnInit {
   plots = signal<PlotDto[]>([]);
   treatments = signal<TreatmentDto[]>([]);
 
-  // Reactiv Form
-  treatmentForm = this.fb.group({
-    plotId: [null as number | null, Validators.required],
+  // Reactive Form
+treatmentForm = this.fb.group({
+    plotIds: [[] as number[], Validators.required], // Number array
     startDate: [new Date().toISOString(), Validators.required],
-    treatedAreaHa: [null as number | null, [Validators.required, Validators.min(0.01)]],
     phytosanitaryProblem: ['Repilo', Validators.required],
     productName: ['', Validators.required],
     registrationNumber: ['', Validators.required],
@@ -54,25 +53,29 @@ export class TreatmentPage implements OnInit {
     const dto = this.treatmentForm.value as TreatmentCreateDto;
 
     this.core.cue.createTreatment({ body: dto }, 
-    async (res) => {
-      this.treatments.update(t => [...t, res]);
-          this.formMode.set('hidden');
+    async (res: TreatmentDto[]) => {
+      // Adding all the new treatments
+      this.treatments.update(t => [...t, ...res]); 
+      this.formMode.set('hidden');
           
-          const toast = await this.core.toastCtrl.create({
-            message: 'Tratamiento registrado en el CUE',
-            duration: 2500,
-            color: 'success'
-          });
-          await toast.present();
-          this.treatmentForm.reset({ 
-            startDate: new Date().toISOString(), 
-            doseUnit: 'l/ha', 
-            efficacy: 'Buena',
-            phytosanitaryProblem: 'Repilo'
-          });
+      const toast = await this.core.toastCtrl.create({
+        message: 'Tratamientos registrados en el CUE',
+        duration: 2500,
+        color: 'success'
+      });
+
+      await toast.present();
+      
+      this.treatmentForm.reset({ 
+        plotIds: [], // Reset array
+        startDate: new Date().toISOString(), 
+        doseUnit: 'l/ha', 
+        efficacy: 'Buena',
+        phytosanitaryProblem: 'Repilo'
+      });
     },
-    (err) => {
+    (err: any) => {
       console.error('Error al guardar:', err);      
-    })
+    });
   }
 }

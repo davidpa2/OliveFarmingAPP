@@ -67,7 +67,8 @@
             <form [formGroup]="treatmentForm">
               <ion-row>
                 <ion-col size="12">
-                  <ion-select formControlName="plotId" label="Recinto SIGPAC" labelPlacement="floating" fill="outline" shape="round">
+                  <!-- Selector múltiple -->
+                  <ion-select formControlName="plotIds" [multiple]="true" label="Recintos SIGPAC" labelPlacement="floating" fill="outline" shape="round" cancelText="Cancelar" okText="Aceptar">
                     @for (plot of plots(); track plot.id) {
                       <ion-select-option [value]="plot.id">
                         Pol {{plot.polygon}} - Parc {{plot.parcel}} ({{plot.cultivatedAreaHa}} ha)
@@ -113,26 +114,22 @@
 
               <ion-row class="ion-margin-top">
                 <ion-col size="6">
-                  <ion-input type="number" formControlName="dose" label="Dosis"
+                  <!-- Label dinámico según la unidad -->
+                  <ion-input type="number" formControlName="dose" 
+                    [label]="'Dosis (' + treatmentForm.get('doseUnit')?.value + ')'"
                     labelPlacement="floating" fill="outline" shape="round"></ion-input>
                 </ion-col>
                 <ion-col size="6">
                   <ion-select formControlName="doseUnit" label="Unidad" labelPlacement="floating" fill="outline" shape="round">
-                    <ion-select-option value="l/ha">l/ha</ion-select-option>
-                    <ion-select-option value="kg/ha">kg/ha</ion-select-option>
+                    <ion-select-option value="l/ha">Litros / hectárea</ion-select-option>
+                    <ion-select-option value="kg/ha">Kilos / hectárea</ion-select-option>
                   </ion-select>
                 </ion-col>
               </ion-row>
 
               <ion-row class="ion-margin-top">
-                <ion-col size="12" size-md="6">
-                  <ion-input type="number" formControlName="treatedAreaHa" label="Área tratada (ha)"
-                    labelPlacement="floating" fill="outline" shape="round">
-                    <ion-icon slot="end" name="map-outline" color="primary"></ion-icon>
-                  </ion-input>
-                </ion-col>
-                <ion-col size="12" size-md="6">
-                  <ion-select formControlName="efficacy" label="Eficacia" labelPlacement="floating" fill="outline" shape="round">
+                <ion-col size="12">
+                  <ion-select formControlName="efficacy" label="Eficacia del tratamiento" labelPlacement="floating" fill="outline" shape="round">
                     <ion-select-option value="Buena">Buena</ion-select-option>
                     <ion-select-option value="Regular">Regular</ion-select-option>
                     <ion-select-option value="Mala">Mala</ion-select-option>
