@@ -17,6 +17,8 @@ export type { CreateTreatment$Plain$Params as CreateTreatment$Plain$Params } fro
 export { createTreatment$Plain as createTreatment$Plain } from './fn/cue/create-treatment-plain';
 export type { CreateTreatment$Json$Params as CreateTreatment$Json$Params } from './fn/cue/create-treatment-json';
 export { createTreatment$Json as createTreatment$Json } from './fn/cue/create-treatment-json';
+export type { DeleteTreatment$Params as DeleteTreatment$Params } from './fn/cue/delete-treatment';
+export { deleteTreatment as deleteTreatment } from './fn/cue/delete-treatment';
 export type { ApiPingGet$Params as ApiPingGet$Params } from './fn/ping/api-ping-get';
 export { apiPingGet as apiPingGet } from './fn/ping/api-ping-get';
 export type { FindBySeason$Plain$Params as FindBySeason$Plain$Params } from './fn/rain/find-by-season-plain';
