@@ -89,6 +89,47 @@ treatmentForm = this.fb.group({
     });
   }
 
+  async deleteTreatment(id: number) {
+    const alert = await this.core.alertCtrl.create({
+      header: 'Confirmar borrado',
+      message: '¿Estás seguro de que deseas eliminar este registro del CUE?',
+      buttons: [
+        { 
+          text: 'Cancelar', 
+          role: 'cancel' 
+        },
+        { 
+          text: 'Eliminar', 
+          role: 'destructive',
+          handler: () => {
+            this.isLoading.set(true);
+            
+            this.core.cue.deleteTreatment(id, 
+              async () => {
+                // Filter local array
+                this.treatments.update(t => t.filter(item => item.id !== id));
+                this.isLoading.set(false);
+                
+                const toast = await this.core.toastCtrl.create({
+                  message: 'Registro eliminado del Cuaderno',
+                  duration: 2000,
+                  color: 'success'
+                });
+                await toast.present();
+              },
+              (err: any) => {
+                console.error('Error al borrar:', err);
+                this.isLoading.set(false);
+              }
+            );
+          }
+        }
+      ]
+    });
+    
+    await alert.present();
+  }
+
   getPlotInfo(plotId: number): string {
     const plot = this.plots().find(p => p.id === plotId);
     return plot ? `Pol ${plot.polygon} - Parc ${plot.parcel}` : '';

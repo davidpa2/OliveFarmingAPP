@@ -197,7 +197,7 @@
                       <ion-button fill="clear" color="medium">
                         <ion-icon slot="icon-only" name="create-outline" class="tableButton"></ion-icon>
                       </ion-button>
-                      <ion-button fill="clear" color="danger">
+                      <ion-button fill="clear" color="danger" (click)="treatment.id && deleteTreatment(treatment.id)">
                         <ion-icon slot="icon-only" name="trash-outline" class="tableButton"></ion-icon>
                       </ion-button>
                     </ion-col>
