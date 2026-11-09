@@ -38,7 +38,17 @@ treatmentForm = this.fb.group({
     this.core.cue.getPlots(
       (data) => {
         this.plots.set(data);
-        this.isLoading.set(false);
+
+        this.core.cue.getTreatments(
+          (treatmentsData) => {
+            this.treatments.set(treatmentsData);
+            this.isLoading.set(false);
+          },
+          (err) => {
+            console.error("Error al cargar tratamientos: ", err);
+            this.isLoading.set(false);
+          }
+        );
       },
       (err) => {
         console.log("Error: " + err);        
@@ -77,5 +87,10 @@ treatmentForm = this.fb.group({
     (err: any) => {
       console.error('Error al guardar:', err);      
     });
+  }
+
+  getPlotInfo(plotId: number): string {
+    const plot = this.plots().find(p => p.id === plotId);
+    return plot ? `Pol ${plot.polygon} - Parc ${plot.parcel}` : '';
   }
 }

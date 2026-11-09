@@ -2,8 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { CoreProvider } from './core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration } from './api/api-configuration';
-import { createTreatment$Json, CreateTreatment$Json$Params, getPlots$Json } from './api/functions';
-import { PlotDto } from './api/models';
+import { createTreatment$Json, CreateTreatment$Json$Params, getPlots$Json, getTreatments$Json } from './api/functions';
+import { PlotDto, TreatmentDto } from './api/models';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,27 @@ export class CueService {
 
   private initChecks() {
 
+  }
+
+  public getTreatments(
+    cbSuccess: (treatments: TreatmentDto[]) => void,
+    cbErr: Function
+  ) {
+    const handleErr = (err: any) => {
+      if (cbErr) {
+        cbErr(err);
+      } else {
+        this.core.errorToast();
+        console.error('Error in GetTreatments request', err);
+      }
+    };
+
+    getTreatments$Json(this.http, this.apiConfig.rootUrl).subscribe({
+      next: res => {
+        if (res && cbSuccess) cbSuccess(res.body);
+      },
+      error: err => handleErr(err)
+    });
   }
 
   public getPlots(

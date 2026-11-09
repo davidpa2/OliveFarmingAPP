@@ -169,14 +169,30 @@
               <ion-item class="grid-item">
                 <ion-grid>
                   <ion-row class="ion-align-items-center">
+                    
+                    <!-- Date and Parcel -->
                     <ion-col size="4">
-                      <strong>{{treatment.startDate | date}}</strong>
+                      <div style="line-height: 1.2;">
+                        <strong>{{treatment.startDate | date:'dd/MM/yyyy'}}</strong><br>
+                        <span style="font-size: 0.8rem; color: var(--ion-color-medium);">
+                          {{ getPlotInfo(treatment.plotId) }}
+                        </span>
+                      </div>
                     </ion-col>
+                    
+                    <!-- Product and Dose -->
                     <ion-col size="4" class="ion-text-center">
-                      <ion-badge color="secondary" mode="ios" class="liters-badge">
-                        {{treatment.productName}}
-                      </ion-badge>
+                      <div style="line-height: 1.2;">
+                        <ion-badge color="secondary" mode="ios" class="liters-badge">
+                          {{treatment.productName}}
+                        </ion-badge><br>
+                        <span style="font-size: 0.8rem; color: var(--ion-color-medium);">
+                          {{treatment.dose}} {{treatment.doseUnit}}
+                        </span>
+                      </div>
                     </ion-col>
+                    
+                    <!-- Actions -->
                     <ion-col size="4" class="ion-text-end">
                       <ion-button fill="clear" color="medium">
                         <ion-icon slot="icon-only" name="create-outline" class="tableButton"></ion-icon>
@@ -185,6 +201,7 @@
                         <ion-icon slot="icon-only" name="trash-outline" class="tableButton"></ion-icon>
                       </ion-button>
                     </ion-col>
+                    
                   </ion-row>
                 </ion-grid>
               </ion-item>
