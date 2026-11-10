@@ -62,7 +62,7 @@ export class TreatmentPage implements OnInit {
     if (this.treatmentForm.invalid) return;
 
     this.isLoading.set(true);
-    const formValue = this.treatmentForm.value;
+    const formValue = this.treatmentForm.getRawValue();
 
     if (this.formMode() === 'insert') {
       const dto = formValue as TreatmentCreateDto;
@@ -114,6 +114,9 @@ export class TreatmentPage implements OnInit {
       efficacy: treatment.efficacy
     });
     
+    // Disabling plot selector
+    this.treatmentForm.get('plotIds')?.disable();
+
     document.querySelector('ion-content')?.scrollToTop(500);
   }
 

@@ -67,7 +67,7 @@
             <form [formGroup]="treatmentForm">
               <ion-row>
                 <ion-col size="12">
-                  <!-- Selector múltiple -->
+                  <!-- Multiple selector -->
                   <ion-select formControlName="plotIds" [multiple]="true" label="Recintos SIGPAC" labelPlacement="floating" fill="outline" shape="round" cancelText="Cancelar" okText="Aceptar">
                     @for (plot of plots(); track plot.id) {
                       <ion-select-option [value]="plot.id">
