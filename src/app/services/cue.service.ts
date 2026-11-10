@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { CoreProvider } from './core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration } from './api/api-configuration';
-import { createTreatment$Json, CreateTreatment$Json$Params, deleteTreatment, getPlots$Json, getTreatments$Json } from './api/functions';
+import { createTreatment$Json, CreateTreatment$Json$Params, deleteTreatment, getPlots$Json, getTreatments$Json, updateTreatment$Json, UpdateTreatment$Json$Params } from './api/functions';
 import { PlotDto, TreatmentDto } from './api/models';
 
 @Injectable({
@@ -45,6 +45,27 @@ export class CueService {
       error: err => handleErr(err)
     });
   }
+
+  public updateTreatment(
+  data: UpdateTreatment$Json$Params,
+  cbSuccess: (res: TreatmentDto) => void,
+  cbErr: Function
+) {
+  const handleErr = (err: any) => {
+    if (cbErr) cbErr(err);
+    else {
+      this.core.errorToast();
+      console.error('Error in UpdateTreatment request', err);
+    }
+  };
+
+  updateTreatment$Json(this.http, this.apiConfig.rootUrl, data).subscribe({
+    next: res => {
+      if (res && cbSuccess) cbSuccess(res.body as TreatmentDto);
+    },
+    error: (err: any) => handleErr(err)
+  });
+}
 
   public deleteTreatment(
     id: number,

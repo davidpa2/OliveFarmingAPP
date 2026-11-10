@@ -16,8 +16,10 @@ export class TreatmentPage implements OnInit {
   plots = signal<PlotDto[]>([]);
   treatments = signal<TreatmentDto[]>([]);
 
+  editingId = signal<number | null>(null); // Editing id
+
   // Reactive Form
-treatmentForm = this.fb.group({
+  treatmentForm = this.fb.group({
     plotIds: [[] as number[], Validators.required], // Number array
     startDate: [new Date().toISOString(), Validators.required],
     phytosanitaryProblem: ['Repilo', Validators.required],
@@ -60,32 +62,79 @@ treatmentForm = this.fb.group({
     if (this.treatmentForm.invalid) return;
 
     this.isLoading.set(true);
-    const dto = this.treatmentForm.value as TreatmentCreateDto;
+    const formValue = this.treatmentForm.value;
 
-    this.core.cue.createTreatment({ body: dto }, 
-    async (res: TreatmentDto[]) => {
-      // Adding all the new treatments
-      this.treatments.update(t => [...t, ...res]); 
-      this.formMode.set('hidden');
-          
-      const toast = await this.core.toastCtrl.create({
-        message: 'Tratamientos registrados en el CUE',
-        duration: 2500,
-        color: 'success'
-      });
+    if (this.formMode() === 'insert') {
+      const dto = formValue as TreatmentCreateDto;
+      this.core.cue.createTreatment({ body: dto },
+        async (res: TreatmentDto[]) => {
+          this.treatments.update(t => [...t, ...res]);
+          await this.finishForm('Tratamientos registrados en el CUE');
+        },
+        (err: any) => { console.error('Error al guardar:', err); this.isLoading.set(false); });
 
-      await toast.present();
-      
-      this.treatmentForm.reset({ 
-        plotIds: [], // Reset array
-        startDate: new Date().toISOString(), 
-        doseUnit: 'l/ha', 
-        efficacy: 'Buena',
-        phytosanitaryProblem: 'Repilo'
-      });
-    },
-    (err: any) => {
-      console.error('Error al guardar:', err);      
+    } else if (this.formMode() === 'edit') {
+      const dtoUpdate = {
+        plotId: formValue.plotIds![0], // The only ID on the array
+        startDate: formValue.startDate!,
+        phytosanitaryProblem: formValue.phytosanitaryProblem!,
+        productName: formValue.productName!,
+        registrationNumber: formValue.registrationNumber!,
+        dose: formValue.dose!,
+        doseUnit: formValue.doseUnit!,
+        efficacy: formValue.efficacy!
+      };
+
+      this.core.cue.updateTreatment({ id: this.editingId()!, body: dtoUpdate },
+        async (updatedTreatment) => {
+          // Changing the old element by the updated in the Signal
+          this.treatments.update(t => t.map(item => item.id === updatedTreatment.id ? updatedTreatment : item));
+          await this.finishForm('Registro actualizado correctamente');
+        },
+        (err: any) => { console.error('Error al actualizar:', err); this.isLoading.set(false); });
+    }
+  }
+
+  /**
+   * Method to fill edit form
+   * @param treatment 
+   */
+  setEditForm(treatment: TreatmentDto) {
+    this.editingId.set(treatment.id);
+    this.formMode.set('edit');
+    
+    this.treatmentForm.patchValue({
+      plotIds: [treatment.plotId],
+      startDate: treatment.startDate,
+      phytosanitaryProblem: treatment.phytosanitaryProblem,
+      productName: treatment.productName,
+      registrationNumber: treatment.registrationNumber,
+      dose: treatment.dose,
+      doseUnit: treatment.doseUnit,
+      efficacy: treatment.efficacy
+    });
+    
+    document.querySelector('ion-content')?.scrollToTop(500);
+  }
+
+  async finishForm(msg: string) {
+    this.formMode.set('hidden');
+    this.editingId.set(null);
+    this.isLoading.set(false);
+        
+    const toast = await this.core.toastCtrl.create({
+      message: msg,
+      duration: 2500,
+      color: 'success'
+    });
+    await toast.present();
+    
+    this.treatmentForm.reset({ 
+      plotIds: [], 
+      startDate: new Date().toISOString(), 
+      doseUnit: 'l/ha', 
+      efficacy: 'Buena',
+      phytosanitaryProblem: 'Repilo'
     });
   }
 

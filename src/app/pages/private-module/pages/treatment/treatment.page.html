@@ -139,8 +139,8 @@
 
               <div class="action-buttons ion-margin-top">
                 <ion-button shape="round" [disabled]="treatmentForm.invalid" (click)="manageTreatmentForm()">
-                  <ion-icon slot="start" name="save-outline"></ion-icon>
-                  Guardar en CUE
+                  <ion-icon slot="start" [name]="formMode() === 'insert' ? 'save-outline' : 'sync-outline'"></ion-icon>
+                  {{ formMode() === 'insert' ? 'Guardar en CUE' : 'Actualizar registro' }}
                 </ion-button>
                 <ion-button shape="round" color="medium" fill="clear" (click)="formMode.set('hidden')">
                   Cancelar
@@ -194,7 +194,7 @@
                     
                     <!-- Actions -->
                     <ion-col size="4" class="ion-text-end">
-                      <ion-button fill="clear" color="medium">
+                      <ion-button fill="clear" color="medium" (click)="setEditForm(treatment)">
                         <ion-icon slot="icon-only" name="create-outline" class="tableButton"></ion-icon>
                       </ion-button>
                       <ion-button fill="clear" color="danger" (click)="treatment.id && deleteTreatment(treatment.id)">

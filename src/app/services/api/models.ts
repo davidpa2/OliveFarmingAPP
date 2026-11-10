@@ -12,6 +12,7 @@ export type { SeasonLitersDto } from './models/season-liters-dto';
 export type { SeasonsCreateDto } from './models/seasons-create-dto';
 export type { TreatmentCreateDto } from './models/treatment-create-dto';
 export type { TreatmentDto } from './models/treatment-dto';
+export type { TreatmentUpdateDto } from './models/treatment-update-dto';
 export type { UserLoginDto } from './models/user-login-dto';
 export type { UserMeDto } from './models/user-me-dto';
 export type { UserRegisterDto } from './models/user-register-dto';
