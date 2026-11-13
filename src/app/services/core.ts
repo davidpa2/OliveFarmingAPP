@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { AuthService } from './auth/auth.service';
 import { AlertController, IonLoading, NavController, PopoverController, ToastController } from '@ionic/angular';
 import { SeasonsService } from './seasons.service';
-import { RainLog, RainLogCreateDto } from './api/models';
+import { RainLog } from './api/models';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { RainService } from './rain.service';
 import { CueService } from './cue.service';
+import { HttpClient } from '@angular/common/http';
+import { ApiConfiguration } from './api/api-configuration';
 
 @Injectable({ providedIn: 'root' })
 export class CoreProvider {
@@ -21,7 +23,9 @@ export class CoreProvider {
     public popoverCtrl: PopoverController,
     public alertCtrl: AlertController,
     public datePipe: DatePipe,
-    public router: Router
+    public router: Router,
+    public http: HttpClient,
+    public apiConfig: ApiConfiguration
   ) {
     this.auth.init(this);
     this.season.init(this);

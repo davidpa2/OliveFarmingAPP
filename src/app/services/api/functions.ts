@@ -23,6 +23,8 @@ export type { UpdateTreatment$Json$Params as UpdateTreatment$Json$Params } from 
 export { updateTreatment$Json as updateTreatment$Json } from './fn/cue/update-treatment-json';
 export type { DeleteTreatment$Params as DeleteTreatment$Params } from './fn/cue/delete-treatment';
 export { deleteTreatment as deleteTreatment } from './fn/cue/delete-treatment';
+export type { ExportTreatments$Params as ExportTreatments$Params } from './fn/cue/export-treatments';
+export { exportTreatments as exportTreatments } from './fn/cue/export-treatments';
 export type { ApiPingGet$Params as ApiPingGet$Params } from './fn/ping/api-ping-get';
 export { apiPingGet as apiPingGet } from './fn/ping/api-ping-get';
 export type { FindBySeason$Plain$Params as FindBySeason$Plain$Params } from './fn/rain/find-by-season-plain';

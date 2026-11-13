@@ -86,7 +86,10 @@
                   </ion-input>
                   <ion-popover trigger="datePopover" alignment="center">
                     <ng-template>
-                      <ion-datetime formControlName="startDate" presentation="date"></ion-datetime>
+                      <ion-datetime 
+                        presentation="date"
+                        [formControl]="$any(treatmentForm.get('startDate'))">
+                      </ion-datetime>
                     </ng-template>
                   </ion-popover>
                 </ion-col>
@@ -152,7 +155,7 @@
       }
 
       <!-- Treatments list -->
-      @if (treatments().length) {
+      @if (groupedTreatments().length) {
         <ion-card class="table-card ion-margin-top">
           <ion-list lines="full">
             <ion-list-header color="primary" class="ion-no-padding list-header">
@@ -165,46 +168,57 @@
               </ion-grid>
             </ion-list-header>
 
-            @for (treatment of treatments(); track treatment.id; let i = $index) {
-              <ion-item class="grid-item">
-                <ion-grid>
-                  <ion-row class="ion-align-items-center">
-                    
-                    <!-- Date and Parcel -->
-                    <ion-col size="4">
-                      <div style="line-height: 1.2;">
-                        <strong>{{treatment.startDate | date:'dd/MM/yyyy'}}</strong><br>
-                        <span style="font-size: 0.8rem; color: var(--ion-color-medium);">
-                          {{ getPlotInfo(treatment.plotId) }}
-                        </span>
-                      </div>
-                    </ion-col>
-                    
-                    <!-- Product and Dose -->
-                    <ion-col size="4" class="ion-text-center">
-                      <div style="line-height: 1.2;">
-                        <ion-badge color="secondary" mode="ios" class="liters-badge">
-                          {{treatment.productName}}
-                        </ion-badge><br>
-                        <span style="font-size: 0.8rem; color: var(--ion-color-medium);">
-                          {{treatment.dose}} {{treatment.doseUnit}}
-                        </span>
-                      </div>
-                    </ion-col>
-                    
-                    <!-- Actions -->
-                    <ion-col size="4" class="ion-text-end">
-                      <ion-button fill="clear" color="medium" (click)="setEditForm(treatment)">
-                        <ion-icon slot="icon-only" name="create-outline" class="tableButton"></ion-icon>
-                      </ion-button>
-                      <ion-button fill="clear" color="danger" (click)="treatment.id && deleteTreatment(treatment.id)">
-                        <ion-icon slot="icon-only" name="trash-outline" class="tableButton"></ion-icon>
-                      </ion-button>
-                    </ion-col>
-                    
-                  </ion-row>
-                </ion-grid>
-              </ion-item>
+            <!-- Iterate over monthly groups -->
+            @for (group of groupedTreatments(); track group.label) {
+              
+              <!-- Month header -->
+              <ion-item-divider color="light" class="ion-padding-vertical" style="height: 60px;">
+                <ion-label style="font-weight: 700; font-size: 1.1rem; color: var(--ion-color-dark);">
+                  {{ group.label }}
+                </ion-label>
+                <ion-button slot="end" shape="round" color="primary" size="small" (click)="exportMonth(group.year, group.month)">
+                  <ion-icon slot="start" name="download-outline"></ion-icon>
+                  Exportar CUE
+                </ion-button>
+              </ion-item-divider>
+
+              <!-- Iterate over treatments -->
+              @for (treatment of group.items; track treatment.id) {
+                <ion-item class="grid-item">
+                  <ion-grid>
+                    <ion-row class="ion-align-items-center">
+                      <ion-col size="4">
+                        <div style="line-height: 1.2;">
+                          <strong>{{treatment.startDate | date:'dd/MM/yyyy'}}</strong><br>
+                          <span style="font-size: 0.8rem; color: var(--ion-color-medium);">
+                            {{ getPlotInfo(treatment.plotId) }}
+                          </span>
+                        </div>
+                      </ion-col>
+                      
+                      <ion-col size="4" class="ion-text-center">
+                        <div style="line-height: 1.2;">
+                          <ion-badge color="secondary" mode="ios" class="liters-badge">
+                            {{treatment.productName}}
+                          </ion-badge><br>
+                          <span style="font-size: 0.8rem; color: var(--ion-color-medium);">
+                            {{treatment.dose}} {{treatment.doseUnit}}
+                          </span>
+                        </div>
+                      </ion-col>
+                      
+                      <ion-col size="4" class="ion-text-end">
+                        <ion-button fill="clear" color="medium" (click)="setEditForm(treatment)">
+                          <ion-icon slot="icon-only" name="create-outline" class="tableButton"></ion-icon>
+                        </ion-button>
+                        <ion-button fill="clear" color="danger" (click)="treatment.id && deleteTreatment(treatment.id)">
+                          <ion-icon slot="icon-only" name="trash-outline" class="tableButton"></ion-icon>
+                        </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-item>
+              }
             }
           </ion-list>
         </ion-card>

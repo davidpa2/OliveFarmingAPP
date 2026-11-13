@@ -268,6 +268,39 @@
         }
       }
     },
+    "/api/Cue/export/{year}/{month}": {
+      "get": {
+        "tags": [
+          "Cue"
+        ],
+        "operationId": "ExportTreatments",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "month",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Ping": {
       "get": {
         "tags": [

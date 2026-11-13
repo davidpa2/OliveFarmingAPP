@@ -1,4 +1,4 @@
-import { Component, signal, OnInit } from '@angular/core';
+import { Component, signal, OnInit, computed } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CoreProvider } from 'src/app/services/core';
 import { PlotDto, TreatmentDto, TreatmentCreateDto } from 'src/app/services/api/models';
@@ -31,6 +31,39 @@ export class TreatmentPage implements OnInit {
   });
 
   constructor(public core: CoreProvider, public fb: FormBuilder) {}
+  
+  // Group data by month and year
+  groupedTreatments = computed(() => {
+    const list = this.treatments();
+    if (!list || list.length === 0) return [];
+
+    const groups = new Map<string, { label: string, year: number, month: number, items: TreatmentDto[] }>();
+
+    // Date formatter
+    const formatter = new Intl.DateTimeFormat('es-ES', { month: 'long', year: 'numeric' });
+
+    list.forEach(t => {
+      const date = new Date(t.startDate);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1; // 1-12
+      const key = `${year}-${month.toString().padStart(2, '0')}`; // ex: "2026-10"
+
+      if (!groups.has(key)) {
+        // Capitalize the first letter of the month ("Octubre 2026")
+        let label = formatter.format(date);
+        label = label.charAt(0).toUpperCase() + label.slice(1);
+
+        groups.set(key, { label, year, month, items: [] });
+      }
+      groups.get(key)!.items.push(t);
+    });
+
+    // Convert to array and order by month desc
+    return Array.from(groups.values()).sort((a, b) => {
+      if (a.year !== b.year) return b.year - a.year;
+      return b.month - a.month;
+    });
+  });
 
   ngOnInit() {
     this.loadInitialData();
@@ -185,5 +218,36 @@ export class TreatmentPage implements OnInit {
   getPlotInfo(plotId: number): string {
     const plot = this.plots().find(p => p.id === plotId);
     return plot ? `Pol ${plot.polygon} - Parc ${plot.parcel}` : '';
+  }
+
+  exportMonth(year: number, month: number) {
+    this.core.toastCtrl.create({
+      message: `Generando cuaderno de ${month}/${year}...`,
+      duration: 1500
+    }).then(t => t.present());
+
+    this.core.http.get(`${this.core.apiConfig.rootUrl}/api/cue/export/${year}/${month}`, {
+      responseType: 'blob'
+    }).subscribe({
+      next: (blob) => {
+        // Create local URL for the binary file
+        const url = window.URL.createObjectURL(blob);
+        
+        // Create an <a> element to force the download
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Cuaderno_Campo_${year}_${month.toString().padStart(2, '0')}.xlsx`;
+        
+        // Add it to DOM and click it
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err) => {
+        console.error('Error al exportar:', err);
+        this.core.errorToast(null, 'Error al generar el documento Excel');
+      }
+    });
   }
 }
