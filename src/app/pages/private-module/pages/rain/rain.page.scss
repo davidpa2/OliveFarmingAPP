@@ -20,77 +20,6 @@ ion-segment-button ion-label {
     font-size: 20px;
 }
 
-// Form
-.form-card {
-    border-top: 4px solid var(--ion-color-primary);
-
-    .action-buttons {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        justify-content: flex-start;
-    }
-}
-
-// Table settings
-.table-card {
-    border-radius: 12px;
-    overflow: hidden;
-
-    .list-header {
-        font-size: 0.95rem;
-        font-weight: bold;
-        min-height: 40px;
-        padding: 0 16px;
-    }
-
-    .liters-badge {
-        font-size: 0.9rem;
-        padding: 6px 10px;
-    }
-
-    .row-actions {
-        display: flex;
-        gap: 4px;
-
-        ion-button {
-            margin: 0;
-            --padding-start: 8px;
-            --padding-end: 8px;
-        }
-    }
-
-    .total-row {
-        --min-height: 50px;
-        font-size: 1.1rem;
-
-        .spacer {
-            width: 80px;
-        }
-    }
-}
-
-.grid-item {
-    --padding-start: 0;
-    --inner-padding-end: 0;
-}
-
-.grid-item ion-button {
-    margin: 0;
-    --padding-start: 8px;
-    --padding-end: 8px;
-}
-
-.list-header ion-label {
-    margin: 0;
-    font-weight: bold;
-    font-size: 0.95rem;
-}
-
-.tableButton {
-    font-size: 22px;
-}
-
 // Empty State
 .empty-state {
     margin-top: 40px;
@@ -134,13 +63,7 @@ ion-segment-button ion-label {
     animation: slideOutDown 0.5s ease-in forwards;
 }
 
-.animation-fade-in {
-    animation: fadeIn 0.4s ease-out;
-}
 
-.animation-slide-down {
-    animation: slideInDown 0.4s ease-out;
-}
 
 @keyframes slideInUp {
     from {
@@ -165,29 +88,6 @@ ion-segment-button ion-label {
         transform: translateY(20px);
     }
 }
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes slideInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 
 @media screen and (max-width: 600px) {
     .form-card .action-buttons {
