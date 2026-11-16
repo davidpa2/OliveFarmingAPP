@@ -186,6 +186,36 @@
         }
       }
     },
+    "/api/Cue/summary": {
+      "get": {
+        "tags": [
+          "Cue"
+        ],
+        "operationId": "GetCueSummary",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CueSummaryDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CueSummaryDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CueSummaryDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Cue/treatments/{id}": {
       "put": {
         "tags": [
@@ -750,6 +780,21 @@
   },
   "components": {
     "schemas": {
+      "CueSummaryDto": {
+        "type": "object",
+        "properties": {
+          "totalTreatments": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lastTreatmentDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "EditRainLogDTO": {
         "required": [
           "seasonName"
