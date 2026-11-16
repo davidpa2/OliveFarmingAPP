@@ -65,10 +65,21 @@
 
                 <div class="statsGlassbox ion-margin-vertical ion-text-center">
                   <p class="statsLabel">Campaña {{core.season.currentSeason}}</p>
+
                   <div class="litersHighlight">
-                    <span class="number">Al día</span>
-                    <span class="unit"></span>
+                    <span class="number">{{ core.cue.treatmentsCount() }}</span>
+                    <span class="unit">Tratamientos</span>
                   </div>
+
+                  @if (core.cue.lastTreatmentDate()) {
+                    <p style="margin: 8px 0 0; font-size: 0.85rem; color: #c8e6c9; font-weight: 500;">
+                      Última aplicación: {{ core.cue.lastTreatmentDate() | date:'dd/MM/yyyy' }}
+                    </p>
+                  } @else {
+                    <p style="margin: 8px 0 0; font-size: 0.85rem; color: #c8e6c9; font-weight: 500;">
+                      Sin tratamientos registrados
+                    </p>
+                  }
                 </div>
 
                 <ion-button expand="block" shape="round" color="light" class="actionBtn"

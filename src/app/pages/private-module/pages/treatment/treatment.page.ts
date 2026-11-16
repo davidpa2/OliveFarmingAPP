@@ -125,6 +125,8 @@ export class TreatmentPage implements OnInit {
           await this.finishForm('Registro actualizado correctamente');
         },
         (err: any) => { console.error('Error al actualizar:', err); this.isLoading.set(false); });
+    } else {
+      return
     }
   }
 
@@ -172,6 +174,9 @@ export class TreatmentPage implements OnInit {
       efficacy: 'Buena',
       phytosanitaryProblem: 'Repilo'
     });
+
+    // Refresh dashboard stats
+    this.core.cue.loadDashboardStats();
   }
 
   async deleteTreatment(id: number) {

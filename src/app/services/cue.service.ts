@@ -1,8 +1,8 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { CoreProvider } from './core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration } from './api/api-configuration';
-import { createTreatment$Json, CreateTreatment$Json$Params, deleteTreatment, getPlots$Json, getTreatments$Json, updateTreatment$Json, UpdateTreatment$Json$Params } from './api/functions';
+import { createTreatment$Json, CreateTreatment$Json$Params, deleteTreatment, getCueSummary$Json, getPlots$Json, getTreatments$Json, updateTreatment$Json, UpdateTreatment$Json$Params } from './api/functions';
 import { PlotDto, TreatmentDto } from './api/models';
 
 @Injectable({
@@ -14,6 +14,9 @@ export class CueService {
   private http = inject(HttpClient);
   private apiConfig = inject(ApiConfiguration);
 
+  public treatmentsCount = signal<number>(0);
+  public lastTreatmentDate = signal<string | null>(null);
+
   constructor() { }
 
   public init = (core: CoreProvider) => {
@@ -22,7 +25,7 @@ export class CueService {
   };
 
   private initChecks() {
-
+    this.loadDashboardStats();
   }
 
   public getTreatments(
@@ -85,6 +88,22 @@ export class CueService {
         if (cbSuccess) cbSuccess();
       },
       error: (err: any) => handleErr(err)
+    });
+  }
+
+  public loadDashboardStats() {
+    getCueSummary$Json(this.http, this.apiConfig.rootUrl).subscribe({
+      next: (res) => {
+        if (res && res.body) {
+          console.log("Cargando datos CUE de dashboard");
+          
+          this.treatmentsCount.set(res.body.totalTreatments);
+          this.lastTreatmentDate.set(res.body.lastTreatmentDate || null);
+        }
+      },
+      error: (err) => {
+        console.error('No se pudieron cargar las estadísticas del CUE', err);
+      }
     });
   }
 
