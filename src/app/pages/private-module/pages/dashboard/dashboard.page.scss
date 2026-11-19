@@ -30,22 +30,11 @@
     min-height: 320px;
     display: flex;
     flex-direction: column;
-}
-
-.rainyCard {
-    background-image: url("/assets/RainGif.gif");
-    background-size: cover;
-    background-position: center;
     color: white;
 
-    // Dark overlay
     .cardOverlay {
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(to bottom, rgba(40, 70, 100, 0.5), rgba(15, 30, 50, 0.95));
+        top: 0; left: 0; right: 0; bottom: 0;
         z-index: 1;
     }
 
@@ -71,7 +60,6 @@
 
         .cardIcon {
             font-size: 2rem;
-            color: #90caf9;
         }
     }
 
@@ -107,7 +95,6 @@
             .unit {
                 font-size: 1.2rem;
                 font-weight: 600;
-                color: #90caf9;
                 margin-left: 4px;
             }
         }
@@ -116,9 +103,50 @@
     .actionBtn {
         margin-top: auto;
         font-weight: 700;
+    }
+}
+
+.rainyCard {
+    background-image: url("/assets/RainGif.gif");
+    background-size: cover;
+    background-position: center;
+
+    .cardOverlay {
+        background: linear-gradient(to bottom, rgba(40, 70, 100, 0.5), rgba(15, 30, 50, 0.95));
+    }
+
+    .headerFlex .cardIcon,
+    .statsGlassbox .litersHighlight .unit {
+        color: #90caf9;
+    }
+
+    .actionBtn {
         --color: rgba(15, 30, 50, 0.9);
     }
 }
+
+.cueCard {
+    background-image: url("/assets/OliveGif.gif");
+    background-color: #2e7d32; 
+    background-size: cover;
+    background-position: center;
+
+    .cardOverlay {
+        background: linear-gradient(to bottom, rgba(56, 142, 60, 0.5), rgba(27, 94, 32, 0.95));
+    }
+
+    .headerFlex .cardIcon,
+    .statsGlassbox .litersHighlight .unit {
+        color: #c8e6c9;
+    }
+
+    .actionBtn {
+        --color: rgba(27, 94, 32, 0.9);
+    }
+}
+
+
+// ANIMACIONES
 
 .animationSlideDown {
     animation: slideInDown 0.5s ease-out;
@@ -135,7 +163,6 @@
         opacity: 0;
         transform: translateY(-15px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -143,11 +170,6 @@
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
