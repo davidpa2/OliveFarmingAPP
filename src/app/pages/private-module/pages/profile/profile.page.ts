@@ -18,11 +18,14 @@ export class ProfilePage implements OnInit {
   public userInfo = signal<UserMeDto | null>(null);
 
   public profileForm = this.fb.group({
+    reafaNumber: [''],
+    holderName: [''],
+    holderNif: [''],
     applicatorName: [''],
     applicatorNif: [''],
     ropoNumber: [''],
     equipmentRoma: [''],
-    lastIteafDate: [''] // Formato YYYY-MM-DD para <input type="date"> o ion-input
+    lastIteafDate: ['']
   });
 
   ngOnInit() {
@@ -31,7 +34,7 @@ export class ProfilePage implements OnInit {
 
   loadUserProfile() {
     this.isLoading.set(true);
-    this.core.auth.getMe( // Usa el método que ya tengas para llamar a /api/users/me
+    this.core.auth.getMe(
       (user: UserMeDto) => {
         this.userInfo.set(user);
         this.profileForm.patchValue({
@@ -39,7 +42,6 @@ export class ProfilePage implements OnInit {
           applicatorNif: user.applicatorNif || '',
           ropoNumber: user.ropoNumber || '',
           equipmentRoma: user.equipmentRoma || '',
-          // Cortamos la parte de la hora (T00:00:00) para que el input date lo lea bien
           lastIteafDate: user.lastIteafDate ? user.lastIteafDate.split('T')[0] : ''
         });
         this.isLoading.set(false);

@@ -4,7 +4,7 @@
   <div class="page-container">
 
     @if (isLoading()) {
-      <!-- Skeleton Tarjeta de Cuenta -->
+      <!-- Skeleton account card -->
       <ion-card class="animation-fade-in ion-margin-top" style="border-radius: 12px;">
         <ion-item lines="none" class="ion-padding-vertical">
           <ion-skeleton-text [animated]="true" slot="start" style="width: 48px; height: 48px; border-radius: 50%;"></ion-skeleton-text>
@@ -15,7 +15,7 @@
         </ion-item>
       </ion-card>
 
-      <!-- Skeleton Formulario CUE -->
+      <!-- Skeleton CUE Form -->
       <ion-card class="form-card animation-fade-in ion-margin-top">
         <ion-card-header>
           <ion-skeleton-text [animated]="true" style="width: 60%; height: 24px; border-radius: 4px;"></ion-skeleton-text>
@@ -33,7 +33,7 @@
 
     } @else {
 
-      <!-- Datos de la cuenta (Solo lectura) -->
+      <!-- Account data -->
       @if (userInfo(); as user) {
         <ion-card class="animation-fade-in ion-margin-top" style="border-radius: 12px;">
           <ion-item lines="none" class="ion-padding-vertical">
@@ -48,7 +48,7 @@
         </ion-card>
       }
 
-      <!-- Formulario de Datos de Explotación (CUE) -->
+      <!-- CUE Form -->
       <ion-card class="form-card animation-slide-down ion-margin-top">
         <ion-card-header>
           <ion-card-title color="primary">Datos de Explotación (CUE)</ion-card-title>
@@ -58,6 +58,31 @@
         <ion-card-content>
           <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
             
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <ion-input type="text" formControlName="holderName" label="Titular de la Explotación"
+                  labelPlacement="floating" fill="outline" shape="round">
+                  <ion-icon slot="end" name="business-outline" color="primary"></ion-icon>
+                </ion-input>
+              </ion-col>
+
+              <ion-col size="12" size-md="6">
+                <ion-input type="text" formControlName="holderNif" label="NIF del Titular"
+                  labelPlacement="floating" fill="outline" shape="round">
+                  <ion-icon slot="end" name="id-card-outline" color="primary"></ion-icon>
+                </ion-input>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="12">
+                <ion-input type="text" formControlName="reafaNumber" label="Nº Inscripción REAFA"
+                  labelPlacement="floating" fill="outline" shape="round">
+                  <ion-icon slot="end" name="document-text-outline" color="primary"></ion-icon>
+                </ion-input>
+              </ion-col>
+            </ion-row>
+
             <ion-row>
               <ion-col size="12" size-md="6">
                 <ion-input type="text" formControlName="applicatorName" label="Nombre del Aplicador"
