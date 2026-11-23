@@ -15,6 +15,7 @@ export type { TreatmentCreateDto } from './models/treatment-create-dto';
 export type { TreatmentDto } from './models/treatment-dto';
 export type { TreatmentUpdateDto } from './models/treatment-update-dto';
 export type { User } from './models/user';
+export type { UserCueProfileUpdateDto } from './models/user-cue-profile-update-dto';
 export type { UserLoginDto } from './models/user-login-dto';
 export type { UserMeDto } from './models/user-me-dto';
 export type { UserRegisterDto } from './models/user-register-dto';

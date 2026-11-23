@@ -776,6 +776,55 @@
           }
         }
       }
+    },
+    "/api/Users/cue-profile": {
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "UpdateCueProfile",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCueProfileUpdateDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCueProfileUpdateDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCueProfileUpdateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMeDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMeDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMeDTO"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1156,6 +1205,54 @@
           "passwordHash": {
             "type": "string",
             "nullable": true
+          },
+          "applicatorName": {
+            "type": "string",
+            "nullable": true
+          },
+          "ropoNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "applicatorNif": {
+            "type": "string",
+            "nullable": true
+          },
+          "equipmentRoma": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastIteafDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserCueProfileUpdateDTO": {
+        "type": "object",
+        "properties": {
+          "applicatorName": {
+            "type": "string",
+            "nullable": true
+          },
+          "applicatorNif": {
+            "type": "string",
+            "nullable": true
+          },
+          "ropoNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "equipmentRoma": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastIteafDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1192,6 +1289,27 @@
           },
           "email": {
             "type": "string",
+            "nullable": true
+          },
+          "applicatorName": {
+            "type": "string",
+            "nullable": true
+          },
+          "applicatorNif": {
+            "type": "string",
+            "nullable": true
+          },
+          "ropoNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "equipmentRoma": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastIteafDate": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           }
         },

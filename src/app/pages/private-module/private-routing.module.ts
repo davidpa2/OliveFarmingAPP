@@ -11,8 +11,13 @@ const routes: Routes = [
   },
   {
     path: 'treatment',
-    loadChildren: () => import('./pages/treatment/treatment.module').then( m => m.TreatmentPagePageModule)
+    loadChildren: () => import('./pages/treatment/treatment.module').then( m => m.TreatmentPagePageModule), canActivate: [AuthServiceGuard]
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule), canActivate: [AuthServiceGuard]
   }
+
 
 ]
 @NgModule({

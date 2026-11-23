@@ -71,3 +71,7 @@ export type { Me$Plain$Params as Me$Plain$Params } from './fn/users/me-plain';
 export { me$Plain as me$Plain } from './fn/users/me-plain';
 export type { Me$Json$Params as Me$Json$Params } from './fn/users/me-json';
 export { me$Json as me$Json } from './fn/users/me-json';
+export type { UpdateCueProfile$Plain$Params as UpdateCueProfile$Plain$Params } from './fn/users/update-cue-profile-plain';
+export { updateCueProfile$Plain as updateCueProfile$Plain } from './fn/users/update-cue-profile-plain';
+export type { UpdateCueProfile$Json$Params as UpdateCueProfile$Json$Params } from './fn/users/update-cue-profile-json';
+export { updateCueProfile$Json as updateCueProfile$Json } from './fn/users/update-cue-profile-json';

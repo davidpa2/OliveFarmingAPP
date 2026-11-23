@@ -34,6 +34,11 @@
                     <!-- <p>{{core.user.surname}}</p> -->
                   </ion-label>
                 </ion-list-header>
+
+                <ion-item button="true" detail="false" (click)="goToProfile()" class="ion-margin-bottom">
+                  <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+                  <ion-label>Perfil y Explotación</ion-label>
+                </ion-item>
                 
                 <!-- Logout button -->
                 <ion-item button (click)="logout()" color="danger" detail="false" class="logout-item">

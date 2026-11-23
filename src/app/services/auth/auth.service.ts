@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { CoreProvider } from '../core';
 import { environment } from 'src/environments/environment';
-import { UserLoginDto } from '../api/models';
+import { UserCueProfileUpdateDto, UserLoginDto, UserMeDto } from '../api/models';
 import { login$Json } from '../api/fn/users/login-json';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration } from '../api/api-configuration';
-import { me$Json } from '../api/functions';
+import { me$Json, updateCueProfile$Json } from '../api/functions';
 
 @Injectable({
   providedIn: 'root'
@@ -60,18 +60,12 @@ export class AuthService {
     }
 
     if (this.token) {
-      me$Json(this.http, this.apiConfig.rootUrl).subscribe({
-        next: response => {
-          if (!this.initedData) {
-            this.initedData = true;
-          }
-          this.data.user = response.body; 
-          this.updateStorage();
+      this.getMe(
+        () => {
+          if (!this.initedData) this.initedData = true;
         },
-        error: err => {
-          if (!this.initedData) {
-            this.initedData = true;
-          }
+        () => {
+          if (!this.initedData) this.initedData = true;
           this.data = { user: null, token: null };
           environment.authToken = '';
           this.updateStorage();
@@ -80,11 +74,9 @@ export class AuthService {
             undefined, 'Su sesión anterior ha sido cerrada por seguridad', 15000
           );
         }
-      })
+      );
     } else {
-      if (!this.initedData) {
-        this.initedData = true;
-      }
+      if (!this.initedData) this.initedData = true;
     }
   }
 
@@ -108,25 +100,36 @@ export class AuthService {
           environment.authToken = response.body.jwt;
           this.data.token = response.body.jwt;
 
-          me$Json(this.http, this.apiConfig.rootUrl).subscribe({
-            next: userResponse => {
-              this.data.user = userResponse.body;
-              this.updateStorage();
-
-              if (cbSuccess) {
-                cbSuccess();
-              }
+          this.getMe(
+            () => {
+              cbSuccess();
             },
-            error: err => {
+            (err) => {
               handleErr(err);
             }
-          })
+          );
         }
       },
       error: (err) => {
         handleErr(err);
       }
     })
+  }
+
+  public getMe(
+    cbSuccess?: (user: UserMeDto) => void,
+    cbError?: (err: any) => void
+  ) {
+    me$Json(this.http, this.apiConfig.rootUrl).subscribe({
+      next: response => {
+        this.data.user = response.body;
+        this.updateStorage();
+        if (cbSuccess) cbSuccess(response.body);
+      },
+      error: err => {
+        if (cbError) cbError(err);
+      }
+    });
   }
 
   public logout(cb: Function) {
@@ -138,5 +141,22 @@ export class AuthService {
 
   updateStorage() {
     localStorage.setItem('appSession', JSON.stringify(this.data));
+  }
+
+  public updateCueProfile(
+    body: UserCueProfileUpdateDto,
+    cbSuccess: (res: UserMeDto) => void,
+    cbError: (err: any) => void
+  ) {
+    updateCueProfile$Json(this.http, this.apiConfig.rootUrl, { body }).subscribe({
+      next: (res) => {
+        this.data.user = res.body;
+        this.updateStorage();
+        cbSuccess(res.body);
+      },
+      error: (err) => {
+        if (cbError) cbError(err);
+      }
+    });
   }
 }
