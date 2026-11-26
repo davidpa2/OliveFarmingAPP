@@ -91,6 +91,88 @@
         }
       }
     },
+    "/api/Cue/plots/{id}": {
+      "put": {
+        "tags": [
+          "Cue"
+        ],
+        "operationId": "UpdatePlot",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlotCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlotCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlotCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlotDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlotDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlotDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Cue"
+        ],
+        "operationId": "DeletePlot",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Cue/treatments": {
       "get": {
         "tags": [
@@ -958,13 +1040,28 @@
             "type": "integer",
             "format": "int32"
           },
+          "sigpacAreaHa": {
+            "type": "number",
+            "format": "double"
+          },
           "cultivatedAreaHa": {
             "type": "number",
             "format": "double"
           },
+          "sigpacUse": {
+            "type": "string",
+            "nullable": true
+          },
           "species": {
             "type": "string",
             "nullable": true
+          },
+          "variety": {
+            "type": "string",
+            "nullable": true
+          },
+          "isIrrigated": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -1226,6 +1323,18 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "reafaNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "holderName": {
+            "type": "string",
+            "nullable": true
+          },
+          "holderNif": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1252,6 +1361,18 @@
           "lastIteafDate": {
             "type": "string",
             "format": "date-time",
+            "nullable": true
+          },
+          "reafaNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "holderName": {
+            "type": "string",
+            "nullable": true
+          },
+          "holderNif": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -1310,6 +1431,18 @@
           "lastIteafDate": {
             "type": "string",
             "format": "date-time",
+            "nullable": true
+          },
+          "reafaNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "holderName": {
+            "type": "string",
+            "nullable": true
+          },
+          "holderNif": {
+            "type": "string",
             "nullable": true
           }
         },

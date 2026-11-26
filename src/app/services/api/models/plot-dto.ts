@@ -5,9 +5,13 @@ export interface PlotDto {
   cultivatedAreaHa?: number;
   enclosure?: number;
   id?: number;
+  isIrrigated?: boolean;
   municipalityCode?: number;
   parcel?: number;
   polygon?: number;
   provinceCode?: number;
+  sigpacAreaHa?: number;
+  sigpacUse?: string | null;
   species?: string | null;
+  variety?: string | null;
 }

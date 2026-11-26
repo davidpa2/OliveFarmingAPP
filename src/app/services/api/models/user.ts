@@ -6,10 +6,13 @@ export interface User {
   applicatorNif?: string | null;
   email?: string | null;
   equipmentRoma?: string | null;
+  holderName?: string | null;
+  holderNif?: string | null;
   id?: number;
   lastIteafDate?: string | null;
   name?: string | null;
   passwordHash?: string | null;
+  reafaNumber?: string | null;
   ropoNumber?: string | null;
   surname?: string | null;
 }

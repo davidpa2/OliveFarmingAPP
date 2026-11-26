@@ -5,6 +5,9 @@ export interface UserCueProfileUpdateDto {
   applicatorName?: string | null;
   applicatorNif?: string | null;
   equipmentRoma?: string | null;
+  holderName?: string | null;
+  holderNif?: string | null;
   lastIteafDate?: string | null;
+  reafaNumber?: string | null;
   ropoNumber?: string | null;
 }

@@ -9,6 +9,12 @@ export type { CreatePlot$Plain$Params as CreatePlot$Plain$Params } from './fn/cu
 export { createPlot$Plain as createPlot$Plain } from './fn/cue/create-plot-plain';
 export type { CreatePlot$Json$Params as CreatePlot$Json$Params } from './fn/cue/create-plot-json';
 export { createPlot$Json as createPlot$Json } from './fn/cue/create-plot-json';
+export type { UpdatePlot$Plain$Params as UpdatePlot$Plain$Params } from './fn/cue/update-plot-plain';
+export { updatePlot$Plain as updatePlot$Plain } from './fn/cue/update-plot-plain';
+export type { UpdatePlot$Json$Params as UpdatePlot$Json$Params } from './fn/cue/update-plot-json';
+export { updatePlot$Json as updatePlot$Json } from './fn/cue/update-plot-json';
+export type { DeletePlot$Params as DeletePlot$Params } from './fn/cue/delete-plot';
+export { deletePlot as deletePlot } from './fn/cue/delete-plot';
 export type { GetTreatments$Plain$Params as GetTreatments$Plain$Params } from './fn/cue/get-treatments-plain';
 export { getTreatments$Plain as getTreatments$Plain } from './fn/cue/get-treatments-plain';
 export type { GetTreatments$Json$Params as GetTreatments$Json$Params } from './fn/cue/get-treatments-json';

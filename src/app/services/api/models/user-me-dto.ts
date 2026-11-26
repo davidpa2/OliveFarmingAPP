@@ -6,8 +6,11 @@ export interface UserMeDto {
   applicatorNif?: string | null;
   email: string | null;
   equipmentRoma?: string | null;
+  holderName?: string | null;
+  holderNif?: string | null;
   lastIteafDate?: string | null;
   name: string | null;
+  reafaNumber?: string | null;
   ropoNumber?: string | null;
   surname: string | null;
 }
