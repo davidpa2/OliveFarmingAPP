@@ -2,8 +2,8 @@ import { inject, Injectable, signal } from '@angular/core';
 import { CoreProvider } from './core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration } from './api/api-configuration';
-import { createTreatment$Json, CreateTreatment$Json$Params, deleteTreatment, getCueSummary$Json, getPlots$Json, getTreatments$Json, updateTreatment$Json, UpdateTreatment$Json$Params } from './api/functions';
-import { PlotDto, TreatmentDto } from './api/models';
+import { createPlot$Json, createTreatment$Json, CreateTreatment$Json$Params, deletePlot, deleteTreatment, getCueSummary$Json, getPlots$Json, getTreatments$Json, updatePlot$Json, updateTreatment$Json, UpdateTreatment$Json$Params } from './api/functions';
+import { PlotCreateDto, PlotDto, TreatmentDto } from './api/models';
 
 @Injectable({
   providedIn: 'root'
@@ -131,6 +131,42 @@ export class CueService {
         handleErr(err);
       }
     })
+  }
+
+  public createPlot(
+    body: PlotCreateDto,
+    cbSuccess: (res: PlotDto) => void,
+    cbError: (err: any) => void
+  ) {
+    createPlot$Json(this.http, this.apiConfig.rootUrl, { body }).subscribe({
+      next: (res) => cbSuccess(res.body),
+      error: (err) => cbError(err)
+    });
+  }
+
+  public updatePlot(
+    id: number,
+    body: PlotCreateDto,
+    cbSuccess: (res: PlotDto) => void,
+    cbError: (err: any) => void
+  ) {
+    console.log(body);
+    
+    updatePlot$Json(this.http, this.apiConfig.rootUrl, { id, body }).subscribe({
+      next: (res) => cbSuccess(res.body),
+      error: (err) => cbError(err)
+    });
+  }
+
+  public deletePlot(
+    id: number,
+    cbSuccess: () => void,
+    cbError: (err: any) => void
+  ) {
+    deletePlot(this.http, this.apiConfig.rootUrl, { id }).subscribe({
+      next: () => cbSuccess(),
+      error: (err) => cbError(err)
+    });
   }
 
   public createTreatment(
